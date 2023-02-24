@@ -1,0 +1,25 @@
+project:
+  type: book
+
+book:
+  title: "CM3"
+  author: "Dr Chris Wheadon"
+  date: "2/23/2023"
+  chapters:
+    - index.qmd
+    - tools.qmd
+    - verify.qmd
+    - summary.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+
+execute:
+  freeze: auto
+

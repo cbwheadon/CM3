@@ -1,0 +1,15 @@
+# Prequesites
+
+## R for data science
+<https://r4ds.hadley.nz/>
+The tidyverse is the modern method for data science in R. Note that this book uses RStudio with Quarto, but I recommend you run all examples in Quarto in VSCode.
+
+I would highly recommend you work through the book, chapter by chapter. There are lots of good examples to work on.
+
+## Assignment
+
+‘I do not expect this model to hold at all if applied to items belonging to different fields of mathematics’ (Rasch, 1969, p. 100).
+
+Rasch, G. 1969. “Personal communication, quoted”. In 1969 Item banking, Edited by: R. Wood and L. S. Skurnik Slough: National Foundation for Educational Research.
+
+If you search Google scholar for papers in the field of Rasch measurement published since 2020 you will find a huge range of topics, far beyond Rasch's initial conception of an model that may work for a few maths items. Summarise the range of topics that you can see, and the motivations for using the Rasch model.
