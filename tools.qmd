@@ -1,0 +1,41 @@
+# Modern Tools for Rasch Analysis
+**Tools**
+The following tools are recommended for the course. They are all free and open source with the exception of Github Copilot which offers a free trial.
+
+**R**
+
+<https://cran.r-project.org/>
+Follow the standard installation of R. If you have used R before make sure you update to the latest version.
+
+Once you have installed R, you will need to install the following package before going any further. Installing a package is done by typing the following command in the R console:
+```
+    install.packages("languageserver")
+```
+
+
+**Visual Studio Code**
+
+<https://code.visualstudio.com/>
+Download and install the latest build. You will then need to install two extensions. This guide explains what an extension is, and how to install it: <https://code.visualstudio.com/docs/editor/extension-marketplace>
+
+**VSCode extension: R**
+
+<https://code.visualstudio.com/docs/languages/r>
+The extension suggests various optional enhancements that you can install, but these are not neccessary if you are using Quarto.
+
+**VSCode extension: Quarto**
+
+<https://marketplace.visualstudio.com/items?itemName=quarto.quarto>
+
+
+**Github Copilot**
+
+<https://copilot.github.com/>
+Copilot is an AI pair programmer. As you type copilot will make suggestions for your code which will accelerate your learning experience. Copilot offers a 60 day free trial. To sign up for Copilot you will first need a free Github account.
+
+**Github Copilot for Visual Studio Code**
+
+<https://docs.github.com/en/copilot/getting-started-with-github-copilot/getting-started-with-github-copilot-in-visual-studio-code>
+Once you have signed up for copilot you will need to install the extension in Visual Studio Code.
+
+

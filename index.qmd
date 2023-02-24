@@ -1,0 +1,6 @@
+# Course Notes for CM3 {.unnumbered}
+
+<https://www.education.ox.ac.uk/study/msc-educational-assessment/>
+
+**MODULE 3: PSYCHOMETRICS AND ASSESSMENT ANALYSIS**
+This paper builds on concepts introduced in the first two core papers and constitutes the foundation of technical measurement and data analysis in educational assessment. It is specifically focussed on psychometric methods for the evaluation of assessment data and integrates these technical aspects with the historical and philosophical underpinnings of psychometrics. Students will be introduced to various psychometric frameworks, including Classical Test Theory, Item Response theory and Rasch Measurement Theory, their approaches to assessment reliability and validity, as well as relevant criticisms of the frameworks. Students will also gain hands-on experience of different psychometric analyses using the R statistical software.
