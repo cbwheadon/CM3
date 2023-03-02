@@ -7,11 +7,13 @@ The following tools are recommended for the course. They are all free and open s
 <https://cran.r-project.org/>
 Follow the standard installation of R. If you have used R before make sure you update to the latest version.
 
-Once you have installed R, you will need to install the following package before going any further. Installing a package is done by typing the following command in the R console:
+Once you have installed R, you will need to install the following packages before going any further. Installing a package is done by typing the following command in the R console:
+
 ```
     install.packages("languageserver")
+    install.packages("rmarkdown")
+    install.packages("tidyverse")
 ```
-
 
 **Visual Studio Code**
 
@@ -20,13 +22,19 @@ Download and install the latest build. You will then need to install two extensi
 
 **VSCode extension: R**
 
-<https://code.visualstudio.com/docs/languages/r>
+<https://marketplace.visualstudio.com/items?itemName=REditorSupport.r>
 The extension suggests various optional enhancements that you can install, but these are not neccessary if you are using Quarto.
 
 **VSCode extension: Quarto**
 
 <https://marketplace.visualstudio.com/items?itemName=quarto.quarto>
 
+**Install Quarto**
+https://quarto.org/docs/get-started/
+
+You will need to close and reopen Visual Studio Code after installing Quarto.
+
+**OPTIONAL!**
 
 **Github Copilot**
 
