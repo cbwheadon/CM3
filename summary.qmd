@@ -1,7 +1,0 @@
-# Reading
-
-## R for data science
-<https://r4ds.hadley.nz/>
-The tidyverse is the modern method for data science in R. Note that this book uses RStudio with Quarto, but I recommend you run all examples in Quarto in VSCode.
-
-I would highly recommend you work through the book, chapter by chapter. There are lots of good examples to work on.
