@@ -10,7 +10,12 @@ book:
     - tools.qmd
     - verify.qmd
     - cj-intro.qmd
-
+    - part: "Classical Test Theory"
+      chapters:
+        - setup.qmd
+        - dataset.qmd
+        - c-test-information.qmd
+      
 bibliography: references.bib
 
 format:
