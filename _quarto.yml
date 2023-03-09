@@ -9,7 +9,7 @@ book:
     - index.qmd
     - tools.qmd
     - verify.qmd
-    - references.qmd
+    - cj-intro.qmd
 
 bibliography: references.bib
 
