@@ -1,0 +1,7 @@
+# Setting up your analysis environment
+
+* Create A New Folder called CM3
+* Start VS Code
+* Add the folder to workspace (CMD + P + WORKSPACES ADD FOLDER TO WORKSPACE)
+* Create new quarto document (CMD + P + QUARTO NEW DOCUMENT)
+

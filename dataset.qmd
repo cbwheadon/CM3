@@ -1,0 +1,22 @@
+# The Dataset
+
+The dataset we will be using for analysis is a set of responses to a 20 question multiple choice test on sentence structure.
+
+The test is designed to help teachers understand some of the most common mistakes we see in their pupils' writing.
+
+Here is a typical question.
+
+___
+> *Only one of the following sentences is correct. Select it.* 
+
+> A)	Was very sorry about the mistake.
+
+> B)	Gone away.
+
+> C)	Skipped down the road.
+
+> D)	We kicked the ball round the park.
+
+> E)	Jumped over the fence.
+
+___

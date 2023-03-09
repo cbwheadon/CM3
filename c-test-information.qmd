@@ -1,0 +1,63 @@
+---
+title: "Classical Test Analysis"
+format: html
+execute:
+  echo: false
+---
+
+```{r}
+#| label: setup
+#| include: false
+rm(list=ls())
+library(tidyverse)
+# load in the dataset
+responses <- read_csv('data/responses.csv')
+```
+
+## Test Information
+
+```{r}
+#| label: sumscores
+# sum across the columns with _score_ in the name and add to a new column called total.
+# make sure to ignore missing values
+# https://dplyr.tidyverse.org/articles/rowwise.html
+# https://dplyr.tidyverse.org/reference/pick.html?q=pick#ref-usage
+responses <- responses %>% mutate(total = rowSums(pick(ends_with("_score")), na.rm = TRUE))
+```
+    
+```{r}
+#| label: basic-stats
+#| table-cap: Summary statistics for the scores
+# table with number of candidates, mean, standard deviation, min and max
+# round all stats to 2 decimal places
+summary_table <- responses %>% 
+  summarise(
+    n = n(),
+    mean = mean(total),
+    sd = sd(total),
+    min = min(total),
+    max = max(total)
+  )
+knitr::kable(summary_table, digits = 2,align = "c")
+```
+
+# Score Distribution
+
+```{r}
+#| label: fig-histogram
+#| fig-cap: Histogram of scores
+#| width: 6
+#| height: 4
+#| include: true
+ggplot (responses, aes(x = total)) +
+  geom_histogram(bins = 21) +
+  scale_x_continuous(breaks = seq(0, 20, 1)) +
+  # add a vertical line at the mean
+    geom_vline(xintercept = mean(responses$total), linetype = "dashed", color = "red") +
+    # add the light theme
+    theme_light() 
+
+
+``` 
+
+### What can we learn from the distribution of scores?
