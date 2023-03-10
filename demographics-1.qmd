@@ -1,0 +1,58 @@
+---
+title: "Demographics"
+format: html
+execute:
+  echo: true
+---
+
+### Working with demographic data
+In our dataset we have the the variable gender. Let's examine what sort of variable gender is.
+
+```{r}
+#| label: setup
+#| include: false
+rm(list=ls())
+library(tidyverse)
+# load in the dataset
+responses <- read_csv('data/responses.csv')
+```
+
+```{r}
+
+# What class of variable is gender in the dataset?
+print(class(responses$gender))
+
+```
+
+To work with demographic data we need to convert the variable to a factor. We can do this using the factor function.
+
+```{r}
+# List all the permutations of gender in the dataset
+print(unique(responses$gender))
+```
+
+```{r}
+responses <- responses %>% 
+  mutate_at(vars(gender), factor, levels=c('M','F'),labels=c('Male','Female'))
+```
+
+## What are the proportions of Male / Female in the dataset?
+
+```{r}
+#| label: proportions
+#| include: true
+responses %>%
+  group_by(gender) %>%
+  summarise(n = n()) %>%
+  mutate(freq = n / sum(n))
+```
+
+## Remove the missing data for simplicity
+
+```{r}
+# Remove the missing data for simplicity
+responses <- responses %>% drop_na(gender)
+```
+
+## Now go back to the Test Information and produce a table and a histogram by gender
+**What do you learn from the grouped information?**

@@ -1,0 +1,16 @@
+{
+  "hash": "61b924bc2b4ea08d5df45e2df4065b0b",
+  "result": {
+    "markdown": "---\ntitle: \"Demographics\"\nformat: html\nexecute:\n  echo: true\n---\n\n\n### Working with demographic data\nIn our dataset we have the the variable gender. Let's examine what sort of variable gender is.\n\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# What class of variable is gender in the dataset?\nprint(class(responses$gender))\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[1] \"character\"\n```\n:::\n:::\n\n\nTo work with demographic data we need to convert the variable to a factor. We can do this using the factor function.\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# List all the permutations of gender in the dataset\nprint(unique(responses$gender))\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[1] \"F\" \"M\" NA \n```\n:::\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\nresponses <- responses %>% \n  mutate_at(vars(gender), factor, levels=c('M','F'),labels=c('Male','Female'))\n```\n:::\n\n\n## What are the proportions of Male / Female in the dataset?\n\n\n::: {.cell}\n\n```{.r .cell-code}\nresponses %>%\n  group_by(gender) %>%\n  summarise(n = n()) %>%\n  mutate(freq = n / sum(n))\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n# A tibble: 3 × 3\n  gender     n    freq\n  <fct>  <int>   <dbl>\n1 Male    1527 0.499  \n2 Female  1512 0.494  \n3 <NA>      22 0.00719\n```\n:::\n:::\n\n\n## Remove the missing data for simplicity\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# Remove the missing data for simplicity\nresponses <- responses %>% drop_na(gender)\n```\n:::\n\n\n## Now go back to the Test Information and produce a table and a histogram by gender\n**What do you learn from the grouped information?**\n",
+    "supporting": [
+      "demographics-1_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

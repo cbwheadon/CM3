@@ -15,6 +15,7 @@ book:
         - setup.qmd
         - dataset.qmd
         - c-test-information.qmd
+        - demographics-1.qmd
       
 bibliography: references.bib
 

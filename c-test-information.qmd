@@ -1,5 +1,5 @@
 ---
-title: "Classical Test Analysis"
+title: "Test Information"
 format: html
 execute:
   echo: false
@@ -61,3 +61,5 @@ ggplot (responses, aes(x = total)) +
 ``` 
 
 ### What can we learn from the distribution of scores?
+
+
