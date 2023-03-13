@@ -14,8 +14,10 @@ book:
       chapters:
         - setup.qmd
         - dataset.qmd
-        - c-test-information.qmd
+        - ct-test-1.qmd
         - demographics-1.qmd
+        - ct-item-1.qmd
+        - ct-item-discrimination-1.qmd
       
 bibliography: references.bib
 

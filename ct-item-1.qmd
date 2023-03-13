@@ -1,0 +1,57 @@
+# Descriptive Data
+
+```{r}
+#| label: setup
+#| include: false
+rm(list=ls())
+library(tidyverse)
+# load in the dataset
+responses <- read_csv('data/responses.csv')
+```
+
+In the special case of dichotomous items, scored “0” for one response and “1” for the other, the proportion of respondents in a sample who select the response choice scored “1” is equivalent to the mean item response. Items for which everyone gives the same response are uninformative because they do not differentiate between individuals. In contrast, dichotomous items that yield about an equal number of people (50%) selecting each of the two response options provide the best differentiation between individuals in the sample overall (@cappelleri).
+
+```{r}
+# select all the columns with _score as the suffix and store as a tibble
+items <- responses %>% select(ends_with('_score'))
+
+# pivot the items longer for analysis
+items <- items %>% pivot_longer(cols=starts_with('Q'), names_to = 'item', values_to = 'score')
+
+# create a summary table with item stats
+item_stats <- items %>% 
+  group_by(item) %>%
+  summarise(across(everything(), 
+  list(
+    max = ~max(.x, na.rm = TRUE),
+    n = ~sum(!is.na(.x)),
+    mean = ~mean(.x, na.rm = TRUE),
+    sd = ~sd(.x, na.rm = TRUE)))
+)
+
+item_stats <- item_stats %>% mutate(
+    item_name = factor(item, levels=paste('Q',1:20, '_score',sep=''),labels = paste0('Q',1:20),ordered = TRUE)
+)
+
+item_stats <- item_stats %>% arrange(item_name) %>%
+    select(
+        item_name,
+        score_max,
+        score_n,
+        score_mean,
+        score_sd
+    ) %>% rename(
+        Item = item_name,
+        Max = score_max,
+        N = score_n,
+        Mean = score_mean,
+        SD = score_sd
+    )
+
+# display the summary table
+knitr::kable(item_stats, digits=2)
+```
+
+
+```{r}
+```

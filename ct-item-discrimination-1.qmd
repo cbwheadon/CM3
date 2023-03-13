@@ -1,0 +1,77 @@
+# Item Discrimination
+The more an item discriminates among individuals with different amounts of the underlying concept of interest, the higher the discrimination index.
+
+```{r}
+#| label: setup
+#| include: false
+rm(list=ls())
+library(tidyverse)
+# load in the dataset
+responses <- read_csv('data/responses.csv')
+```
+
+## The extreme group method (@cappelleri)
+### Step 1
+Partition respondents who have the highest and lowest overall scores on the overall scale, aggregated across all items, into upper and lower groups. The upper group can be composed of the top x% (e.g., 25%) of scores on the scale, while the lower group can be composed of the bottom x% (e.g., 25%) of scores on the scale.
+
+```{r}
+# calculate the total score for each respondent
+responses <- responses %>% 
+  mutate(total = rowSums(pick(ends_with('_score')),na.rm=TRUE)) 
+
+# partition the respondents into 4 quartiles based on their total score
+responses <- responses %>% 
+  mutate(quartile = cut(total,quantile(total,probs=c(0,0.25,0.5,0.75,1)),labels=c('Q1','Q2','Q3','Q4'),include.lowest=TRUE))
+
+# double check
+responses %>% 
+  group_by(quartile) %>% 
+  summarise(mean_score = mean(total))
+
+items <- responses %>% select(quartile, ends_with('_score'))
+# pivot the items longer for analysis
+items <- items %>% pivot_longer(-quartile, names_to = 'item', values_to = 'score')
+```
+
+### Step 2
+Examine each item and determine the proportion of individual respondents in the sample who correctly respond to each item in the upper group and lower group.
+
+```{r}
+# create a summary table with item stats
+item_stats <- items %>% 
+  group_by(quartile, item) %>%
+  summarise(mean_score = mean(score, na.rm=TRUE))
+# pivot wider so we have the item stats for each quartile
+item_wide_stats <- item_stats %>% 
+  pivot_wider(names_from = quartile, values_from = mean_score)
+
+item_wide_stats <- item_wide_stats %>% mutate(
+    item_name = factor(item, levels=paste('Q',1:20, '_score',sep=''),labels = paste0('Q',1:20),ordered = TRUE)
+    ) %>% arrange(item_name) 
+
+item_wide_stats <- item_wide_stats %>% select(
+    item_name, 
+    Q1 = `Q1`, 
+    Q2 = `Q2`, 
+    Q3 = `Q3`, 
+    Q4 = `Q4`
+    )
+
+```
+
+### Step 3
+Subtract the pair of proportions noted in Step 2.
+
+```{r}
+item_wide_stats <- item_wide_stats %>% mutate(
+    Q1_Q4 = Q4 - Q1,
+    )
+knitr::kable(item_wide_stats, digits=2)
+```
+
+
+## Interpretation
+The higher the item discrimination index, the more the item discriminates. For example, if 60% of the upper group and 25% of the lower group endorse a particular item in the scale, the item discrimination index for that item would be calculated as (0.60−0.25) = 0.35.
+
+## Extension Exercise
+Try and recreate the item discrimination plot [here](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4096146/)

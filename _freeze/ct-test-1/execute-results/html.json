@@ -1,0 +1,16 @@
+{
+  "hash": "28e55f2826d4b1abb38bcc8593975e1d",
+  "result": {
+    "markdown": "---\ntitle: \"Test Information\"\nformat: html\nexecute:\n  echo: false\n---\n\n\n\n\n## Test Information\n\n\n::: {.cell}\n\n:::\n\n::: {.cell table-cap='Summary statistics for the scores'}\n::: {.cell-output-display}\n|  n   | mean |  sd  | min | max |\n|:----:|:----:|:----:|:---:|:---:|\n| 3061 |  12  | 4.03 |  0  | 20  |\n:::\n:::\n\n\n# Score Distribution\n\n\n::: {.cell width='6' height='4'}\n::: {.cell-output-display}\n![Histogram of scores](ct-test-1_files/figure-html/fig-histogram-1.png){#fig-histogram width=672}\n:::\n:::\n\n\n### What can we learn from the distribution of scores?\n\n\n",
+    "supporting": [
+      "ct-test-1_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
