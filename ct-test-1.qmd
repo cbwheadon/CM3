@@ -1,9 +1,4 @@
----
-title: "Test Information"
-format: html
-execute:
-  echo: false
----
+# Test Information
 
 ```{r}
 #| label: setup
@@ -12,11 +7,6 @@ rm(list=ls())
 library(tidyverse)
 # load in the dataset
 responses <- read_csv('data/responses.csv')
-```
-
-## Test Information
-
-```{r}
 #| label: sumscores
 # sum across the columns with _score_ in the name and add to a new column called total.
 # make sure to ignore missing values

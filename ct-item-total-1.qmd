@@ -1,0 +1,69 @@
+# Correlations
+
+## Item Total Correlations
+
+Item total correlations, are generally used as supporting evidence for the reliability of test forms. Items may be excluded from a test form if they have a poor correlation to the total score. The item total correlation is the correlation between the item score and the total score.
+
+```{r}
+#| label: setup
+#| include: false
+rm(list=ls())
+library(tidyverse)
+# load in the dataset
+responses <- read_csv('data/responses.csv')
+#| label: sumscores
+# sum across the columns with _score_ in the name and add to a new column called total.
+# make sure to ignore missing values
+# https://dplyr.tidyverse.org/articles/rowwise.html
+# https://dplyr.tidyverse.org/reference/pick.html?q=pick#ref-usage
+responses <- responses %>% mutate(total = rowSums(pick(ends_with("_score")), na.rm = TRUE))
+```
+```{r}
+#| label: tbl-itemr
+#| tbl-cap: Item Total Correlations
+# correlate each item score with the total score
+# note that this function includes the studied item score in the total score for simplicity, but normally the item score would be excluded from the total score
+item_total_r <- responses %>% 
+  select(ends_with("_score")) %>% 
+  mutate(total = responses$total) %>% 
+  gather(key = "item", value = "score", -total) %>% 
+  mutate(item = str_remove(item, "_score")) %>% 
+  group_by(item) %>% 
+  summarise(correlation = cor(score, total, use = "pairwise.complete.obs")) %>% 
+  arrange(desc(correlation))
+  
+knitr::kable(item_total_r, digits = 2)
+```
+
+## Discussion
+Is there a relationship between item difficulty and item total correlation? 
+Can you see any issues with excluding items based on item total correlation?
+
+## Inter-item Correlations
+```{r}
+#| label: inter-item-r
+#| include: false
+# Correlate each item score with every other item score
+# https://corrr.tidymodels.org/
+library(corrr)
+x1 <- responses %>% 
+  select(ends_with("_score")) %>%
+  correlate() %>% 
+  rearrange() %>%
+  shave()
+
+fashion(x1)
+
+stretch(x1, na.rm = TRUE) %>% arrange(r)
+
+```
+```{r}
+#| label: network-plot
+#| include: true
+#| fig-cap: Network diagram of inter-item correlations
+x2 <- responses %>% 
+  select(ends_with("_score")) %>%
+  correlate()
+x2 %>% network_plot(min_cor = .1)
+```
+
