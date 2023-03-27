@@ -1,0 +1,30 @@
+# Exploring alpha
+
+```{r}
+#| label: setup
+#| include: false
+rm(list=ls())
+library(tidyverse)
+library(psych)
+# load in the dataset
+responses <- read_csv('data/responses.csv')
+#| label: sumscores
+# take all the item scores
+item_responses <- responses %>% 
+  select(ends_with("_score"))
+```
+
+```{r}
+mdl_alpha <- psych::alpha(item_responses)
+print(summary(mdl_alpha))
+```
+
+**What happens to alpha if you only use half the scores?**
+
+## From alpha to omega
+<https://tidsskriftet.no/en/2022/08/medicine-and-numbers/internal-consistency-alpha-omega>
+
+```{r}
+mdl_omega <- psych::omega(item_responses)
+print(summary(mdl_omega))
+```

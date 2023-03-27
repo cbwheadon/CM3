@@ -1,0 +1,16 @@
+{
+  "hash": "4b11b0ba76ed90112e2dd61c1832778b",
+  "result": {
+    "markdown": "# Exploring alpha\n\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nmdl_alpha <- psych::alpha(item_responses)\nprint(summary(mdl_alpha))\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n\nReliability analysis   \n raw_alpha std.alpha G6(smc) average_r S/N    ase mean  sd median_r\n      0.81      0.81    0.83      0.18 4.3 0.0048  0.6 0.2     0.16\nNULL\n```\n:::\n:::\n\n\n**What happens to alpha if you only use half the scores?**\n\n## From alpha to omega\n<https://tidsskriftet.no/en/2022/08/medicine-and-numbers/internal-consistency-alpha-omega>\n\n\n::: {.cell}\n\n```{.r .cell-code}\nmdl_omega <- psych::omega(item_responses)\n```\n\n::: {.cell-output .cell-output-stderr}\n```\nLoading required namespace: GPArotation\n```\n:::\n\n::: {.cell-output .cell-output-stderr}\n```\nWarning in fa.stats(r = r, f = f, phi = phi, n.obs = n.obs, np.obs = np.obs, :\nThe estimated weights for the factor scores are probably incorrect.  Try a\ndifferent factor score estimation method.\n```\n:::\n\n::: {.cell-output .cell-output-stderr}\n```\nWarning in fac(r = r, nfactors = nfactors, n.obs = n.obs, rotate = rotate, : An\nultra-Heywood case was detected.  Examine the results carefully\n```\n:::\n\n::: {.cell-output .cell-output-stderr}\n```\nWarning in cov2cor(t(w) %*% r %*% w): diag(.) had 0 or NA entries; non-finite\nresult is doubtful\n```\n:::\n\n::: {.cell-output-display}\n![](ct-alpha_files/figure-html/unnamed-chunk-3-1.png){width=672}\n:::\n\n```{.r .cell-code}\nprint(summary(mdl_omega))\n```\n\n::: {.cell-output .cell-output-stdout}\n```\nOmega \npsych::omega(m = item_responses)\nAlpha:                 0.81 \nG.6:                   0.83 \nOmega Hierarchical:    0.59 \nOmega H asymptotic:    0.7 \nOmega Total            0.84 \n\nWith eigenvalues of:\n  g F1* F2* F3* \n3.0 1.6 1.3 0.0 \nThe degrees of freedom for the model is 133  and the fit was  0.24 \nThe number of observations was  3061  with Chi Square =  726.19  with prob <  0 \n\nThe root mean square of the residuals is  0.03 \nThe df corrected root mean square of the residuals is  0.04 \n\nRMSEA and the  0.9 confidence intervals are  0.038 0.035 0.041\nBIC =  -341.34Explained Common Variance of the general factor =  0.5 \n\n Total, General and Subset omega for each subset\n                                                 g  F1*  F2* F3*\nOmega total for total scores and subscales    0.84 0.81 0.70  NA\nOmega general for total scores and subscales  0.59 0.47 0.36  NA\nOmega group for total scores and subscales    0.24 0.33 0.34  NA\nNULL\n```\n:::\n:::",
+    "supporting": [
+      "ct-alpha_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

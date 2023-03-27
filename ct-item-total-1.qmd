@@ -22,7 +22,7 @@ responses <- responses %>% mutate(total = rowSums(pick(ends_with("_score")), na.
 #| label: tbl-itemr
 #| tbl-cap: Item Total Correlations
 # correlate each item score with the total score
-# note that this function includes the studied item score in the total score for simplicity, but normally the item score would be excluded from the total score
+# note that this function includes the studied item score in the total score for simplicity, but normally the item score would be excluded from the total score, see https://personality-project.org/r/html/alpha.html
 item_total_r <- responses %>% 
   select(ends_with("_score")) %>% 
   mutate(total = responses$total) %>% 

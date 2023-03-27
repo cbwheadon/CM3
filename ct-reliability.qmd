@@ -1,0 +1,18 @@
+# Reliability
+
+## Observed Scores, True Scores and Error
+Classical Test Theory assumes that tests suffer from random measurement error.
+
+The test contains *J* items. Random variable *X~j~* denotes the score on item *j*. The summary of the item scores is the total score or test score, which is defined as
+
+$$
+X_+ = \sum_{j=1}^J X_j
+$$
+
+Test score *X~+i~* is assumed to suffer from random measurement error. Thus, rather than *X~+i~* one would like to know respondent *i*’s test score without error. This error-free test score is defined as the expectation of *X~+i~* across the propensity distribution of independent repetitions of the test to individual *i*, that is, as ɛ(*X~+i~*) (Lord & Novick, 1968, pp. 29–30). The expectation is better known as the true score. <https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2792363/>
+
+The difference between a test score resulting from a single test administration and the true score is defined to be the random measurement error.
+
+Reliability coefficients are an attempt to quantify the random measurement error in the absence of infinite repetitions of tests. 
+
+The most widely used coefficient is [alpha](https://link.springer.com/article/10.1007/bf02310555). Mathematically, alpha depends on the average degree of inter-relatedness between the items in a test and is heavily dependent on the number of items in a test.
