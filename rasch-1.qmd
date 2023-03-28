@@ -1,0 +1,48 @@
+# Rasch Measurement
+
+Rasch measurement theory is a method for transforming data from multiple-choice tests, surveys, or other assessments into a scale that reflects a person's level of understanding or skill. The theory is based on the idea of invariance in measurement, which means that the comparison between two stimuli or individuals should be independent of who was involved in the comparison.
+
+Rasch models are used to identify deviations from the model's requirements when they occur. These deviations can help researchers identify areas for additional research or guide improvements in the quality of the assessment procedure.
+
+Rasch models have several theoretical and practical features that make them popular across disciplines in the social, behavioral, and health sciences.
+
+Wright and Mok (2004) summarized the key theoretical and practical features of the Rasch measurement approach as follows:
+
+In order to construct inference from observation, the measurement model must:
+(a) produce linear measures
+(b) overcome missing data
+(c) give estimates of precision
+(d) have devices for detecting misfit
+(e) the parameters of the object being measured and of the measurement instrument must be separable.
+
+Only the family of Rasch measurement models solve these problems. (p. 4)
+
+Wright, Benjamin D., and Magdalena Mo Ching Mok. An overview of the family of Rasch measurement models. In E. V. Smith & R. M. Smith (Eds.), Introduction to Rasch Measurement, JAM Press, 2004, 1–24.
+
+## Some introductory texts
+
+Andrich, David, and Ida Marais. A Course in Rasch Measurement Theory: Measuring in the Educational, Social and Health Sciences. Singapore: Springer, 2019.
+
+Bond, Trevor G., Zi Yan, and Moritz Heene. Applying the Rasch Model: Fundamental Measurement in the Human Sciences (4th Ed.). New York: Routledge, Taylor & Francis Group, 2020.
+
+Engelhard, Georg, and Jue Wang. Rasch Models for solving measurement problems: Invariant Measurement in the Social Sciences. Vol.187. SAGE, 2020. https://us.sagepub.com/en-us/nam/rasch-models-for-solving-measurement-problems/book267292
+
+## Rasch controversies
+
+There have been some controversies surrounding the use of the Rasch model in educational and social science research. Here are some of the main points of debate:
+
+### Assumption of unidimensionality
+The Rasch model assumes that the underlying construct being measured is unidimensional, meaning that all of the items in the test are measuring the same thing. Critics argue that this assumption is often violated in practice, particularly in complex constructs such as reading comprehension or mathematical ability.
+
+### Lack of fit to the model
+While the Rasch model provides a good fit for many datasets, it is not always an accurate representation of the underlying data. Researchers have proposed alternative models, such as multidimensional item response theory (MIRT), to account for the complexity and multidimensionality of constructs.
+
+### Lack of flexibility
+The Rasch model is relatively inflexible and cannot accommodate certain types of data, such as data that violates the assumption of local independence (meaning that responses to one item may depend on responses to another item). Alternative models, such as the partial credit model or the generalized partial credit model, have been proposed to address these limitations.
+
+### Interpretation of scores
+While Rasch scores are often interpreted as linear measures of a person's ability or level of understanding, critics argue that this interpretation may not always be appropriate, particularly if the construct being measured is not unidimensional or if the Rasch model does not provide a good fit to the data.
+
+## Rasch Wars!
+Panayides, P., Robinson, C. and Tymms, P. (2010), The assessment revolution that has passed England by: Rasch measurement. British Educational Research Journal, 36: 611-626. https://doi.org/10.1080/01411920903018182
+Goldstein, H. and Blinkhorn, S. (1982), The Rasch Model Still Does Not Fit. British Educational Research Journal, 8: 167-170. https://doi.org/10.1080/0141192820080207

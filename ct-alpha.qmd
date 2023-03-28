@@ -28,3 +28,5 @@ print(summary(mdl_alpha))
 mdl_omega <- psych::omega(item_responses)
 print(summary(mdl_omega))
 ```
+
+## Putting everything together what have we learned about the quality of the test?
