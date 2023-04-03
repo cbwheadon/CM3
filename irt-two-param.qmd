@@ -1,0 +1,47 @@
+# Two-parameter IRT model
+
+Mathematically, the two-parameter IRT model has a discrimination parameter in addition to the item difficulty parameter.
+
+$$
+Prob(X=1) = \frac{\exp(a(\theta - \delta))}{1+\exp(a(\theta - \delta))}
+$$
+
+where *a* is called the discrimination parameter.
+
+The result of including a discrimination parameter is that the slopes of the Item Characteristic Curves are no longer parallel.
+
+![Rasch Model ICCs](images/ICC2-1.png){#fig-rasch}
+![Two-parameter Model ICCs](images/ICC3-1.png){#fig-irt}
+
+Under the Rasch model, for any person, Item 1 is easier than Item 2 which is easier than item 3.
+
+Under the two-parameter IRT model ICCs are not parallel. For a person with ability measure of -1 logit, Item 1 is the easiest item. But for a person with an ability of 2 logits, Item 2 is the easiest item.
+
+
+```{r}
+#| label: setup
+#| include: false
+rm(list=ls())  #remove all objects in the R environment
+require(tidyverse)
+```
+
+## Exercise
+
+Amend the equation for the Rasch model so that it now has a discrimination parameter. Plot ICCs with different discrimination parameters to see the impact of manipulating alpha.
+
+```{r}
+#| label: fig-item-cc
+#| fig-cap: Item Characteristic Curve
+#Calculate prob as a function the theta
+id = 1 # item id
+delta <- 1 #item difficulty is 1
+theta <- seq(-3,3,0.01) #a vector of theta from -3 to 3 in steps of 0.01
+irt_function <- function(alpha, theta, delta){
+    
+}
+
+```
+
+## Discussion
+
+What are the advantages / disadvantages of adding the alpha parameter to the Rasch model?
