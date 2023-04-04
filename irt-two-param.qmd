@@ -44,4 +44,12 @@ irt_function <- function(alpha, theta, delta){
 
 ## Discussion
 
-What are the advantages / disadvantages of adding the alpha parameter to the Rasch model?
+Play the scoring game:
+
+<https://dexter-psychometrics.github.io/dexter/articles/blog/2018-09-24-the-scoring-game>
+
+How do you feel about using the 2PL model to score a high stakes examination?
+
+Now read on ...
+
+<https://dexter-psychometrics.github.io/dexter/articles/blog/2022-06-20-Woes_with_2PL>

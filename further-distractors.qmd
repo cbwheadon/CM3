@@ -1,0 +1,3 @@
+## Distractor analysis
+
+<https://dexter-psychometrics.github.io/dexter/articles/blog/2018-08-07-distractor-plots-in-dexter>

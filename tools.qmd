@@ -29,10 +29,28 @@ The extension suggests various optional enhancements that you can install, but t
 
 <https://marketplace.visualstudio.com/items?itemName=quarto.quarto>
 
+**VSCode settings: Install httpgd in VSCode**
+
+In VSCode: Code - Preferences - Settings - Extensions - R - Plot: Use Httpgd. 
+
+![Alt text](images/plot-1.png)
+![Alt text](images/plot-2.png)
+![Alt text](images/plot-3.png)
+![Alt text](images/plot-4.png)
+
+In R:
+```
+    install.packages("httpgd")
+```
+
+
+
 **Install Quarto**
+
 https://quarto.org/docs/get-started/
 
 You will need to close and reopen Visual Studio Code after installing Quarto.
+
 
 **OPTIONAL!**
 
