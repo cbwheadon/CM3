@@ -1,0 +1,41 @@
+## Analysing with dexter
+
+## Extension exercise
+
+```{r}
+#| label: setup
+#| include: false
+rm(list=ls())
+library(tidyverse)
+library(dexter)
+# load in the dataset
+responses <- read_csv('data/responses.csv')
+keys <- read_csv('data/key.csv')
+```
+
+```{r}
+# Create the rules
+rules <- keys_to_rules(keys, include_NA_rule = TRUE)
+db <- start_new_project(rules, db_name = ":memory:", person_properties=list(gender="unknown"))
+```
+
+```{r}
+add_booklet(db, responses, "y7") 
+get_booklets(db)
+head(get_items(db))
+get_persons(db) %>% 
+  glimpse()
+tt = tia_tables(db)
+tt$booklets
+tt$items
+distractor_plot(db, 'Q5')
+
+m = fit_inter(db, booklet_id=='y7')
+plot(m, "Q1", show.observed=TRUE)
+plot(m, 'Q1', summate=FALSE)
+
+```
+
+```{r}
+close_project(db)
+```
