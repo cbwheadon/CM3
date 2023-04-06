@@ -3,6 +3,10 @@
 <http://www.edmeasurementsurveys.com/IRT/residual-based-item-fit-statistics.html>
 
 ```{r}
+#| include: true
+#| echo: true
+#| output: false
+#| warning: false
 rm(list=ls())  #remove all variables in the R environment
 library(TAM)  #load the package TAM so we can use the functions in TAM
 library(tidyverse)
@@ -11,8 +15,12 @@ library(tidyverse)
 responses <- read_csv('data/responses.csv')
 # keep the scores
 responses <- responses %>% select(ends_with('score'))
-
 mod1 <- tam.jml(responses,bias=FALSE)
+```
+
+```{r}
+
+
 fit1 <- tam.jml.fit(mod1,trim_val = NULL)
 
 item_fit <- tibble(fit1$fit.item)
@@ -30,8 +38,11 @@ print(p)
 ## How does the fit of the items reflect the visual differences seen in the ICCs?
 
 The residual-based fit statistics reflect the slope of the ICC:
-- When fit MS is close to 1, the item has average item discrimination of the set of items.
-- When fit MS is lower than 1, the item is more discriminating than the average item discrimination.
-- When fit MS is higher than 1, the item is less discriminating than the average item discrimination.
 
-Identify an item of each type and plot the ICC using dexter or TAM or both
+*    When fit MS is close to 1, the item has average item discrimination of the set of items.
+
+*    When fit MS is lower than 1, the item is more discriminating than the average item discrimination.
+
+*    When fit MS is higher than 1, the item is less discriminating than the average item discrimination.
+
+## Identify an item of each type and plot the ICC using dexter or TAM or both

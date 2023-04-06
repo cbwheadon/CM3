@@ -1,0 +1,42 @@
+# Exploring Differential Item Functioning with Dexter
+
+Differential item functioning (typically abbreviated as DIF) is present when the probability of success on an item differs for two groups of people, even when we control for ability measures. For example, in mathematics, girls have been found to outperform boys on number items, while boys outperform girls on spatial items, even when the average abilities for boys and girls are the same.
+
+```{r}
+#| label: setup
+#| include: true
+#| echo: true
+#| output: false
+#| warning: false
+rm(list=ls())
+library(tidyverse)
+library(dexter)
+# load in the dataset
+responses <- read_csv('data/responses.csv')
+responses <- responses %>% drop_na(gender)
+keys <- read_csv('data/key.csv')
+# Create the rules
+rules <- keys_to_rules(keys, include_NA_rule = TRUE)
+db <- start_new_project(rules, db_name = ":memory:", person_properties=list(gender=""))
+add_booklet(db, responses, "y7") 
+
+```
+
+## Is there DIF?
+```{r}
+dif_gender = DIF(db, "gender")
+dif_gender
+```
+
+## Which items are affected?
+
+```{r}
+    plot(dif_gender)
+```
+
+## Is the DIF meaningful?
+<https://dexter-psychometrics.github.io/dexter/articles/profile-plots.html>
+
+```{r}
+close_project(db)
+```

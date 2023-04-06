@@ -30,6 +30,7 @@ book:
         - rasch-regression.qmd
         - rasch-ability-difficulty.qmd
         - rasch-infit.qmd
+        - rasch-dif.qmd
       
 bibliography: references.bib
 

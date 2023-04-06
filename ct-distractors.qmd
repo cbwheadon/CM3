@@ -2,31 +2,37 @@
 
 ```{r}
 #| label: setup
-#| include: false
+#| include: true
+#| echo: true
+#| output: false
+#| warning: false
 rm(list=ls())
 library(tidyverse)
 library(dexter)
 # load in the dataset
 responses <- read_csv('data/responses.csv')
 keys <- read_csv('data/key.csv')
-```
-
-```{r}
 # Create the rules
 rules <- keys_to_rules(keys, include_NA_rule = TRUE)
 db <- start_new_project(rules, db_name = ":memory:", person_properties=list(gender="unknown"))
+add_booklet(db, responses, "y7") 
 ```
 
 ```{r}
-add_booklet(db, responses, "y7") 
+
 get_booklets(db)
 head(get_items(db))
 get_persons(db) %>% 
   glimpse()
 tt = tia_tables(db)
 tt$booklets
-tt$items
+knitr::kable(tt$items)
 
+```
+
+## Distractor plots
+
+```{r}
 # Look at distractor plots for all items
 n_items <- nrow(keys)
 for(i in 1:n_items){

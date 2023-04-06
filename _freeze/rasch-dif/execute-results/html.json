@@ -1,0 +1,16 @@
+{
+  "hash": "d37748e86d2a113604c8fb017c961eb6",
+  "result": {
+    "markdown": "# Exploring Differential Item Functioning with Dexter\n\nDifferential item functioning (typically abbreviated as DIF) is present when the probability of success on an item differs for two groups of people, even when we control for ability measures. For example, in mathematics, girls have been found to outperform boys on number items, while boys outperform girls on spatial items, even when the average abilities for boys and girls are the same.\n\n\n::: {.cell}\n\n```{.r .cell-code}\nrm(list=ls())\nlibrary(tidyverse)\nlibrary(dexter)\n# load in the dataset\nresponses <- read_csv('data/responses.csv')\nresponses <- responses %>% drop_na(gender)\nkeys <- read_csv('data/key.csv')\n# Create the rules\nrules <- keys_to_rules(keys, include_NA_rule = TRUE)\ndb <- start_new_project(rules, db_name = \":memory:\", person_properties=list(gender=\"\"))\nadd_booklet(db, responses, \"y7\") \n```\n:::\n\n\n## Is there DIF?\n\n::: {.cell}\n\n```{.r .cell-code}\ndif_gender = DIF(db, \"gender\")\ndif_gender\n```\n\n::: {.cell-output .cell-output-stdout}\n```\nTest for DIF: Chi-square = 67.498, df = 19, p = < 0.0006\n```\n:::\n:::\n\n\n## Which items are affected?\n\n\n::: {.cell}\n\n```{.r .cell-code}\n    plot(dif_gender)\n```\n\n::: {.cell-output-display}\n![](rasch-dif_files/figure-html/unnamed-chunk-3-1.png){width=672}\n:::\n:::\n\n\n## Is the DIF meaningful?\n<https://dexter-psychometrics.github.io/dexter/articles/profile-plots.html>\n\n\n::: {.cell}\n\n```{.r .cell-code}\nclose_project(db)\n```\n:::",
+    "supporting": [
+      "rasch-dif_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

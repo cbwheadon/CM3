@@ -4,8 +4,10 @@
 <https://dexter-psychometrics.github.io/dexter/articles/blog/2018-02-25-item-total-regressions-in-dexter>
 
 ```{r}
-#| label: setup
 #| include: true
+#| echo: true
+#| output: false
+#| warning: false
 rm(list=ls())
 library(tidyverse)
 library(dexter)
@@ -45,3 +47,7 @@ The left hand curtain gives us an idea of guessing. By default, they are drawn a
 
 ### Model fit
 Which items seem to fit the Rasch model less well? Which restriction of the Rasch model do these items highlight? How can the fit of the model be improved?
+
+```{r}
+close_project(db)
+```

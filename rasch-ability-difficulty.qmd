@@ -3,6 +3,10 @@
 ## Fitting the Rasch model with TAM
 
 ```{r}
+#| include: true
+#| echo: true
+#| output: false
+#| warning: false
 rm(list=ls())  #remove all variables in the R environment
 library(tidyverse)
 library(TAM)  #load the package TAM so we can use the functions in TAM
@@ -14,24 +18,42 @@ responses <- responses %>% select(ends_with('score'))
 
 #run a joint maximum likelihood estimation of the Rasch model
 mod1 <- tam.jml(responses)
+```
+
+```{r}
+#| include: true
+#| echo: true
+#| output: true
+#| warning: false
 
 #All the results of the Rasch analysis are stored in the object called "mod1"
 summary(mod1)  #see a summary of the results
 
 #See specific results from the Rasch analysis
-mod1$item
-mod1$WLE
+knitr::kable(mod1$item)
+head(mod1$WLE)
 mod1$WLEreliability
+```
 
-#You can calculate item and person summary statistics
+## Item and person summary statistics
+```{r}
 summary(mod1$item1)
 summary(mod1$WLE)
-hist(mod1$WLE)
 
-#You can plot ICCs
+person_abilities <- tibble(theta=mod1$WLE)
+p <- ggplot(person_abilities, aes(x=theta))
+p <- p + geom_histogram(binwidth = 0.5)
+p
+
+```
+
+## Item Characteristic Curves
+```{r}
 plot(mod1)
+```
 
-# Item person map
+## Item person map
+```{r}
 library(WrightMap)
 wrightMap(mod1$WLE, mod1$xsi, item.side = itemClassic)
 
