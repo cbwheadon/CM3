@@ -19,12 +19,17 @@ book:
         - ct-item-1.qmd
         - ct-item-discrimination-1.qmd
         - ct-item-total-1.qmd
+        - ct-distractors.qmd
         - ct-reliability.qmd
         - ct-alpha.qmd
     - part: "The Rasch Model"
       chapters:
         - rasch-1.qmd
         - rasch-2.qmd
+        - rasch-irt-two-param.qmd
+        - rasch-regression.qmd
+        - rasch-ability-difficulty.qmd
+        - rasch-infit.qmd
       
 bibliography: references.bib
 

@@ -1,0 +1,50 @@
+## Distractor analysis with dexter
+
+```{r}
+#| label: setup
+#| include: false
+rm(list=ls())
+library(tidyverse)
+library(dexter)
+# load in the dataset
+responses <- read_csv('data/responses.csv')
+keys <- read_csv('data/key.csv')
+```
+
+```{r}
+# Create the rules
+rules <- keys_to_rules(keys, include_NA_rule = TRUE)
+db <- start_new_project(rules, db_name = ":memory:", person_properties=list(gender="unknown"))
+```
+
+```{r}
+add_booklet(db, responses, "y7") 
+get_booklets(db)
+head(get_items(db))
+get_persons(db) %>% 
+  glimpse()
+tt = tia_tables(db)
+tt$booklets
+tt$items
+
+# Look at distractor plots for all items
+n_items <- nrow(keys)
+for(i in 1:n_items){
+  distractor_plot(db, keys$item_id[i])
+}
+```
+
+## Analysis questions
+Does the slope of the correct answer always rise from left to right? 
+Does the curve for the correct answer always rise above those for the incorrect answers?
+What does the steepness of the slope for the correct answer tell you about an item?
+Change the key so that one of the items is incorrectly marked. What do you see in the distractor analysis?
+What is the role of the curtains (the shaded areas in the plots)? Are there any items where they are particularly helpful?
+How many distractors generally seem to be useful?
+What would you typically expect the probability of guessing the correct answer to be for a MC item with 5 choices? If you look at the point at which the distractors cross the y-axis where sum score = 0, what do you learn about the actual probabilities?
+Can you make any recommendations for improvement based on the distractor analysis?
+
+
+```{r}
+close_project(db)
+```

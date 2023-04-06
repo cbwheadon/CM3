@@ -1,0 +1,47 @@
+# Item Difficulty and Person Ability
+
+## Fitting the Rasch model with TAM
+
+```{r}
+rm(list=ls())  #remove all variables in the R environment
+library(tidyverse)
+library(TAM)  #load the package TAM so we can use the functions in TAM
+
+# load in the dataset
+responses <- read_csv('data/responses.csv')
+# keep the scores
+responses <- responses %>% select(ends_with('score'))
+
+#run a joint maximum likelihood estimation of the Rasch model
+mod1 <- tam.jml(responses)
+
+#All the results of the Rasch analysis are stored in the object called "mod1"
+summary(mod1)  #see a summary of the results
+
+#See specific results from the Rasch analysis
+mod1$item
+mod1$WLE
+mod1$WLEreliability
+
+#You can calculate item and person summary statistics
+summary(mod1$item1)
+summary(mod1$WLE)
+hist(mod1$WLE)
+
+#You can plot ICCs
+plot(mod1)
+
+# Item person map
+library(WrightMap)
+wrightMap(mod1$WLE, mod1$xsi, item.side = itemClassic)
+
+```
+
+
+## Exercises
+1. Compare IRT estimated item difficulties with CTT item scores.
+2. Use the R function cor to calculate correlation. Use plot to show the relationship graphically.
+3. Compare IRT reliability and CTT reliability
+4. Visually compare ‘steepness’ of IRT observed ICC with CTT point-biserial correlation.
+5. Compare students’ IRT ability measures (WLE) with students’ test scores (CTT).
+6. Compute correlation and plot the two variables to show the relationship.

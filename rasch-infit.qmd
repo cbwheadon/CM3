@@ -1,0 +1,37 @@
+# Infit & Outfit
+
+<http://www.edmeasurementsurveys.com/IRT/residual-based-item-fit-statistics.html>
+
+```{r}
+rm(list=ls())  #remove all variables in the R environment
+library(TAM)  #load the package TAM so we can use the functions in TAM
+library(tidyverse)
+
+# load in the dataset
+responses <- read_csv('data/responses.csv')
+# keep the scores
+responses <- responses %>% select(ends_with('score'))
+
+mod1 <- tam.jml(responses,bias=FALSE)
+fit1 <- tam.jml.fit(mod1,trim_val = NULL)
+
+item_fit <- tibble(fit1$fit.item)
+item_fit <- item_fit %>% bind_cols(mod1$item1)
+
+# plot the item infit against the item difficulty
+p <- ggplot(item_fit, aes(x=infitItem, y=xsi, size=se.xsi,label=item))
+p <- p + geom_point()
+p <- p + geom_text(data=item_fit %>% filter(infitItem>1.1),aes(x=infitItem, y=xsi,label=item,size=4),nudge_y=0.15, nudge_x = -0.005)
+print(p)
+
+
+```
+
+## How does the fit of the items reflect the visual differences seen in the ICCs?
+
+The residual-based fit statistics reflect the slope of the ICC:
+- When fit MS is close to 1, the item has average item discrimination of the set of items.
+- When fit MS is lower than 1, the item is more discriminating than the average item discrimination.
+- When fit MS is higher than 1, the item is less discriminating than the average item discrimination.
+
+Identify an item of each type and plot the ICC using dexter or TAM or both

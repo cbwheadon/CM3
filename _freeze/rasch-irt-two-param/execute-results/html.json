@@ -1,0 +1,14 @@
+{
+  "hash": "13be75606d25a2c768060ae0e3bd8ce9",
+  "result": {
+    "markdown": "# Two-parameter IRT model\n\nMathematically, the two-parameter IRT model has a discrimination parameter in addition to the item difficulty parameter.\n\n$$\nProb(X=1) = \\frac{\\exp(a(\\theta - \\delta))}{1+\\exp(a(\\theta - \\delta))}\n$$\n\nwhere *a* is called the discrimination parameter.\n\nThe result of including a discrimination parameter is that the slopes of the Item Characteristic Curves are no longer parallel.\n\n![Rasch Model ICCs](images/ICC2-1.png){#fig-rasch}\n![Two-parameter Model ICCs](images/ICC3-1.png){#fig-irt}\n\nUnder the Rasch model, for any person, Item 1 is easier than Item 2 which is easier than item 3.\n\nUnder the two-parameter IRT model ICCs are not parallel. For a person with ability measure of -1 logit, Item 1 is the easiest item. But for a person with an ability of 2 logits, Item 2 is the easiest item.\n\n\n\n\n\n\n## Exercise\n\nAmend the equation for the Rasch model so that it now has a discrimination parameter. Plot ICCs with different discrimination parameters to see the impact of manipulating alpha.\n\n\n::: {.cell}\n\n```{.r .cell-code}\n#Calculate prob as a function the theta\nid = 1 # item id\ndelta <- 1 #item difficulty is 1\ntheta <- seq(-3,3,0.01) #a vector of theta from -3 to 3 in steps of 0.01\nirt_function <- function(alpha, theta, delta){\n    \n}\n```\n:::\n\n\n## Discussion\n\nPlay the scoring game:\n\n<https://dexter-psychometrics.github.io/dexter/articles/blog/2018-09-24-the-scoring-game>\n\nHow do you feel about using the 2PL model to score a high stakes examination?\n\nNow read on ...\n\n<https://dexter-psychometrics.github.io/dexter/articles/blog/2022-06-20-Woes_with_2PL>",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

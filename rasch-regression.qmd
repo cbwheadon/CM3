@@ -1,0 +1,47 @@
+# Assessing the fit of the Rasch model
+
+## How does Rasch differ from regression models?
+<https://dexter-psychometrics.github.io/dexter/articles/blog/2018-02-25-item-total-regressions-in-dexter>
+
+```{r}
+#| label: setup
+#| include: true
+rm(list=ls())
+library(tidyverse)
+library(dexter)
+# load in the dataset
+responses <- read_csv('data/responses.csv')
+keys <- read_csv('data/key.csv')
+# Create the rules
+rules <- keys_to_rules(keys, include_NA_rule = TRUE)
+db <- start_new_project(rules, db_name = ":memory:", person_properties=list(gender="unknown"))
+```
+
+## Fitting the Rasch model
+Look at Item Characteristic Plots for all items. There are three item-test regressions on the plot: the observed one, shown as pink dots; the interaction model, shown with a thick gray line; and the ENORM model, shown with a thin black line. (ENORM=RASCH for dichotomous models)
+
+```{r}
+
+add_booklet(db, responses, "y7") 
+get_booklets(db)
+
+m = fit_inter(db, booklet_id=='y7')
+
+n_items <- nrow(keys)
+for(i in 1:n_items){
+  plot(m, keys$item_id[i], show.observed=TRUE)
+}
+
+```
+
+```{r}
+tt = tia_tables(db)
+knitr::kable(tt$items)
+```
+
+## Analysis
+### Guessing
+The left hand curtain gives us an idea of guessing. By default, they are drawn at the 5th and the 95th percentile of the observed test scores, highlighting the central 90% of the data. The left curtain highlights the likely item score for the pupils at the 95th percentile. From examination of the ICCs, which items are prone to guessing?
+
+### Model fit
+Which items seem to fit the Rasch model less well? Which restriction of the Rasch model do these items highlight? How can the fit of the model be improved?
