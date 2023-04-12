@@ -18,7 +18,22 @@ keys <- read_csv('data/key.csv')
 # Create the rules
 rules <- keys_to_rules(keys, include_NA_rule = TRUE)
 db <- start_new_project(rules, db_name = ":memory:", person_properties=list(gender=""))
+
+# Add item properties
+properties <- read_csv('data/properties.csv')
+# reduce to two properties
+properties <- properties %>% mutate(
+    main_test = case_when(
+        subtest == 'subject-verb-object' ~ 'long',
+        subtest == 'subject-verb' ~ 'short',
+        subtest == 'conjunction' ~ 'long'
+    )
+)
+# Add item properties
+add_item_properties(db, item_properties = properties, default_values = NULL)
 add_booklet(db, responses, "y7") 
+get_booklets(db)
+
 
 ```
 
@@ -37,6 +52,22 @@ dif_gender
 ## Is the DIF meaningful?
 <https://dexter-psychometrics.github.io/dexter/articles/profile-plots.html>
 
+## Do boys struggle more with run-on sentences than girls?
+
+### Look at scores
+```{r}
+responses %>% mutate(
+    run_on = (Q8_score + Q9_score + Q10_score + Q11_score)
+) %>% select(gender, run_on) %>% group_by(gender) %>% summarise(n=n(),mean=mean(run_on,na.rm=T))
+```
+
+```{r}
+profile_plot(db, item_property='run-on', covariate='gender')
+```
+
 ```{r}
 close_project(db)
 ```
+
+### More on DIF!
+There are a huge number of methods for testing for DIF. Have a look through <https://cran.r-project.org/web/packages/difR/difR.pdf>

@@ -1,0 +1,74 @@
+# Booklet Design
+```{r}
+#| include: true
+#| echo: true
+#| output: false
+#| warning: false
+rm(list=ls())
+library(tidyverse)
+library(dexter)
+# load in the dataset
+responses <- read_csv('data/responses.csv')
+responses <- responses %>% drop_na(gender, yg)
+# load in year 5 responses
+r5 <- read_csv('data/responses-5.csv')
+r5 <- r5 %>% drop_na(gender, yg)
+
+properties <- read_csv('data/properties.csv')
+# reduce to two properties
+properties <- properties %>% mutate(
+    main_test = case_when(
+        subtest == 'subject-verb-object' ~ 'long',
+        subtest == 'subject-verb' ~ 'short',
+        subtest == 'conjunction' ~ 'long'
+    )
+)
+
+keys <- read_csv('data/key.csv')
+# Create the rules
+rules <- keys_to_rules(keys, include_NA_rule = TRUE)
+db <- start_new_project(rules, db_name = ":memory:", person_properties=list(gender="unknown",yg="unknown"))
+# Add item properties
+add_item_properties(db, item_properties = properties, default_values = NULL)
+
+add_booklet(db, responses, "y7") 
+add_booklet(db, r5, "y5") 
+get_booklets(db)
+
+
+```
+
+```{r}
+
+mSit = fit_domains(db, item_property= "maintest")
+plot(mSit)
+
+m = fit_inter(db)
+n_items <- nrow(keys)
+for(i in 1:n_items){
+  plot(m, keys$item_id[i], show.observed=TRUE)
+}
+
+tt = tia_tables(db, distractor = TRUE)
+knitr::kable(tt$items)
+knitr::kable(tt$distractor)
+
+distractor_plot(db, "Q1")
+plot(m, "Q1", show.observed=TRUE)
+
+print(dd)
+plot(dd)
+
+profile_plot(db, item_property='main_test', covariate='yg')
+
+items = get_items(db) %>%
+  arrange(main_test, item_id)
+
+dd = DIF(db,person_property="yg")
+plot(dd, items=items$item_id)
+
+```
+
+```{r}
+close_project(db)
+```
