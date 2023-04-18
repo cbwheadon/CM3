@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>pc-1</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="pc-1_files/libs/clipboard/clipboard.min.js"></script>
+<script src="pc-1_files/libs/quarto-html/quarto.js"></script>
+<script src="pc-1_files/libs/quarto-html/popper.min.js"></script>
+<script src="pc-1_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="pc-1_files/libs/quarto-html/anchor.min.js"></script>
+<link href="pc-1_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="pc-1_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="pc-1_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="pc-1_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="pc-1_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="fitting-the-partial-credit-model" class="level1">
+<h1>Fitting the Partial Credit Model</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>())</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dexter)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&nbsp;load in the dataset</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>responses <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'data/pc-data.csv'</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># recode NA as 0 across all columns</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>responses <span class="ot">&lt;-</span> responses <span class="sc">%&gt;%</span> </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.numeric, <span class="sc">~</span><span class="fu">replace_na</span>(., <span class="dv">0</span>))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># load the data summary</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>data_summary <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'data/pc-data-summary.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the rules from the summary</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># create an empty tibble with three columns item_id, response, and item_score</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>rules <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">item_id =</span> <span class="fu">character</span>(), <span class="at">response =</span> <span class="fu">character</span>(), <span class="at">item_score =</span> <span class="fu">numeric</span>())</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># for each row in the data summary create a rule</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(data_summary)) {</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get the item id</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  item_id <span class="ot">&lt;-</span> data_summary<span class="sc">$</span>Variable[i]</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get the maximum mark</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  max_mark <span class="ot">&lt;-</span> data_summary<span class="sc">$</span><span class="st">`</span><span class="at">Maximum possible mark</span><span class="st">`</span>[i]</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># for every mark from 0 to max_mark create a rule</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (mark <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>max_mark) {</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># create a rule for the mark</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        rule <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">item_id =</span> item_id, <span class="at">response =</span> <span class="fu">as.character</span>(mark), <span class="at">item_score =</span> mark)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="co"># add the rule to the rules tibble</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        rules <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(rules, rule)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a new project</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>db <span class="ot">&lt;-</span> <span class="fu">start_new_project</span>(rules, <span class="at">db_name =</span> <span class="st">":memory:"</span>, <span class="at">person_properties=</span><span class="fu">list</span>(<span class="at">sex=</span><span class="st">"unknown"</span>,<span class="at">grade=</span><span class="st">"unknown"</span>))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># add the response data</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">add_booklet</span>(db, responses, <span class="st">"geography"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>no column `person_id` provided, automatically generating unique person id's</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$items
+ [1] "C1_1ai"    "C1_1aii"   "C1_1bi"    "C1_1bii"   "C1_1biii"  "C1_1biv"  
+ [7] "C1_1ci"    "C1_1cii"   "C1_1di"    "C1_1dii"   "C1_1e"     "C1_1eSPaG"
+[13] "C1_2ai"    "C1_2aii"   "C1_2bi"    "C1_2bii"   "C1_2biii"  "C1_2biv"  
+[19] "C1_2bv"    "C1_2c"     "C1_2d"     "C1_3ai"    "C1_3aii"   "C1_3aiii" 
+[25] "C1_3bi"    "C1_3bii"   "C1_3ci"    "C1_3cii"   "C1_3d"     "C2_Aa"    
+[31] "C2_Ab"     "C2_Ac"     "C2_Adi"    "C2_Adii"   "C2_Aei"    "C2_Aeii"  
+[37] "C2_Aeiii"  "C2_Aeiv"   "C2_Af"     "C2_Ag"     "C2_Bai"    "C2_Baii"  
+[43] "C2_Bb"     "C2_Bc"     "C2_Bd"     "C2_Be"     "C2_Bf"     "C2_C"     
+[49] "C2_CSPaG"  "C3_1ai"    "C3_1aii"   "C3_1bi"    "C3_1bii"   "C3_1biii" 
+[55] "C3_1c"     "C3_2ai"    "C3_2aii"   "C3_2b"     "C3_2ci"    "C3_2cii"  
+[61] "C3_2ciii"  "C3_2d"     "C3_3ai"    "C3_3aii"   "C3_3aiii"  "C3_3b"    
+[67] "C3_3ci"    "C3_3cii"   "C3_3di"    "C3_3dii"   "C3_3e"     "C3_3f"    
+[73] "C3_3fSPaG"
+
+$person_properties
+[1] "sex"   "grade"
+
+$columns_ignored
+[1] "C1_total" "C2_total" "C3_total" "total"   </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print the item tables</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>tt <span class="ot">=</span> <span class="fu">tia_tables</span>(db)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tt<span class="sc">$</span>items)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 10%">
+<col style="width: 11%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">booklet_id</th>
+<th style="text-align: left;">item_id</th>
+<th style="text-align: right;">mean_score</th>
+<th style="text-align: right;">sd_score</th>
+<th style="text-align: right;">max_score</th>
+<th style="text-align: right;">pvalue</th>
+<th style="text-align: right;">rit</th>
+<th style="text-align: right;">rir</th>
+<th style="text-align: right;">n_persons</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_1ai</td>
+<td style="text-align: right;">0.9645882</td>
+<td style="text-align: right;">0.1848182</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.9645882</td>
+<td style="text-align: right;">0.2396137</td>
+<td style="text-align: right;">0.2350943</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_1aii</td>
+<td style="text-align: right;">2.7224706</td>
+<td style="text-align: right;">0.5078569</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.9074902</td>
+<td style="text-align: right;">0.3838192</td>
+<td style="text-align: right;">0.3725196</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_1bi</td>
+<td style="text-align: right;">0.9671765</td>
+<td style="text-align: right;">0.1781745</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.9671765</td>
+<td style="text-align: right;">0.1969231</td>
+<td style="text-align: right;">0.1924817</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_1bii</td>
+<td style="text-align: right;">0.7096471</td>
+<td style="text-align: right;">0.4539252</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.7096471</td>
+<td style="text-align: right;">0.3424736</td>
+<td style="text-align: right;">0.3320343</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_1biii</td>
+<td style="text-align: right;">0.9771765</td>
+<td style="text-align: right;">0.7765362</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.4885882</td>
+<td style="text-align: right;">0.4272807</td>
+<td style="text-align: right;">0.4106300</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_1biv</td>
+<td style="text-align: right;">0.5349412</td>
+<td style="text-align: right;">0.4987776</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.5349412</td>
+<td style="text-align: right;">0.4869989</td>
+<td style="text-align: right;">0.4770520</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_1ci</td>
+<td style="text-align: right;">0.9083529</td>
+<td style="text-align: right;">1.1240477</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.2270882</td>
+<td style="text-align: right;">0.4643022</td>
+<td style="text-align: right;">0.4410036</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_1cii</td>
+<td style="text-align: right;">2.4965882</td>
+<td style="text-align: right;">1.3955771</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.4160980</td>
+<td style="text-align: right;">0.6070121</td>
+<td style="text-align: right;">0.5834231</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_1di</td>
+<td style="text-align: right;">1.6309412</td>
+<td style="text-align: right;">1.0772111</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.5436471</td>
+<td style="text-align: right;">0.4406991</td>
+<td style="text-align: right;">0.4178054</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_1dii</td>
+<td style="text-align: right;">1.0869412</td>
+<td style="text-align: right;">0.8143385</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.5434706</td>
+<td style="text-align: right;">0.4904750</td>
+<td style="text-align: right;">0.4742095</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_1e</td>
+<td style="text-align: right;">3.7475294</td>
+<td style="text-align: right;">1.7345689</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0.4684412</td>
+<td style="text-align: right;">0.6932973</td>
+<td style="text-align: right;">0.6688443</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_1eSPaG</td>
+<td style="text-align: right;">2.6910588</td>
+<td style="text-align: right;">0.8045986</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.6727647</td>
+<td style="text-align: right;">0.6011150</td>
+<td style="text-align: right;">0.5875545</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_2ai</td>
+<td style="text-align: right;">2.8452941</td>
+<td style="text-align: right;">1.2757264</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.7113235</td>
+<td style="text-align: right;">0.4856812</td>
+<td style="text-align: right;">0.4598260</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_2aii</td>
+<td style="text-align: right;">3.1178824</td>
+<td style="text-align: right;">0.9208616</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.7794706</td>
+<td style="text-align: right;">0.3452339</td>
+<td style="text-align: right;">0.3239708</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_2bi</td>
+<td style="text-align: right;">0.8462353</td>
+<td style="text-align: right;">0.3607231</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.8462353</td>
+<td style="text-align: right;">0.3613399</td>
+<td style="text-align: right;">0.3531766</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_2bii</td>
+<td style="text-align: right;">1.4281176</td>
+<td style="text-align: right;">0.8409434</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.7140588</td>
+<td style="text-align: right;">0.4610899</td>
+<td style="text-align: right;">0.4436829</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_2biii</td>
+<td style="text-align: right;">2.6120000</td>
+<td style="text-align: right;">0.6185729</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.8706667</td>
+<td style="text-align: right;">0.3848712</td>
+<td style="text-align: right;">0.3710986</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_2biv</td>
+<td style="text-align: right;">1.1525882</td>
+<td style="text-align: right;">0.9470135</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.5762941</td>
+<td style="text-align: right;">0.5698544</td>
+<td style="text-align: right;">0.5529427</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_2bv</td>
+<td style="text-align: right;">0.6547059</td>
+<td style="text-align: right;">0.8529231</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.3273529</td>
+<td style="text-align: right;">0.5043758</td>
+<td style="text-align: right;">0.4876298</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_2c</td>
+<td style="text-align: right;">2.3552941</td>
+<td style="text-align: right;">2.0088338</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.3925490</td>
+<td style="text-align: right;">0.6772301</td>
+<td style="text-align: right;">0.6475279</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_2d</td>
+<td style="text-align: right;">3.3368235</td>
+<td style="text-align: right;">1.6459102</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0.4171029</td>
+<td style="text-align: right;">0.6735216</td>
+<td style="text-align: right;">0.6492022</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_3ai</td>
+<td style="text-align: right;">2.8951765</td>
+<td style="text-align: right;">1.1601015</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.7237941</td>
+<td style="text-align: right;">0.6543128</td>
+<td style="text-align: right;">0.6366157</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_3aii</td>
+<td style="text-align: right;">0.9638824</td>
+<td style="text-align: right;">0.7266290</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.4819412</td>
+<td style="text-align: right;">0.3745160</td>
+<td style="text-align: right;">0.3581671</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_3aiii</td>
+<td style="text-align: right;">1.4096471</td>
+<td style="text-align: right;">1.1883557</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.3524118</td>
+<td style="text-align: right;">0.5368229</td>
+<td style="text-align: right;">0.5143685</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_3bi</td>
+<td style="text-align: right;">0.9154118</td>
+<td style="text-align: right;">0.2782680</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.9154118</td>
+<td style="text-align: right;">0.2845624</td>
+<td style="text-align: right;">0.2779191</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_3bii</td>
+<td style="text-align: right;">1.5660000</td>
+<td style="text-align: right;">1.1772337</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.3915000</td>
+<td style="text-align: right;">0.5362137</td>
+<td style="text-align: right;">0.5139548</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_3ci</td>
+<td style="text-align: right;">2.2384706</td>
+<td style="text-align: right;">0.9634265</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.7461569</td>
+<td style="text-align: right;">0.5975646</td>
+<td style="text-align: right;">0.5811606</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_3cii</td>
+<td style="text-align: right;">2.6848235</td>
+<td style="text-align: right;">1.7159680</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.4474706</td>
+<td style="text-align: right;">0.6969009</td>
+<td style="text-align: right;">0.6729495</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C1_3d</td>
+<td style="text-align: right;">3.3554118</td>
+<td style="text-align: right;">1.6988335</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0.4194265</td>
+<td style="text-align: right;">0.6849569</td>
+<td style="text-align: right;">0.6605156</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C2_Aa</td>
+<td style="text-align: right;">2.3361176</td>
+<td style="text-align: right;">1.2668958</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0.4672235</td>
+<td style="text-align: right;">0.3955555</td>
+<td style="text-align: right;">0.3673438</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C2_Ab</td>
+<td style="text-align: right;">1.7481176</td>
+<td style="text-align: right;">1.1832020</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.4370294</td>
+<td style="text-align: right;">0.4127942</td>
+<td style="text-align: right;">0.3868928</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C2_Ac</td>
+<td style="text-align: right;">2.8294118</td>
+<td style="text-align: right;">1.1526260</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.7073529</td>
+<td style="text-align: right;">0.5570216</td>
+<td style="text-align: right;">0.5359143</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C2_Adi</td>
+<td style="text-align: right;">3.3056471</td>
+<td style="text-align: right;">1.0260105</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.8264118</td>
+<td style="text-align: right;">0.5035740</td>
+<td style="text-align: right;">0.4833407</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C2_Adii</td>
+<td style="text-align: right;">1.4189412</td>
+<td style="text-align: right;">0.9254030</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.4729804</td>
+<td style="text-align: right;">0.5135347</td>
+<td style="text-align: right;">0.4955615</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C2_Aei</td>
+<td style="text-align: right;">0.9358824</td>
+<td style="text-align: right;">0.2449624</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.9358824</td>
+<td style="text-align: right;">0.2130062</td>
+<td style="text-align: right;">0.2069378</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C2_Aeii</td>
+<td style="text-align: right;">1.9235294</td>
+<td style="text-align: right;">1.0507305</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.6411765</td>
+<td style="text-align: right;">0.6419064</td>
+<td style="text-align: right;">0.6254815</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C2_Aeiii</td>
+<td style="text-align: right;">0.7808235</td>
+<td style="text-align: right;">0.8487135</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.1952059</td>
+<td style="text-align: right;">0.4140983</td>
+<td style="text-align: right;">0.3956394</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C2_Aeiv</td>
+<td style="text-align: right;">0.5524706</td>
+<td style="text-align: right;">0.6675326</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.2762353</td>
+<td style="text-align: right;">0.2642487</td>
+<td style="text-align: right;">0.2480594</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C2_Af</td>
+<td style="text-align: right;">1.4823529</td>
+<td style="text-align: right;">0.8061786</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.4941176</td>
+<td style="text-align: right;">0.4572702</td>
+<td style="text-align: right;">0.4405208</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C2_Ag</td>
+<td style="text-align: right;">3.1738824</td>
+<td style="text-align: right;">1.5164588</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.5289804</td>
+<td style="text-align: right;">0.6590625</td>
+<td style="text-align: right;">0.6359654</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C2_Bai</td>
+<td style="text-align: right;">0.9012941</td>
+<td style="text-align: right;">0.2982667</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.9012941</td>
+<td style="text-align: right;">0.3256934</td>
+<td style="text-align: right;">0.3187623</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C2_Baii</td>
+<td style="text-align: right;">0.7674118</td>
+<td style="text-align: right;">0.5691245</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.3837059</td>
+<td style="text-align: right;">0.4942689</td>
+<td style="text-align: right;">0.4830085</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C2_Bb</td>
+<td style="text-align: right;">1.2478824</td>
+<td style="text-align: right;">1.2273698</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.3119706</td>
+<td style="text-align: right;">0.4349425</td>
+<td style="text-align: right;">0.4086358</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C2_Bc</td>
+<td style="text-align: right;">1.1125882</td>
+<td style="text-align: right;">0.7539116</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.5562941</td>
+<td style="text-align: right;">0.4018955</td>
+<td style="text-align: right;">0.3853323</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C2_Bd</td>
+<td style="text-align: right;">2.6702353</td>
+<td style="text-align: right;">1.3849897</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0.5340471</td>
+<td style="text-align: right;">0.6538597</td>
+<td style="text-align: right;">0.6325888</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C2_Be</td>
+<td style="text-align: right;">2.3045882</td>
+<td style="text-align: right;">1.4305252</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.5761471</td>
+<td style="text-align: right;">0.5872175</td>
+<td style="text-align: right;">0.5621408</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C2_Bf</td>
+<td style="text-align: right;">1.2100000</td>
+<td style="text-align: right;">0.9730576</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.4033333</td>
+<td style="text-align: right;">0.5049774</td>
+<td style="text-align: right;">0.4858433</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C2_C</td>
+<td style="text-align: right;">6.6910588</td>
+<td style="text-align: right;">3.2345328</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0.5575882</td>
+<td style="text-align: right;">0.7650456</td>
+<td style="text-align: right;">0.7267215</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C2_CSPaG</td>
+<td style="text-align: right;">2.9535294</td>
+<td style="text-align: right;">1.0619983</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.7383824</td>
+<td style="text-align: right;">0.7004400</td>
+<td style="text-align: right;">0.6860175</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C3_1ai</td>
+<td style="text-align: right;">0.4165882</td>
+<td style="text-align: right;">0.6258980</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.2082941</td>
+<td style="text-align: right;">0.4637235</td>
+<td style="text-align: right;">0.4508561</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C3_1aii</td>
+<td style="text-align: right;">1.7045882</td>
+<td style="text-align: right;">0.6138807</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.8522941</td>
+<td style="text-align: right;">0.4371866</td>
+<td style="text-align: right;">0.4241930</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C3_1bi</td>
+<td style="text-align: right;">1.5975294</td>
+<td style="text-align: right;">0.7657482</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.7987647</td>
+<td style="text-align: right;">0.5115314</td>
+<td style="text-align: right;">0.4966655</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C3_1bii</td>
+<td style="text-align: right;">0.7180000</td>
+<td style="text-align: right;">0.7393993</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.3590000</td>
+<td style="text-align: right;">0.4569226</td>
+<td style="text-align: right;">0.4415725</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C3_1biii</td>
+<td style="text-align: right;">1.3367059</td>
+<td style="text-align: right;">1.1602407</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.3341765</td>
+<td style="text-align: right;">0.5977466</td>
+<td style="text-align: right;">0.5779077</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C3_1c</td>
+<td style="text-align: right;">1.5445882</td>
+<td style="text-align: right;">1.5730862</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.2574314</td>
+<td style="text-align: right;">0.6013341</td>
+<td style="text-align: right;">0.5743530</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C3_2ai</td>
+<td style="text-align: right;">1.6440000</td>
+<td style="text-align: right;">0.5947559</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.8220000</td>
+<td style="text-align: right;">0.1637214</td>
+<td style="text-align: right;">0.1486760</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C3_2aii</td>
+<td style="text-align: right;">1.2676471</td>
+<td style="text-align: right;">0.9824401</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.3169118</td>
+<td style="text-align: right;">0.4948219</td>
+<td style="text-align: right;">0.4752443</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C3_2b</td>
+<td style="text-align: right;">1.5574118</td>
+<td style="text-align: right;">0.5918051</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.7787059</td>
+<td style="text-align: right;">0.4124031</td>
+<td style="text-align: right;">0.3995628</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C3_2ci</td>
+<td style="text-align: right;">0.7743529</td>
+<td style="text-align: right;">0.4180077</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.7743529</td>
+<td style="text-align: right;">0.3697200</td>
+<td style="text-align: right;">0.3603182</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C3_2cii</td>
+<td style="text-align: right;">0.9469412</td>
+<td style="text-align: right;">0.2241508</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.9469412</td>
+<td style="text-align: right;">0.2692779</td>
+<td style="text-align: right;">0.2638812</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C3_2ciii</td>
+<td style="text-align: right;">1.4687059</td>
+<td style="text-align: right;">0.9603110</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.3671765</td>
+<td style="text-align: right;">0.5358178</td>
+<td style="text-align: right;">0.5177311</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C3_2d</td>
+<td style="text-align: right;">1.3744706</td>
+<td style="text-align: right;">1.1479424</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.3436176</td>
+<td style="text-align: right;">0.6074480</td>
+<td style="text-align: right;">0.5881733</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C3_3ai</td>
+<td style="text-align: right;">2.4300000</td>
+<td style="text-align: right;">0.7490661</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.8100000</td>
+<td style="text-align: right;">0.4973822</td>
+<td style="text-align: right;">0.4825701</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C3_3aii</td>
+<td style="text-align: right;">1.8951765</td>
+<td style="text-align: right;">0.3699924</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.9475882</td>
+<td style="text-align: right;">0.3925286</td>
+<td style="text-align: right;">0.3843772</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C3_3aiii</td>
+<td style="text-align: right;">2.7771765</td>
+<td style="text-align: right;">1.1901543</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.6942941</td>
+<td style="text-align: right;">0.6701383</td>
+<td style="text-align: right;">0.6526214</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C3_3b</td>
+<td style="text-align: right;">0.7925882</td>
+<td style="text-align: right;">0.4054530</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.7925882</td>
+<td style="text-align: right;">0.3739518</td>
+<td style="text-align: right;">0.3648667</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C3_3ci</td>
+<td style="text-align: right;">1.3935294</td>
+<td style="text-align: right;">0.8716883</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.6967647</td>
+<td style="text-align: right;">0.4198492</td>
+<td style="text-align: right;">0.4009898</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C3_3cii</td>
+<td style="text-align: right;">1.8124706</td>
+<td style="text-align: right;">0.4995384</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.9062353</td>
+<td style="text-align: right;">0.4212064</td>
+<td style="text-align: right;">0.4104776</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C3_3di</td>
+<td style="text-align: right;">0.2645882</td>
+<td style="text-align: right;">0.4411137</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.2645882</td>
+<td style="text-align: right;">0.2292380</td>
+<td style="text-align: right;">0.2183723</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C3_3dii</td>
+<td style="text-align: right;">2.2902353</td>
+<td style="text-align: right;">1.5819939</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.3817059</td>
+<td style="text-align: right;">0.6177664</td>
+<td style="text-align: right;">0.5914507</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C3_3e</td>
+<td style="text-align: right;">0.9495294</td>
+<td style="text-align: right;">0.8132251</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.3165098</td>
+<td style="text-align: right;">0.4424982</td>
+<td style="text-align: right;">0.4253245</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C3_3f</td>
+<td style="text-align: right;">5.5481176</td>
+<td style="text-align: right;">2.6424436</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0.4623431</td>
+<td style="text-align: right;">0.7517553</td>
+<td style="text-align: right;">0.7195678</td>
+<td style="text-align: right;">8500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geography</td>
+<td style="text-align: left;">C3_3fSPaG</td>
+<td style="text-align: right;">2.8781176</td>
+<td style="text-align: right;">1.0467726</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.7195294</td>
+<td style="text-align: right;">0.6351385</td>
+<td style="text-align: right;">0.6185413</td>
+<td style="text-align: right;">8500</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<section id="expected-score-curves" class="level2">
+<h2 class="anchored" data-anchor-id="expected-score-curves">Expected Score Curves</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print the ICCs</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">fit_inter</span>(db)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>n_items <span class="ot">&lt;-</span> <span class="fu">nrow</span>(data_summary)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_items){</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot</span>(m, data_summary<span class="sc">$</span>Variable[i], <span class="at">show.observed=</span><span class="cn">TRUE</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-4.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-5.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-6.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-7.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-8.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-9.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-10.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-11.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-12.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-13.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-14.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-15.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-16.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-17.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-18.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-19.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-20.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-21.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-22.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-23.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-24.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-25.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-26.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-27.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-28.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-29.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-30.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-31.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-32.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-33.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-34.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-35.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-36.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-37.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-38.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-39.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-40.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-41.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-42.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-43.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-44.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-45.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-46.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-47.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-48.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-49.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-50.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-51.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-52.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-53.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-54.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-55.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-56.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-57.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-58.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-59.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-60.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-61.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-62.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-63.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-64.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-65.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-66.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-67.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-68.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-69.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-70.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-71.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-72.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-5-73.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="item-difficulty" class="level2">
+<h2 class="anchored" data-anchor-id="item-difficulty">Item Difficulty</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print the ICCs</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">fit_inter</span>(db)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>n_items <span class="ot">&lt;-</span> <span class="fu">nrow</span>(data_summary)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_items){</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot</span>(m, data_summary<span class="sc">$</span>Variable[i], <span class="at">summate=</span><span class="cn">FALSE</span>, <span class="at">show.observed=</span><span class="cn">FALSE</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-4.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-5.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-6.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-7.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-8.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-9.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-10.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-11.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-12.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-13.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-14.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-15.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-16.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-17.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-18.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-19.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-20.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-21.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-22.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-23.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-24.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-25.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-26.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-27.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-28.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-29.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-30.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-31.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-32.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-33.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-34.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-35.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-36.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-37.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-38.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-39.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-40.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-41.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-42.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-43.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-44.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-45.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-46.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-47.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-48.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-49.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-50.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-51.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-52.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-53.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-54.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-55.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-56.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-57.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-58.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-59.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-60.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-61.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-62.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-63.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-64.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-65.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-66.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-67.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-68.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-69.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-70.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-71.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-72.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="pc-1_files/figure-html/unnamed-chunk-6-73.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(m, "C3_1ai", summate=FALSE, show.observed=FALSE)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(m, "C3_1ai", summate=TRUE, show.observed=TRUE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">close_project</span>(db)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
