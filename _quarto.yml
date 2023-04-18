@@ -31,6 +31,9 @@ book:
         - rasch-ability-difficulty.qmd
         - rasch-infit.qmd
         - rasch-dif.qmd
+    - part: "The Partial Credit Model"
+      chapters:
+        - pc-1.qmd
       
 bibliography: references.bib
 
