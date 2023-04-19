@@ -1,105 +1,60 @@
-# Fitting the Partial Credit Model
+# What is the Partial Credit Model?
 
-```{r}
-#| include: true
-#| echo: true
-#| output: false
-#| warning: false
-rm(list=ls())
-library(tidyverse)
-library(dexter)
-# load in the dataset
-responses <- read_csv('data/pc-data.csv')
-# recode NA as 0 across all columns
-responses <- responses %>% 
-  mutate_if(is.numeric, ~replace_na(., 0))
-# load the data summary
-data_summary <- read_csv('data/pc-data-summary.csv')
-```
+When test items are scored with partial credit scores such as 0, 1 or 2, and not just as correct or incorrect, the model is called the partial credit model (PCM) @eq-pc1 
 
-```{r}
-#| include: true
-#| echo: true
-#| output: false
-#| warning: false
-# Create the rules from the summary
-# create an empty tibble with three columns item_id, response, and item_score
-rules <- tibble(item_id = character(), response = character(), item_score = numeric())
+$$
+Prob(X=0) = \frac{1}{1+\exp(\theta - \delta_1) + \exp(2\theta - \delta_1 - \delta_2)}
+$$  {#eq-pc1}
+$$
+Prob(X=1) = \frac{\exp(\theta - \delta_1)}{1+\exp(\theta - \delta_1) + \exp(2\theta - \delta_1 - \delta_2)}
+$$  {#eq-pc2}
+$$
+Prob(X=2) = \frac{\exp(2\theta - \delta_1 - \delta_2)}{1+\exp(\theta - \delta_1) + \exp(2\theta - \delta_1 - \delta_2)}
+$$ {#eq-pc3}
 
-# for each row in the data summary create a rule
-for (i in 1:nrow(data_summary)) {
-  # get the item id
-  item_id <- data_summary$Variable[i]
-  # get the maximum mark
-  max_mark <- data_summary$`Maximum possible mark`[i]
-  # for every mark from 0 to max_mark create a rule
-    for (mark in 0:max_mark) {
-        # create a rule for the mark
-        rule <- tibble(item_id = item_id, response = as.character(mark), item_score = mark)
-        # add the rule to the rules tibble
-        rules <- bind_rows(rules, rule)
-    }
-}
-```
+where θ is the ability parameter, and δ~1~ and δ~2~ are two item difficulty parameters for this item. Note that the denominator is just the sum of the numerators, so the probabilities add up to one.
 
-```{r}
-#| include: true
-#| echo: true
-#| output: true
-#| warning: false
-# create a new project
-db <- start_new_project(rules, db_name = ":memory:", person_properties=list(sex="unknown",grade="unknown"))
-# add the response data
-add_booklet(db, responses, "geography")
-```
+## Interpretations of the PCM Andrich item thresholds
+In the dichotomous case, the item difficulty parameter, δ, is the ability measure at which students have 50% chance of obtaining the correct answer for the item. That is, the item difficulty is the ability measure at which the chance of obtaining a 0 or 1 is the same. In the partial credit model, the δ values are the ability measures at which persons have an equal chance of being in two adjacent scoring categories. With three score categories, we need two thresholds, δ~1~ and δ~2~. Let's set δ~1~ = -0.5 and δ~2~ = 1.7. So -0.5 (δ~1~) is the ability at which a person has an equal chance of being in category 0 or category 1. Similarly, 1.7 (δ~2~) is the ability at which a person has an equal chance of being in category 1 or category 2.
 
-```{r}
-#| include: true
-#| echo: true
-#| output: true
-#| warning: false
-# print the item tables
-tt = tia_tables(db)
-knitr::kable(tt$items)
-```
+## Let's calculate some probabilities
 
-## Expected Score Curves
+Using our two category parameters, δ~1~ and δ~2~ at -0.5 and 1.7 we can calculate the probabilities of a person of ability 0, scoring 0 as follows:
 
-```{r}
-#| include: true
-#| echo: true
-#| output: true
-#| warning: false
-m = fit_inter(db)
-n_items <- nrow(data_summary)
-for(i in 1:n_items){
-    plot(m, data_summary$Variable[i], show.observed=TRUE)
-}
+$$
+Prob(X=0) = \frac{1}{1+\exp(0 +0.5) + \exp(0 +0.5 -1.7)}
+$$  {#eq-pc4}
 
-```
+$$
+Prob(X=0) = \frac{1}{1+1.648721 + 3.320117}
+$$  {#eq-pc5}
 
-## Item Difficulty
+$$
+Prob(X=0) = \frac{1}{0.1675368}
+$$  {#eq-pc6}
 
-```{r}
-#| include: true
-#| echo: true
-#| output: true
-#| warning: false
-m = fit_inter(db)
-n_items <- nrow(data_summary)
-for(i in 1:n_items){
-    plot(m, data_summary$Variable[i], summate=FALSE, show.observed=FALSE)
-}
+$$
+Prob(X=0) = 0.3389928
+$$  {#eq-pc6}
 
-# plot(m, "C3_1ai", summate=FALSE, show.observed=FALSE)
-# plot(m, "C3_1ai", summate=TRUE, show.observed=TRUE)
-```
+**Now calculate the probabilities for the other two score categories.**
 
-### Take a look at the SPAG items. How well are they working?
-```{r}
-#| include: true
-#| echo: true
-#| output: true
-#| warning: false
-close_project(db)
-```
+## Visualising the Item Characteristic Curves of our PCM item
+
+![PCM ICCs with ordered deltas](images/PCM1-1.png){#fig-PCM1}
+
+![PCM ICCs with disordered deltas](images/PCM2-1.png){#fig-PCM2}
+
+@fig-PCM1 and @fig-PCM2 show the item characteristic curves for two PCM items, plotted according to @eq-pc1, @eq-pc2 and @eq-pc3.
+
+It can be seen in both figures that δ~1~ is the intersection point of p~0~ and p~1~, showing the ability at which the two probabilities are equal. Similarly, δ~2~ is the intersection point of p~1~ and p~2~, where the probability of obtaining a score of 1 is the same as the probability of obtaining a score of 2. However, in @fig-PCM1 ,δ~1~ is smaller than δ~2~, whereas in Figure @fig-PCM2, δ~1~ is greater than δ~2~ . This common phenomenon is known as disordered thresholds. Disordered thresholds occur when a middle score category (score of 1 in this case) has few students as reflected in the low p~1~ curve. Disordered thresholds do not indicate that the item is problematic, it just means that students are most likely to obtain 0 or 2, and few students would obtain a score of 1.
+
+It is important to note that the thresholds do not represent the difficulty of an item, simply the crossover points between categories. It is misleading to compare thresholds between items when analysing the relative difficulty of items.
+
+## Extension task
+From the equations, see if you can create the curves in @fig-PCM1 and @fig-PCM2.
+
+## Further Reading
+<http://www.edmeasurementsurveys.com/IRT/partial-credit-models---part-i.html>
+
+<https://www.winsteps.com/winman/disorder.htm>

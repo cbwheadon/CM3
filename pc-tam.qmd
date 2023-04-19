@@ -1,0 +1,41 @@
+# Fitting the Partial Credit Model with TAM
+## CM1
+```{r}
+#| include: true
+#| echo: true
+#| output: false
+#| warning: false
+rm(list=ls())
+library(TAM)
+library(WrightMap)
+library(tidyverse)
+
+# load in the dataset
+responses <- read_csv('data/pc-data.csv')
+# drop the first six columns
+resp <- responses %>% 
+  select(-c(1:6))
+# choose the columns that start with C1_
+resp_c1 <- resp %>% 
+  select(starts_with('C1_'))
+
+mod1 <- tam.jml(resp_c1)
+
+thres <- tam.threshold(mod1) # find Thurstonian thresholds
+
+wrightMap(mod1$WLE, thres, item.side = itemClassic)
+wrightMap(mod1$WLE, thres)  # try different display options
+
+plot(mod1)  #Expected score curves
+plot(mod1,type="items")  #ICCs
+
+knitr::kable(mod1$item1)  #show item parameters (deltas)
+```
+
+## Things to consider
+Are there items with disordered thresholds? Why might this be?
+Are there any misfitting items? Why might this be?
+How well targeted is the test?
+
+## Extension exercises
+Try CM2 and CM3

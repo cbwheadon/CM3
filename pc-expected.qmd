@@ -1,0 +1,52 @@
+# Expected Score Curves
+
+Another way to think of item difficulty for each score point of a PCM item is to calculate the expected score as a function of ability, and then find the ability at which the expected score is 0, 1, 2, etc.
+
+![Thurstonian thresholds](images/PCM7-1.png){#fig-PCM7-1}
+
+Between the ability range of -0.73 and 1.93, the expected score is between 0.5 and 1.5. We may call this ability range of the score 1 region. Below -0.73, the expected score is closer to 0 than closer to 1, so this region is the score 0 region. Above an ability of 1.93, the expected score is closer to 2 than closer to 1, so this may be the score 2 region. In this way, -0.73 and 1.93 may be regarded as item difficulty measures for a PCM item.
+
+**How do we derive the expected score of 0.5 for a person with ability -0.73?**
+
+We calculate the probability of their scores in each category, multiply by the category score, and then sum them. So, theta = -0.73, δ~1~ = -0.5 and δ~2~ = 1.7.
+
+$$
+Prob(X=1) = \frac{\exp(\theta - \delta_1)}{1+\exp(\theta - \delta_1) + \exp(2\theta - \delta_1 - \delta_2)}
+$$  {#eq-pc4}
+
+$$
+Prob(X=1) = \frac{\exp(-0.73 - -0.5)}{1+\exp(-0.73 - -0.5) + \exp(2* -0.73 - -0.5 - 1.7)}
+$$  {#eq-pc5}
+
+$$
+Prob(X=1) = \frac{0.7945336}{1+0.7945336 + 0.06994822}
+$$  {#eq-pc6}
+
+$$
+Prob(X=1) = 0.4261418
+$$  {#eq-pc7}
+
+$$
+Prob(X=2) = \frac{\exp(2\theta - \delta_1 - \delta_2)}{1+\exp(\theta - \delta_1) + \exp(2\theta - \delta_1 - \delta_2)}
+$$ {#eq-pc8}
+
+$$
+Prob(X=2) = \frac{\exp(2*-0.73 - -0.5 - 1.7)}{1+\exp(-0.73 - -0.5) + \exp(2*-0.73 * - -0.5 - 1.7)}
+$$ {#eq-pc9}
+
+$$
+Prob(X=2) = \frac{0.06994822}{1+0.7945336 + 0.08803683}
+$$ {#eq-pc10}
+
+$$
+Prob(X=2) = 0.0371557
+$$ {#eq-pc11}
+
+We can then add the probabilities to derive the expected score:
+
+$$
+E (-0.7)) = 0.4261418 + (2 * 0.0371557) = 0.5
+$$ {#eq-pc12}
+
+## Extension activity
+Now do the same for E = 1.93

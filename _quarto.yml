@@ -34,6 +34,9 @@ book:
     - part: "The Partial Credit Model"
       chapters:
         - pc-1.qmd
+        - pc-thurstone.qmd
+        - pc-expected.qmd
+        - pc-2.qmd
       
 bibliography: references.bib
 

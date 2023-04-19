@@ -1,0 +1,10 @@
+# Thurstonian Thresholds
+
+Given the difficulty of interpreting the Andrich thresholds in terms of difficulty, Thurstonian thresholds allow us to to perceive category success in terms of item step difficulties. Thurstonian thresholds are defined as the ability at which students have 50% chance of obtaining a score **or higher scores**. For example, for an item with 0, 1 and 2 scores, the first Thurstonian threshold is the ability at which the students have 50% chance of getting a 1 or 2. 
+
+![Thurstonian thresholds](images/PCM4-1.png){#fig-PCM4-1}
+
+In @fig-PCM4-1, γ~1~ (= -0.6) is the ability at which students have 50% chance of obtaining a score of 1 or 2 (or, at least 1), while  γ~2~  (= 1.8) is the ability at which students have 50% chance of obtaining a score of 2 (or, at least 2, but 2 is the maximum score in this example). Comparing the deltas with the gammas, where δ~1~ = -0.5,  δ~2~ = 1.7, and γ~1~ = -0.6, γ~2~ = 1.8, the differences between deltas and gammas are not very large.
+
+## Extension activity
+Reproduce @fig-PCM4-1 from the Partial Credit Model equations. Try differing values of the thresholds and see how the curves change.
