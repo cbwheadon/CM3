@@ -1,0 +1,67 @@
+# Comparative Judgement and the Bradley Terry Model
+
+Comparative Judgement is a popular assessment technique, but the statistical model that allows its efficient deployment was developed as part of research into sport. A classic problem in sport is how to rank players or teams when they do not all play each other the same number of times. This problem is typical of sports with knockout structures such as chess, basketball and tennis. A model-based approach to address this problem is the following: Let βi ∈ R represent the “strength” of team i, and let the outcome of a game between teams (i, j) be determined by βi − βj. The Bradley-Terry model treats this outcome as an independent Bernoulli random variable with distribution Bernoulli(p~i~j), where the log-odds corresponding to the probability p~i~j that team i beats team j is modeled as:
+
+$$
+Prob(i > j) = \frac{e^{\beta i}}{e^{\beta i} + e^{\beta j}}
+$$
+
+In the ATP tour, tennis players play a series of knock-out tournaments around the world. We can consider the problem of how to decide the player rankings using the Bradley-Terry model. 
+
+```{r}
+rm(list=ls())
+library(tidyverse)
+library(sirt)
+matches_2022 <- read_csv('https://raw.githubusercontent.com/JeffSackmann/tennis_atp/master/atp_matches_2022.csv')
+matches_2021 <- read_csv('https://raw.githubusercontent.com/JeffSackmann/tennis_atp/master/atp_matches_2021.csv')
+matches_2020 <- read_csv('https://raw.githubusercontent.com/JeffSackmann/tennis_atp/master/atp_matches_2020.csv')
+matches_2019 <- read_csv('https://raw.githubusercontent.com/JeffSackmann/tennis_atp/master/atp_matches_2019.csv')
+matches_2018 <- read_csv('https://raw.githubusercontent.com/JeffSackmann/tennis_atp/master/atp_matches_2018.csv')
+matches_2017 <- read_csv('https://raw.githubusercontent.com/JeffSackmann/tennis_atp/master/atp_matches_2017.csv')
+matches_2016 <- read_csv('https://raw.githubusercontent.com/JeffSackmann/tennis_atp/master/atp_matches_2016.csv')
+matches_2015 <- read_csv('https://raw.githubusercontent.com/JeffSackmann/tennis_atp/master/atp_matches_2015.csv')
+matches_2014 <- read_csv('https://raw.githubusercontent.com/JeffSackmann/tennis_atp/master/atp_matches_2014.csv')
+matches_2013 <- read_csv('https://raw.githubusercontent.com/JeffSackmann/tennis_atp/master/atp_matches_2013.csv')
+
+# combine all the matches into a single matches file
+matches <- bind_rows(matches_2022,matches_2021,matches_2020,matches_2019,matches_2018,matches_2017,matches_2016,matches_2015,matches_2014,matches_2013)
+matches <- matches_2022
+# matches <- read_csv('https://raw.githubusercontent.com/JeffSackmann/tennis_wta/master/wta_matches_2022.csv')
+
+# matches %>% group_by(tourney_level) %>% tally() %>% arrange(desc(n))
+# matches %>% group_by(round) %>% tally()
+# only slams
+
+# only Australian Open
+# matches %>% group_by(tourney_name) %>% tally() %>% arrange(desc(n))
+# matches <- matches %>% filter(tourney_name %in% c('Australian Open'))
+# only the last 4 rounds
+matches <- matches %>% filter(round %in% c('F','SF','QF','R16','R32','R64'))
+matches <- matches %>% filter(tourney_level %in% c('G','A'))
+
+# retain the columns winner_name loser_name and add a column result, which is always 1
+matches <- matches %>% select(winner_name, loser_name) %>% mutate(result=as.numeric(1.0))
+
+# filter down to the 20 players with the most wins
+# top_players <- matches %>% group_by(winner_name) %>% tally() %>% arrange(desc(n)) %>% filter(row_number()<21) %>% pull(winner_name)
+# rename all players not in top_players as 'Other'
+# matches <- matches %>% mutate(winner_name = ifelse(winner_name %in% top_players, winner_name, 'Other'),loser_name = ifelse(loser_name %in% top_players, loser_name, 'Other')) 
+# ignore any matches where both winner_name is Other and loser_name is Other
+# matches <- matches %>% filter(!(winner_name == 'Other' & loser_name == 'Other'))
+# remove any matches where winner_name is not in top_players
+# matches <- matches %>% filter(winner_name %in% top_players & loser_name %in% top_players)
+
+print(nrow(matches))
+library(bpcs)
+
+m1 <- bpc(data = matches,
+          player0 = 'winner_name',
+          player1 = 'loser_name',
+          result_column = 'result',
+          model_type = 'bt',
+          solve_ties = 'none', #there are no ties
+          show_chain_messages = T)
+
+
+```
+

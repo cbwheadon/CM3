@@ -1,0 +1,102 @@
+# Comparative Judgement Practical
+
+Create a new Comparative Judgement task on www.nomoremarking.com and upload 9 pdfs with the numbers 1 to 8. Judge the numbers 80 times and download the decisions file.
+
+## Fitting the Bradley-Terry Model
+
+```{r}
+#| label: setup
+#| include: true
+rm(list=ls())
+library(tidyverse)
+library(ggplot2)
+library(sirt)
+require(nmmBtm)
+decisions <- read_csv('data/decisions-1.csv')
+persons <- read_csv('data/persons-1.csv')
+glimpse(decisions)
+glimpse(persons)
+```
+
+```{r}
+
+# get the person ids and their first names
+persons <- persons %>% 
+  select(Code, `First Name`) %>% 
+  rename(id = Code, name = `First Name`)
+
+# go through the decisions and add a column with the name of the person who was chosen or not chosen in each case
+decisions <- decisions %>% left_join(persons, by = c('chosen' = 'id')) %>% 
+  rename(chosenName = name) %>% 
+  left_join(persons, by = c('notChosen' = 'id')) %>% 
+  rename(notChosenName = name)
+
+# mutate chosenName and notChosenName to be factors
+decisions <- decisions %>% 
+  mutate(chosenName = factor(chosenName), notChosenName = factor(notChosenName))
+
+# create a name for each judge
+decisions <- decisions %>% mutate(
+    judge = paste0('judge_', judgeName)
+)
+
+# get a vector of judges
+judges <- decisions %>% pull(judge)
+
+# format for the btm model
+decisions <- decisions %>% 
+  select(chosenName, notChosenName) %>% 
+  mutate(result = 1)
+
+# the package doesn't like tibbles?
+decisions <- as.data.frame(decisions)
+mod1 <- btm(decisions, judge=judges, fix.eta = 0, ignore.ties = TRUE, eps = 0.3)
+
+```
+
+
+## Explore the model results
+See <https://alexanderrobitzsch.github.io/sirt/reference/btm.html>
+
+### Reliability
+### Person parameters
+
+```{r}
+#| label: reliability
+#| include: true
+# The mle reliability, also known as separation reliability
+print(mod1$mle.rel)
+# The person parameters
+knitr::kable(mod1$effects)
+# The judge fit
+# Fit statistics (outfit and infit) for judges if judge is provided. In addition, average agreement of the rating with the mode of the ratings is calculated for each judge (at least three ratings per dyad has to be available for computing the agreement)
+knitr::kable(mod1$fit_judges)
+```
+
+## Visualise the person parameters (model effects) along with the standard error
+```{r}
+#| label: person-parameters
+# plot the model effects with the standard errors
+# add a column to the person parameters with the upper and lower limits using 1.96 * standard error
+effects <- mod1$effects %>% 
+  mutate(
+    lower = theta - 1.96 * se.theta,
+    upper = theta + 1.96 * se.theta
+  )
+
+p <- ggplot(effects, aes(x = individual, y = theta)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.2) +
+  theme_bw() +
+  labs(x = 'Person parameter', y = 'Person')
+print(p)
+```
+
+## Inspect the model probabilities
+## What is p1? p0? pD?
+```{r}
+mod1$probs
+```
+
+## Extension exercise
+Can you recreate the model probabilities?

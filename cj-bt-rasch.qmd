@@ -1,0 +1,53 @@
+# Comparative Judgement and the Bradley Terry Model
+
+```{r}
+#| label: setup
+#| include: false
+rm(list=ls())
+library(tidyverse)
+library(ggplot2)
+```
+
+Comparative Judgement is a popular assessment technique, but the statistical model that allows its efficient deployment was developed as part of research into sport. A classic problem in sport is how to rank players or teams when they do not all play each other the same number of times. This problem is typical of sports with knockout structures such as chess, basketball and tennis. A model-based approach to address this problem is the following: Let βi ∈ R represent the “strength” of team i, and let the outcome of a game between teams (i, j) be determined by βi − βj. The Bradley-Terry model treats this outcome as an independent Bernoulli random variable with distribution Bernoulli(p~i~j), where the log-odds corresponding to the probability p~i~j that team i beats team j is modeled as:
+
+$$
+Prob(i > j) = \frac{e^{\beta i}}{e^{\beta i} + e^{\beta j}}
+$$
+
+The Bradley-Terry model can be written as a Rasch measurement model Rasch RMT 9:2, 424 <https://www.rasch.org/rmt/rmt92d.htm>
+
+$$
+log e \frac{P (n > m)}{P (n<m)} = B_n - B_m
+$$
+
+where P~n~>m is the probability that *n* is preferred to *m*. B~n~ and B~m~ are the desirability of *n* and *m*.
+
+If we have two scripts, A and B, with the strength of A being 0 and the strength of B being 0, what is the probability that A will beat B?
+
+```{r}
+p <- function(beta_a, beta_b) {
+  exp(beta_a) / (exp(beta_a) + exp(beta_b))
+}
+print(p(0, 0))
+
+```
+
+## Try some different values for beta_a and beta_b
+
+```{r}
+# Plot a curve showing the probability of A beating B as beta_a increases
+# and beta_b decreases
+# start with a tibble with a range of values for beta_a and beta_b and the probability of success
+# then plot the curve
+
+beta_values <- tibble(beta_a = seq(-5, 5, 0.1), beta_b = seq(5, -5, -0.1))
+beta_values <- beta_values %>% mutate(prob = p(beta_a, beta_b))
+
+p <- ggplot(beta_values, aes(x = beta_a, y = prob)) +
+  geom_line() +
+  geom_vline(xintercept = 0, linetype = "dashed") +
+  geom_hline(yintercept = 0.5, linetype = "dashed") +
+  labs(x = "Beta A", y = "Probability of A beating B", title = "Probability of A beating B as Beta A increases and Beta B decreases")
+print(p)
+
+```
