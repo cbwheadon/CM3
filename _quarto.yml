@@ -41,6 +41,7 @@ book:
       chapters:
         - cj-bt-rasch.qmd
         - cj-practical.qmd
+        - cj-equating.qmd
       
 bibliography: references.bib
 

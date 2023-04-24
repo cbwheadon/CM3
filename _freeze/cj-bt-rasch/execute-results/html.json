@@ -1,0 +1,16 @@
+{
+  "hash": "4e720bd321ab350192392905270d2cd9",
+  "result": {
+    "markdown": "# Comparative Judgement and the Bradley Terry Model\n\n\n::: {.cell}\n\n```{.r .cell-code}\nrm(list=ls())\nlibrary(tidyverse)\nlibrary(ggplot2)\n```\n:::\n\n\nComparative Judgement is a popular assessment technique, but the statistical model that allows its efficient deployment was developed as part of research into sport. A classic problem in sport is how to rank players or teams when they do not all play each other the same number of times. This problem is typical of sports with knockout structures such as chess, basketball and tennis. A model-based approach to address this problem is the following: Let βi ∈ R represent the “strength” of team i, and let the outcome of a game between teams (i, j) be determined by βi − βj. The Bradley-Terry model treats this outcome as an independent Bernoulli random variable with distribution Bernoulli(p~i~j), where the log-odds corresponding to the probability p~i~j that team i beats team j is modeled as:\n\n$$\nProb(i > j) = \\frac{e^{\\beta i}}{e^{\\beta i} + e^{\\beta j}}\n$$\n\nThe Bradley-Terry model can be written as a Rasch measurement model Rasch RMT 9:2, 424 <https://www.rasch.org/rmt/rmt92d.htm>\n\n$$\nlog e \\frac{P (n > m)}{P (n<m)} = B_n - B_m\n$$\n\nwhere P~n~>m is the probability that *n* is preferred to *m*. B~n~ and B~m~ are the desirability of *n* and *m*.\n\nIf we have two scripts, A and B, with the strength of A being 0 and the strength of B being 0, what is the probability that A will beat B?\n\n\n::: {.cell}\n\n```{.r .cell-code}\np <- function(beta_a, beta_b) {\n  exp(beta_a) / (exp(beta_a) + exp(beta_b))\n}\nprint(p(0, 0))\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[1] 0.5\n```\n:::\n:::\n\n\n## Try some different values for beta_a and beta_b\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# Plot a curve showing the probability of A beating B as beta_a increases\n# and beta_b decreases\n# start with a tibble with a range of values for beta_a and beta_b and the probability of success\n# then plot the curve\n\nbeta_values <- tibble(beta_a = seq(-5, 5, 0.1), beta_b = seq(5, -5, -0.1))\nbeta_values <- beta_values %>% mutate(prob = p(beta_a, beta_b))\n\np <- ggplot(beta_values, aes(x = beta_a, y = prob)) +\n  geom_line() +\n  geom_vline(xintercept = 0, linetype = \"dashed\") +\n  geom_hline(yintercept = 0.5, linetype = \"dashed\") +\n  labs(x = \"Beta A\", y = \"Probability of A beating B\", title = \"Probability of A beating B as Beta A increases and Beta B decreases\")\nprint(p)\n```\n\n::: {.cell-output-display}\n![](cj-bt-rasch_files/figure-html/unnamed-chunk-3-1.png){width=672}\n:::\n:::\n",
+    "supporting": [
+      "cj-bt-rasch_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
