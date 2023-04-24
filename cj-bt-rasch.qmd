@@ -2,7 +2,9 @@
 
 ```{r}
 #| label: setup
-#| include: false
+#| include: true
+#| echo: true
+#| output: false
 rm(list=ls())
 library(tidyverse)
 library(ggplot2)

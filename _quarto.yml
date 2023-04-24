@@ -37,6 +37,10 @@ book:
         - pc-thurstone.qmd
         - pc-expected.qmd
         - pc-2.qmd
+    - part: "Comparative Judgement"
+      chapters:
+        - cj-bt-rasch.qmd
+        - cj-practical.qmd
       
 bibliography: references.bib
 

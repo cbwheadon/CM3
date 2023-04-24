@@ -110,150 +110,52 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="comparative-judgement-practical" class="level1">
 <h1>Comparative Judgement Practical</h1>
-<p>Create a new Comparative Judgement task on www.nomoremarking.com and upload 9 pdfs with the numbers 1 to 8. Judge the numbers 80 times and download the decisions file.</p>
+<p>Create a new Comparative Judgement task on <a href="www.nomoremarking.com">www.nomoremarking.com</a> and upload 8 pdfs with the numbers 1 to 8. Judge the numbers 80 times and download the decisions file.</p>
 <section id="fitting-the-bradley-terry-model" class="level2">
 <h2 class="anchored" data-anchor-id="fitting-the-bradley-terry-model">Fitting the Bradley-Terry Model</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>())</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.1     ✔ readr     2.1.4
-✔ forcats   1.0.0     ✔ stringr   1.5.0
-✔ ggplot2   3.4.2     ✔ tibble    3.2.1
-✔ lubridate 1.9.2     ✔ tidyr     1.3.0
-✔ purrr     1.0.1     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sirt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>- sirt 3.12-66 (2022-05-16 12:27:54)</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(nmmBtm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: nmmBtm</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>decisions <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'data/decisions-1.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 83 Columns: 5
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (3): chosen, notChosen, createdAt
-dbl (2): judgeName, timeTaken
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>persons <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'data/persons-1.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 8 Columns: 15
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (12): Candidate, Code, DOB, Gender, Group, Pupil Premium, YG / Grade, An...
-dbl  (2): First Name, Pages
-lgl  (1): Last Name
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(decisions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 83
-Columns: 5
-$ judgeName &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, …
-$ timeTaken &lt;dbl&gt; 6777, 1304, 1065, 1320, 879, 752, 989, 1057, 29724, 3734, 25…
-$ chosen    &lt;chr&gt; "UY5CXG", "WWDA2R", "3E7MMG", "WWDA2R", "GX2ECA", "3E7MMG", …
-$ notChosen &lt;chr&gt; "29YWN2", "XZGJB5", "RENHGT", "RENHGT", "XZGJB5", "XZGJB5", …
-$ createdAt &lt;chr&gt; "03/03/2023 10:24", "03/03/2023 10:24", "03/03/2023 10:24", …</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(persons)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 8
-Columns: 15
-$ Candidate           &lt;chr&gt; "*", "*", "*", "*", "*", "*", "*", "*"
-$ Code                &lt;chr&gt; "UY5CXG", "XZGJB5", "GX2ECA", "RENHGT", "3E7MMG", …
-$ `First Name`        &lt;dbl&gt; 8, 1, 2, 3, 4, 5, 6, 7
-$ `Last Name`         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA
-$ DOB                 &lt;chr&gt; "*", "*", "*", "*", "*", "*", "*", "*"
-$ Gender              &lt;chr&gt; "*", "*", "*", "*", "*", "*", "*", "*"
-$ Group               &lt;chr&gt; "*", "*", "*", "*", "*", "*", "*", "*"
-$ `Pupil Premium`     &lt;chr&gt; "N", "N", "N", "N", "N", "N", "N", "N"
-$ `YG / Grade`        &lt;chr&gt; "*", "*", "*", "*", "*", "*", "*", "*"
-$ Anchor              &lt;chr&gt; "N", "N", "N", "N", "N", "N", "N", "N"
-$ `Anchor Score`      &lt;chr&gt; "*", "*", "*", "*", "*", "*", "*", "*"
-$ Pages               &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1
-$ `Cosine Similarity` &lt;chr&gt; "*", "*", "*", "*", "*", "*", "*", "*"
-$ `Cosine Pair`       &lt;chr&gt; "*", "*", "*", "*", "*", "*", "*", "*"
-$ `Word Count`        &lt;chr&gt; "*", "*", "*", "*", "*", "*", "*", "*"</code></pre>
-</div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sirt)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(nmmBtm)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>decisions <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'data/decisions-1.csv'</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>persons <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'data/persons-1.csv'</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(decisions)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(persons)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get the person ids and their first names</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>persons <span class="ot">&lt;-</span> persons <span class="sc">%&gt;%</span> </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Code, <span class="st">`</span><span class="at">First Name</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">id =</span> Code, <span class="at">name =</span> <span class="st">`</span><span class="at">First Name</span><span class="st">`</span>)</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&nbsp;go through the decisions and add a column with the name of the person who was chosen or not chosen in each case</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>decisions <span class="ot">&lt;-</span> decisions <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(persons, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'chosen'</span> <span class="ot">=</span> <span class="st">'id'</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">chosenName =</span> name) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(persons, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'notChosen'</span> <span class="ot">=</span> <span class="st">'id'</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">notChosenName =</span> name)</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co"># mutate chosenName and notChosenName to be factors</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>decisions <span class="ot">&lt;-</span> decisions <span class="sc">%&gt;%</span> </span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">chosenName =</span> <span class="fu">factor</span>(chosenName), <span class="at">notChosenName =</span> <span class="fu">factor</span>(notChosenName))</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="co"># create a name for each judge</span></span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>decisions <span class="ot">&lt;-</span> decisions <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">judge =</span> <span class="fu">paste0</span>(<span class="st">'judge_'</span>, judgeName)</span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="co"># get a vector of judges</span></span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>judges <span class="ot">&lt;-</span> decisions <span class="sc">%&gt;%</span> <span class="fu">pull</span>(judge)</span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="co"># format for the btm model</span></span>
-<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>decisions <span class="ot">&lt;-</span> decisions <span class="sc">%&gt;%</span> </span>
-<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(chosenName, notChosenName) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">result =</span> <span class="dv">1</span>)</span>
-<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a><span class="co"># the package doesn't like tibbles?</span></span>
-<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>decisions <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(decisions)</span>
-<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">btm</span>(decisions, <span class="at">judge=</span>judges, <span class="at">fix.eta =</span> <span class="dv">0</span>, <span class="at">ignore.ties =</span> <span class="cn">TRUE</span>, <span class="at">eps =</span> <span class="fl">0.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>**** Iteration 1 | Maximum parameter change=0.9893959
-**** Iteration 2 | Maximum parameter change=0.8959736
-**** Iteration 3 | Maximum parameter change=0.6694654
-**** Iteration 4 | Maximum parameter change=0.486868
-**** Iteration 5 | Maximum parameter change=0.3450296
-**** Iteration 6 | Maximum parameter change=0.2461543
-**** Iteration 7 | Maximum parameter change=0.1735043
-**** Iteration 8 | Maximum parameter change=0.1233133
-**** Iteration 9 | Maximum parameter change=0.0865434
-**** Iteration 10 | Maximum parameter change=0.0613544
-**** Iteration 11 | Maximum parameter change=0.0429592
-**** Iteration 12 | Maximum parameter change=0.0304321
-**** Iteration 13 | Maximum parameter change=0.0212844
-**** Iteration 14 | Maximum parameter change=0.0150775
-**** Iteration 15 | Maximum parameter change=0.0105387
-**** Iteration 16 | Maximum parameter change=0.0074673
-**** Iteration 17 | Maximum parameter change=0.0052171
-**** Iteration 18 | Maximum parameter change=0.0036978
-**** Iteration 19 | Maximum parameter change=0.0025825
-**** Iteration 20 | Maximum parameter change=0.0018311
-**** Iteration 21 | Maximum parameter change=0.0012783
-**** Iteration 22 | Maximum parameter change=0.0009067
-**** Iteration 23 | Maximum parameter change=0.0006327
-**** Iteration 24 | Maximum parameter change=0.000449
-**** Iteration 25 | Maximum parameter change=0.0003132
-**** Iteration 26 | Maximum parameter change=0.0002223
-**** Iteration 27 | Maximum parameter change=0.000155
-**** Iteration 28 | Maximum parameter change=0.0001101
-**** Iteration 29 | Maximum parameter change=7.67e-05</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get the person ids and their first names</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>persons <span class="ot">&lt;-</span> persons <span class="sc">%&gt;%</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Code, <span class="st">`</span><span class="at">First Name</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">id =</span> Code, <span class="at">name =</span> <span class="st">`</span><span class="at">First Name</span><span class="st">`</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&nbsp;go through the decisions and add a column with the name of the person who was chosen or not chosen in each case</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>decisions <span class="ot">&lt;-</span> decisions <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(persons, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'chosen'</span> <span class="ot">=</span> <span class="st">'id'</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">chosenName =</span> name) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(persons, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'notChosen'</span> <span class="ot">=</span> <span class="st">'id'</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">notChosenName =</span> name)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># mutate chosenName and notChosenName to be factors</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>decisions <span class="ot">&lt;-</span> decisions <span class="sc">%&gt;%</span> </span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">chosenName =</span> <span class="fu">factor</span>(chosenName), <span class="at">notChosenName =</span> <span class="fu">factor</span>(notChosenName))</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># create a name for each judge</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>decisions <span class="ot">&lt;-</span> decisions <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">judge =</span> <span class="fu">paste0</span>(<span class="st">'judge_'</span>, judgeName)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co"># get a vector of judges</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>judges <span class="ot">&lt;-</span> decisions <span class="sc">%&gt;%</span> <span class="fu">pull</span>(judge)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co"># format for the btm model</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>decisions <span class="ot">&lt;-</span> decisions <span class="sc">%&gt;%</span> </span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(chosenName, notChosenName) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">result =</span> <span class="dv">1</span>)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co"># the package doesn't like tibbles?</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>decisions <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(decisions)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">btm</span>(decisions, <span class="at">judge=</span>judges, <span class="at">fix.eta =</span> <span class="dv">0</span>, <span class="at">ignore.ties =</span> <span class="cn">TRUE</span>, <span class="at">eps =</span> <span class="fl">0.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="explore-the-model-results" class="level2">
@@ -265,30 +167,30 @@ $ `Word Count`        &lt;chr&gt; "*", "*", "*", "*", "*", "*", "*", "*"</code><
 <section id="person-parameters" class="level3">
 <h3 class="anchored" data-anchor-id="person-parameters">Person parameters</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The mle reliability, also known as separation reliability</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(mod1<span class="sc">$</span>mle.rel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The mle reliability, also known as separation reliability</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(mod1<span class="sc">$</span>mle.rel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.8900993</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The person parameters</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(mod1<span class="sc">$</span>effects)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The person parameters</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(mod1<span class="sc">$</span>effects, <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <colgroup>
 <col style="width: 3%">
-<col style="width: 11%">
+<col style="width: 13%">
+<col style="width: 3%">
+<col style="width: 6%">
+<col style="width: 3%">
+<col style="width: 3%">
 <col style="width: 3%">
 <col style="width: 5%">
-<col style="width: 3%">
-<col style="width: 3%">
-<col style="width: 3%">
-<col style="width: 4%">
-<col style="width: 10%">
-<col style="width: 10%">
+<col style="width: 7%">
+<col style="width: 12%">
+<col style="width: 7%">
 <col style="width: 11%">
-<col style="width: 9%">
-<col style="width: 10%">
-<col style="width: 10%">
+<col style="width: 8%">
+<col style="width: 7%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -318,12 +220,12 @@ $ `Word Count`        &lt;chr&gt; "*", "*", "*", "*", "*", "*", "*", "*"</code><
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">24</td>
-<td style="text-align: right;">23.700000</td>
-<td style="text-align: right;">0.9875000</td>
-<td style="text-align: right;">6.4167026</td>
-<td style="text-align: right;">1.857980</td>
-<td style="text-align: right;">0.0132184</td>
-<td style="text-align: right;">0.0463379</td>
+<td style="text-align: right;">23.70</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">6.42</td>
+<td style="text-align: right;">1.86</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.05</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">7</td>
@@ -334,12 +236,12 @@ $ `Word Count`        &lt;chr&gt; "*", "*", "*", "*", "*", "*", "*", "*"</code><
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">17</td>
-<td style="text-align: right;">16.814286</td>
-<td style="text-align: right;">0.8006803</td>
-<td style="text-align: right;">3.5605796</td>
-<td style="text-align: right;">1.376837</td>
-<td style="text-align: right;">0.0361628</td>
-<td style="text-align: right;">0.1872429</td>
+<td style="text-align: right;">16.81</td>
+<td style="text-align: right;">0.80</td>
+<td style="text-align: right;">3.56</td>
+<td style="text-align: right;">1.38</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">0.19</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">6</td>
@@ -350,12 +252,12 @@ $ `Word Count`        &lt;chr&gt; "*", "*", "*", "*", "*", "*", "*", "*"</code><
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">16</td>
-<td style="text-align: right;">15.820000</td>
-<td style="text-align: right;">0.7910000</td>
-<td style="text-align: right;">2.6541140</td>
-<td style="text-align: right;">1.149802</td>
-<td style="text-align: right;">0.0542697</td>
-<td style="text-align: right;">0.1894637</td>
+<td style="text-align: right;">15.82</td>
+<td style="text-align: right;">0.79</td>
+<td style="text-align: right;">2.65</td>
+<td style="text-align: right;">1.15</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">0.19</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">5</td>
@@ -366,12 +268,12 @@ $ `Word Count`        &lt;chr&gt; "*", "*", "*", "*", "*", "*", "*", "*"</code><
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">12</td>
-<td style="text-align: right;">11.940000</td>
-<td style="text-align: right;">0.5970000</td>
-<td style="text-align: right;">0.8080052</td>
-<td style="text-align: right;">1.043502</td>
-<td style="text-align: right;">0.0586762</td>
-<td style="text-align: right;">0.1290680</td>
+<td style="text-align: right;">11.94</td>
+<td style="text-align: right;">0.60</td>
+<td style="text-align: right;">0.81</td>
+<td style="text-align: right;">1.04</td>
+<td style="text-align: right;">0.06</td>
+<td style="text-align: right;">0.13</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">4</td>
@@ -382,12 +284,12 @@ $ `Word Count`        &lt;chr&gt; "*", "*", "*", "*", "*", "*", "*", "*"</code><
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">13</td>
 <td style="text-align: right;">7</td>
-<td style="text-align: right;">7.090000</td>
-<td style="text-align: right;">0.3545000</td>
-<td style="text-align: right;">-0.9094780</td>
-<td style="text-align: right;">1.174595</td>
-<td style="text-align: right;">0.0493630</td>
-<td style="text-align: right;">0.1609200</td>
+<td style="text-align: right;">7.09</td>
+<td style="text-align: right;">0.35</td>
+<td style="text-align: right;">-0.91</td>
+<td style="text-align: right;">1.17</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">0.16</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">3</td>
@@ -398,12 +300,12 @@ $ `Word Count`        &lt;chr&gt; "*", "*", "*", "*", "*", "*", "*", "*"</code><
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">15</td>
 <td style="text-align: right;">4</td>
-<td style="text-align: right;">4.173684</td>
-<td style="text-align: right;">0.2196676</td>
-<td style="text-align: right;">-2.0130565</td>
-<td style="text-align: right;">1.162722</td>
-<td style="text-align: right;">0.0520248</td>
-<td style="text-align: right;">0.1506998</td>
+<td style="text-align: right;">4.17</td>
+<td style="text-align: right;">0.22</td>
+<td style="text-align: right;">-2.01</td>
+<td style="text-align: right;">1.16</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">0.15</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">2</td>
@@ -414,12 +316,12 @@ $ `Word Count`        &lt;chr&gt; "*", "*", "*", "*", "*", "*", "*", "*"</code><
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">18</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">3.214286</td>
-<td style="text-align: right;">0.1530612</td>
-<td style="text-align: right;">-4.1019394</td>
-<td style="text-align: right;">1.211069</td>
-<td style="text-align: right;">0.0390522</td>
-<td style="text-align: right;">0.0961981</td>
+<td style="text-align: right;">3.21</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">-4.10</td>
+<td style="text-align: right;">1.21</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">0.10</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">1</td>
@@ -430,19 +332,19 @@ $ `Word Count`        &lt;chr&gt; "*", "*", "*", "*", "*", "*", "*", "*"</code><
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">21</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.300000</td>
-<td style="text-align: right;">0.0142857</td>
-<td style="text-align: right;">-6.4149277</td>
-<td style="text-align: right;">1.915324</td>
-<td style="text-align: right;">0.0154313</td>
-<td style="text-align: right;">0.0899757</td>
+<td style="text-align: right;">0.30</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">-6.41</td>
+<td style="text-align: right;">1.92</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.09</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The judge fit</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit statistics (outfit and infit) for judges if judge is provided. In addition, average agreement of the rating with the mode of the ratings is calculated for each judge (at least three ratings per dyad has to be available for computing the agreement)</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(mod1<span class="sc">$</span>fit_judges)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The judge fit</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit statistics (outfit and infit) for judges if judge is provided. In addition, average agreement of the rating with the mode of the ratings is calculated for each judge (at least three ratings per dyad has to be available for computing the agreement)</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(mod1<span class="sc">$</span>fit_judges, <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <thead>
@@ -458,64 +360,64 @@ $ `Word Count`        &lt;chr&gt; "*", "*", "*", "*", "*", "*", "*", "*"</code><
 <tr class="odd">
 <td style="text-align: left;">judge_1</td>
 <td style="text-align: left;">judge_1</td>
-<td style="text-align: right;">0.0593654</td>
-<td style="text-align: right;">0.2269443</td>
+<td style="text-align: right;">0.06</td>
+<td style="text-align: right;">0.23</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">judge_2</td>
 <td style="text-align: left;">judge_2</td>
-<td style="text-align: right;">0.0226136</td>
-<td style="text-align: right;">0.0857596</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.09</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">judge_3</td>
 <td style="text-align: left;">judge_3</td>
-<td style="text-align: right;">0.0528220</td>
-<td style="text-align: right;">0.1392631</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">0.14</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">judge_4</td>
 <td style="text-align: left;">judge_4</td>
-<td style="text-align: right;">0.0443660</td>
-<td style="text-align: right;">0.1052281</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">0.11</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">judge_5</td>
 <td style="text-align: left;">judge_5</td>
-<td style="text-align: right;">0.0220026</td>
-<td style="text-align: right;">0.1322931</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.13</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">judge_6</td>
 <td style="text-align: left;">judge_6</td>
-<td style="text-align: right;">0.0751333</td>
-<td style="text-align: right;">0.2673373</td>
+<td style="text-align: right;">0.08</td>
+<td style="text-align: right;">0.27</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">judge_7</td>
 <td style="text-align: left;">judge_7</td>
-<td style="text-align: right;">0.0294163</td>
-<td style="text-align: right;">0.0787091</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">0.08</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">judge_8</td>
 <td style="text-align: left;">judge_8</td>
-<td style="text-align: right;">0.0286484</td>
-<td style="text-align: right;">0.0820712</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">0.08</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">judge_9</td>
 <td style="text-align: left;">judge_9</td>
-<td style="text-align: right;">0.0314318</td>
-<td style="text-align: right;">0.0691511</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">0.07</td>
 <td style="text-align: right;">1</td>
 </tr>
 </tbody>
@@ -527,20 +429,20 @@ $ `Word Count`        &lt;chr&gt; "*", "*", "*", "*", "*", "*", "*", "*"</code><
 <section id="visualise-the-person-parameters-model-effects-along-with-the-standard-error" class="level2">
 <h2 class="anchored" data-anchor-id="visualise-the-person-parameters-model-effects-along-with-the-standard-error">Visualise the person parameters (model effects) along with the standard error</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the model effects with the standard errors</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># add a column to the person parameters with the upper and lower limits using 1.96 * standard error</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>effects <span class="ot">&lt;-</span> mod1<span class="sc">$</span>effects <span class="sc">%&gt;%</span> </span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">lower =</span> theta <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> se.theta,</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">upper =</span> theta <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> se.theta</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(effects, <span class="fu">aes</span>(<span class="at">x =</span> individual, <span class="at">y =</span> theta)) <span class="sc">+</span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lower, <span class="at">ymax =</span> upper), <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">'Person parameter'</span>, <span class="at">y =</span> <span class="st">'Person'</span>)</span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the model effects with the standard errors</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># add a column to the person parameters with the upper and lower limits using 1.96 * standard error</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>effects <span class="ot">&lt;-</span> mod1<span class="sc">$</span>effects <span class="sc">%&gt;%</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">lower =</span> theta <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> se.theta,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">upper =</span> theta <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> se.theta</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(effects, <span class="fu">aes</span>(<span class="at">x =</span> individual, <span class="at">y =</span> theta)) <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lower, <span class="at">ymax =</span> upper), <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">'Person parameter'</span>, <span class="at">y =</span> <span class="st">'Person'</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="cj-practical_files/figure-html/person-parameters-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -552,98 +454,24 @@ $ `Word Count`        &lt;chr&gt; "*", "*", "*", "*", "*", "*", "*", "*"</code><
 <section id="what-is-p1-p0-pd" class="level2">
 <h2 class="anchored" data-anchor-id="what-is-p1-p0-pd">What is p1? p0? pD?</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>mod1<span class="sc">$</span>probs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mod1<span class="sc">$</span>probs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>             p1           p0           pD
- [1,] 0.9963473 3.652669e-03 6.100379e-45
- [2,] 0.9998848 1.151765e-04 1.085183e-45
- [3,] 0.7509258 2.490742e-01 4.373299e-44
- [4,] 0.9906881 9.311909e-03 9.712569e-45
- [5,] 0.9099456 9.005444e-02 2.894720e-44
- [6,] 0.9959516 4.048385e-03 6.421054e-45
- [7,] 0.9962174 3.782620e-03 6.207542e-45
- [8,] 0.9773028 2.269723e-02 1.506078e-44
- [9,] 0.9997818 2.182483e-04 1.493738e-45
-[10,] 0.9959516 4.048385e-03 6.421054e-45
-[11,] 0.9988374 1.162569e-03 3.445904e-45
-[12,] 0.9926806 7.319440e-03 8.619657e-45
-[13,] 0.9724429 2.755715e-02 1.655371e-44
-[14,] 0.9878934 1.210660e-02 1.105891e-44
-[15,] 0.9963473 3.652669e-03 6.100379e-45
-[16,] 0.8898151 1.101849e-01 3.166338e-44
-[17,] 0.9456337 5.436632e-02 2.292835e-44
-[18,] 0.8478020 1.521980e-01 3.632436e-44
-[19,] 0.9773028 2.269723e-02 1.506078e-44
-[20,] 0.9999730 2.703063e-05 5.257369e-46
-[21,] 0.9962174 3.782620e-03 6.207542e-45
-[22,] 0.9993423 6.577006e-04 2.592493e-45
-[23,] 0.8636667 1.363333e-01 3.469927e-44
-[24,] 0.9999973 2.675201e-06 1.653956e-46
-[25,] 0.9962174 3.782620e-03 6.207542e-45
-[26,] 0.9999535 4.652971e-05 6.897653e-46
-[27,] 0.9886822 1.131784e-02 1.069686e-44
-[28,] 0.9099456 9.005444e-02 2.894720e-44
-[29,] 0.9438013 5.619874e-02 2.328895e-44
-[30,] 0.8636667 1.363333e-01 3.469927e-44
-[31,] 0.9773028 2.269723e-02 1.506078e-44
-[32,] 0.9999535 4.652971e-05 6.897653e-46
-[33,] 0.9997818 2.182483e-04 1.493738e-45
-[34,] 0.8478020 1.521980e-01 3.632436e-44
-[35,] 0.9999535 4.652971e-05 6.897653e-46
-[36,] 0.9988374 1.162569e-03 3.445904e-45
-[37,] 0.9605477 3.945234e-02 1.968531e-44
-[38,] 0.9992708 7.291909e-04 2.729660e-45
-[39,] 0.9963473 3.652669e-03 6.100379e-45
-[40,] 0.9999730 2.703063e-05 5.257369e-46
-[41,] 0.9963473 3.652669e-03 6.100379e-45
-[42,] 0.9886822 1.131784e-02 1.069686e-44
-[43,] 0.9995300 4.699555e-04 2.191657e-45
-[44,] 0.9999730 2.703063e-05 5.257369e-46
-[45,] 0.9400559 5.994407e-02 2.400470e-44
-[46,] 0.8898151 1.101849e-01 3.166338e-44
-[47,] 0.9988374 1.162569e-03 3.445904e-45
-[48,] 0.9992708 7.291909e-04 2.729660e-45
-[49,] 0.7122717 2.877283e-01 4.577838e-44
-[50,] 0.9997818 2.182483e-04 1.493738e-45
-[51,] 0.9926806 7.319440e-03 8.619657e-45
-[52,] 0.9724429 2.755715e-02 1.655371e-44
-[53,] 0.9999535 4.652971e-05 6.897653e-46
-[54,] 0.9993423 6.577006e-04 2.592493e-45
-[55,] 0.9998848 1.151765e-04 1.085183e-45
-[56,] 0.9988374 1.162569e-03 3.445904e-45
-[57,] 0.9438013 5.619874e-02 2.328895e-44
-[58,] 0.9988374 1.162569e-03 3.445904e-45
-[59,] 0.9962174 3.782620e-03 6.207542e-45
-[60,] 0.9456337 5.436632e-02 2.292835e-44
-[61,] 0.9906881 9.311909e-03 9.712569e-45
-[62,] 0.9605477 3.945234e-02 1.968531e-44
-[63,] 0.9999973 2.675201e-06 1.653956e-46
-[64,] 0.9886822 1.131784e-02 1.069686e-44
-[65,] 0.9605477 3.945234e-02 1.968531e-44
-[66,] 0.8636667 1.363333e-01 3.469927e-44
-[67,] 0.9456337 5.436632e-02 2.292835e-44
-[68,] 0.8898151 1.101849e-01 3.166338e-44
-[69,] 0.9886822 1.131784e-02 1.069686e-44
-[70,] 0.9926806 7.319440e-03 8.619657e-45
-[71,] 0.9456337 5.436632e-02 2.292835e-44
-[72,] 0.9999535 4.652971e-05 6.897653e-46
-[73,] 0.9999973 2.675201e-06 1.653956e-46
-[74,] 0.9993423 6.577006e-04 2.592493e-45
-[75,] 0.9724429 2.755715e-02 1.655371e-44
-[76,] 0.9438013 5.619874e-02 2.328895e-44
-[77,] 0.9999535 4.652971e-05 6.897653e-46
-[78,] 0.9959516 4.048385e-03 6.421054e-45
-[79,] 0.9997818 2.182483e-04 1.493738e-45
-[80,] 0.9438013 5.619874e-02 2.328895e-44
-[81,] 0.9099456 9.005444e-02 2.894720e-44
-[82,] 0.9992708 7.291909e-04 2.729660e-45
-[83,] 0.9724429 2.755715e-02 1.655371e-44</code></pre>
+<pre><code>            p1           p0           pD
+[1,] 0.9963473 0.0036526689 6.100379e-45
+[2,] 0.9998848 0.0001151765 1.085183e-45
+[3,] 0.7509258 0.2490741530 4.373299e-44
+[4,] 0.9906881 0.0093119089 9.712569e-45
+[5,] 0.9099456 0.0900544355 2.894720e-44
+[6,] 0.9959516 0.0040483851 6.421054e-45</code></pre>
 </div>
 </div>
 </section>
-<section id="extension-exercise" class="level2">
-<h2 class="anchored" data-anchor-id="extension-exercise">Extension exercise</h2>
-<p>Can you recreate the model probabilities?</p>
+<section id="extension-exercises" class="level2">
+<h2 class="anchored" data-anchor-id="extension-exercises">Extension exercises</h2>
+<ul>
+<li>Try some less accurate judging. Note the impace on the model parameters.</li>
+<li>Can you recreate the model probabilities?</li>
+</ul>
 </section>
 </section>
 
