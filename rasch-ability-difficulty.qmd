@@ -1,5 +1,7 @@
 # Item Difficulty and Person Ability
 
+A more traditional approach to the Rasch model is operationalised in the package TAM <https://alexanderrobitzsch.github.io/TAM/>
+
 ## Fitting the Rasch model with TAM
 
 ```{r}
@@ -30,14 +32,16 @@ mod1 <- tam.jml(responses)
 summary(mod1)  #see a summary of the results
 
 #See specific results from the Rasch analysis
-knitr::kable(mod1$item)
+knitr::kable(mod1$item, digits=2)
 head(mod1$WLE)
 mod1$WLEreliability
 ```
 
 ## Item and person summary statistics
 ```{r}
+# Item difficulty measures
 summary(mod1$item1)
+# Person ability measures
 summary(mod1$WLE)
 
 person_abilities <- tibble(theta=mod1$WLE)

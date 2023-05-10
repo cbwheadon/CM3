@@ -1,6 +1,18 @@
 # Infit & Outfit
 
+## Model based residuals
+While it is most informative to consider each ICC indiviudally, the fit of the predicted ICC to the empirical ICC can be summarised using the residual-based fit statistics. These are the Infit and Outfit statistics.
+
+Read through this article on residual based statistics and then answer the questions below:
 <http://www.edmeasurementsurveys.com/IRT/residual-based-item-fit-statistics.html>
+
+1. If the probability for a person getting an item correct is 0.8 and the person gets it wrong, what is the model residual?
+
+2. Why do we need to standardise residuals? Consider which items lend themselves to generating the highest residuals.
+
+3. What is the difference between infit and outfit?
+
+## Obtaining infit and outfit statistics from TAM
 
 ```{r}
 #| include: true

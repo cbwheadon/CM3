@@ -2,6 +2,7 @@
 
 You can fit the Partical Credit Model in either dexter or TAM. Let's start with dexter.
 
+
 ```{r}
 #| include: true
 #| echo: true
@@ -65,7 +66,9 @@ tt = tia_tables(db)
 knitr::kable(tt$items, digits=2)
 ```
 
+
 ## Expected Score Curves
+
 
 ```{r}
 #| include: true
@@ -80,7 +83,9 @@ for(i in 1:n_items){
 
 ```
 
+
 ## Item Difficulty
+
 
 ```{r}
 #| include: true
@@ -97,7 +102,9 @@ for(i in 1:n_items){
 # plot(m, "C3_1ai", summate=TRUE, show.observed=TRUE)
 ```
 
+
 ## Take a look at the SPAG items. How well are they working?
+
 ```{r}
 #| include: true
 #| echo: true

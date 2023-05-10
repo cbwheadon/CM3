@@ -1,7 +1,10 @@
 # Assessing the fit of the Rasch model
 
 ## How does Rasch differ from regression models?
-<https://dexter-psychometrics.github.io/dexter/articles/blog/2018-02-25-item-total-regressions-in-dexter>
+A common question is how does the Rasch model differ from regression models. The following article explains it well: <https://dexter-psychometrics.github.io/dexter/articles/blog/2018-02-25-item-total-regressions-in-dexter>. Read through the first three paragraphs and note the key difference.
+
+## Model predictions compared to the empirical data
+If model predictions are reasonably similar to the empirical data then we can be relatively sure the model fits. While there are tests of 'fit' these statistical tests are of little use in evaluating the ways in which a test may fail to fit a model, and tend to be largely dependent on sample size. The dexter approach is built around visual inspections of Item Characteristic Plots. Note that dexter uses a slightly different model to the Rasch model for dichotomous data where there is no missing data.
 
 ```{r}
 #| include: true
@@ -19,7 +22,7 @@ rules <- keys_to_rules(keys, include_NA_rule = TRUE)
 db <- start_new_project(rules, db_name = ":memory:", person_properties=list(gender="unknown"))
 ```
 
-## Fitting the Rasch model
+## Item Characteristic Plots
 Look at Item Characteristic Plots for all items. There are three item-test regressions on the plot: the observed one, shown as pink dots; the interaction model, shown with a thick gray line; and the ENORM model, shown with a thin black line. (ENORM=RASCH for dichotomous models)
 
 ```{r}
@@ -38,7 +41,7 @@ for(i in 1:n_items){
 
 ```{r}
 tt = tia_tables(db)
-knitr::kable(tt$items)
+knitr::kable(tt$items, digits=2)
 ```
 
 ## Analysis

@@ -50,11 +50,12 @@ dif_gender
 ```
 
 ## Is the DIF meaningful?
+Read through this article and consider why the authors believe their approach to DIF is superior.
 <https://dexter-psychometrics.github.io/dexter/articles/profile-plots.html>
 
 ## Do boys struggle more with run-on sentences than girls?
 
-### Look at scores
+Does the fact that girls score higher on run-on sentences than boys prove DIF?
 ```{r}
 responses %>% mutate(
     run_on = (Q8_score + Q9_score + Q10_score + Q11_score)
@@ -69,5 +70,5 @@ profile_plot(db, item_property='run-on', covariate='gender')
 close_project(db)
 ```
 
-### More on DIF!
+## More on DIF!
 There are a huge number of methods for testing for DIF. Have a look through <https://cran.r-project.org/web/packages/difR/difR.pdf>
