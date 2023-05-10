@@ -1,20 +1,32 @@
 # Test Information
 
+## Take a look at the structure of the data
 ```{r}
 #| label: setup
-#| include: false
+#| include: true
 rm(list=ls())
 library(tidyverse)
 # load in the dataset
 responses <- read_csv('data/responses.csv')
-#| label: sumscores
+
+# take a look at the structure of the data
+glimpse(responses)
+```
+
+## Create a new variable called total with the sum of the item scores
+
+```{r}
+#| label: sum_scores
 # sum across the columns with _score_ in the name and add to a new column called total.
 # make sure to ignore missing values
 # https://dplyr.tidyverse.org/articles/rowwise.html
 # https://dplyr.tidyverse.org/reference/pick.html?q=pick#ref-usage
 responses <- responses %>% mutate(total = rowSums(pick(ends_with("_score")), na.rm = TRUE))
+glimpse(responses)
 ```
-    
+
+## Table with number of candidates, mean, standard deviation, min and max
+
 ```{r}
 #| label: basic-stats
 #| table-cap: Summary statistics for the scores
@@ -31,7 +43,7 @@ summary_table <- responses %>%
 knitr::kable(summary_table, digits = 2,align = "c")
 ```
 
-# Score Distribution
+## Score Distribution
 
 ```{r}
 #| label: fig-histogram
@@ -50,6 +62,6 @@ ggplot (responses, aes(x = total)) +
 
 ``` 
 
-### What can we learn from the distribution of scores?
+## What can we learn from the distribution of scores?
 
 

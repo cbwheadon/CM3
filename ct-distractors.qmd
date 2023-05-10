@@ -1,4 +1,20 @@
-## Distractor analysis with dexter
+# Distractor analysis with dexter
+
+Dexter is an R package for managing and analyzing data from educational tests and other projects involving individual assessment. <https://dexter-psychometrics.github.io/dexter/>
+
+## What does it do?
+*    Easily create a data base tailored to the specific structure of test data
+*    Safeguard data integrity through a variety of checks; easily recover from wrong answer keys and other human errors
+*    Classical test and item analysis
+*    Assess the fit of the Rasch / partial credit model through comparison against both the observed data and a more flexible model; identify problematic items
+*    Calibrate the test with either conditional maximum likelihood (CML) or MCMC methods
+*    Estimate ability with CML or MCMC methods, produce conversion tables, draw plausible values
+*    Apply a variety of mostly novel methods for DIF analysis, equating pass/fail limits and more.
+
+Dexter fundamentals: <https://dexter-psychometrics.github.io/dexter/articles/dexter.html>
+
+Dexter blog: <https://dexter-psychometrics.github.io/dexter/articles/blog/index.html>
+
 
 ```{r}
 #| label: setup
@@ -26,11 +42,12 @@ get_persons(db) %>%
   glimpse()
 tt = tia_tables(db)
 tt$booklets
-knitr::kable(tt$items)
+knitr::kable(tt$items, digits = 2)
 
 ```
 
 ## Distractor plots
+Distractor plots provide visual information at response level. This is a non-parametric regression of the probability of each response (including non-response) on the total score, particularly useful to detect issues with multiple choice items due to wrong keys or, simply, sub-optimal item writing. 
 
 ```{r}
 # Look at distractor plots for all items
@@ -41,14 +58,14 @@ for(i in 1:n_items){
 ```
 
 ## Analysis questions
-Does the slope of the correct answer always rise from left to right? 
-Does the curve for the correct answer always rise above those for the incorrect answers?
-What does the steepness of the slope for the correct answer tell you about an item?
-Change the key so that one of the items is incorrectly marked. What do you see in the distractor analysis?
-What is the role of the curtains (the shaded areas in the plots)? Are there any items where they are particularly helpful?
-How many distractors generally seem to be useful?
-What would you typically expect the probability of guessing the correct answer to be for a MC item with 5 choices? If you look at the point at which the distractors cross the y-axis where sum score = 0, what do you learn about the actual probabilities?
-Can you make any recommendations for improvement based on the distractor analysis?
+1. Does the slope of the correct answer always rise from left to right? 
+2. Does the curve for the correct answer always rise above those for the incorrect answers?
+3. What does the steepness of the slope for the correct answer tell you about an item?
+4. Change the key so that one of the items is incorrectly marked. What do you see in the distractor analysis?
+5. What is the role of the curtains (the shaded areas in the plots)? Are there any items where they are particularly helpful?
+6. How many distractors generally seem to be useful?
+7. What would you typically expect the probability of guessing the correct answer to be for a MC item with 5 choices? If you look at the point at which the distractors cross the y-axis where sum score = 0, what do you learn about the actual probabilities?
+8. Can you make any recommendations for improvement based on the distractor analysis?
 
 
 ```{r}

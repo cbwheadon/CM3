@@ -1,15 +1,16 @@
 # Descriptive Data
 
+## Item facility or mean item score
+In the special case of dichotomous items, scored “0” for one response and “1” for the other, the proportion of respondents in a sample who select the response choice scored “1” is equivalent to the mean item response. Items for which everyone gives the same response are uninformative because they do not differentiate between individuals. In contrast, dichotomous items that yield about an equal number of people (50%) selecting each of the two response options provide the best differentiation between individuals in the sample overall (@cappelleri).
+
 ```{r}
 #| label: setup
-#| include: false
+#| include: true
 rm(list=ls())
 library(tidyverse)
 # load in the dataset
 responses <- read_csv('data/responses.csv')
 ```
-
-In the special case of dichotomous items, scored “0” for one response and “1” for the other, the proportion of respondents in a sample who select the response choice scored “1” is equivalent to the mean item response. Items for which everyone gives the same response are uninformative because they do not differentiate between individuals. In contrast, dichotomous items that yield about an equal number of people (50%) selecting each of the two response options provide the best differentiation between individuals in the sample overall (@cappelleri).
 
 ```{r}
 # select all the columns with _score as the suffix and store as a tibble
@@ -52,6 +53,6 @@ item_stats <- item_stats %>% arrange(item_name) %>%
 knitr::kable(item_stats, digits=2)
 ```
 
-
-```{r}
-```
+## What do we learn from the item facility table?
+## Plot the items by item difficulty in ascending order of difficulty
+## Plot the items by item difficulty in ascending order of difficulty for males, with the data grouped by gender

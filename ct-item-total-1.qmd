@@ -6,7 +6,7 @@ Item total correlations, are generally used as supporting evidence for the relia
 
 ```{r}
 #| label: setup
-#| include: false
+#| include: true
 rm(list=ls())
 library(tidyverse)
 # load in the dataset
@@ -29,7 +29,7 @@ item_total_r <- responses %>%
   gather(key = "item", value = "score", -total) %>% 
   mutate(item = str_remove(item, "_score")) %>% 
   group_by(item) %>% 
-  summarise(correlation = cor(score, total, use = "pairwise.complete.obs")) %>% 
+  summarise(mean = mean(score, na.rm=T), correlation = cor(score, total, use = "pairwise.complete.obs")) %>% 
   arrange(desc(correlation))
   
 knitr::kable(item_total_r, digits = 2)
@@ -37,12 +37,13 @@ knitr::kable(item_total_r, digits = 2)
 
 ## Discussion
 Is there a relationship between item difficulty and item total correlation? 
+Can you plot this relationship?
 Can you see any issues with excluding items based on item total correlation?
 
 ## Inter-item Correlations
 ```{r}
 #| label: inter-item-r
-#| include: false
+#| include: true
 # Correlate each item score with every other item score
 # https://corrr.tidymodels.org/
 library(corrr)
@@ -57,6 +58,8 @@ fashion(x1)
 stretch(x1, na.rm = TRUE) %>% arrange(r)
 
 ```
+
+## Try some visulations suggested by the package eg. the network plot
 ```{r}
 #| label: network-plot
 #| include: true

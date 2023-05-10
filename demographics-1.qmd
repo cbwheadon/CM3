@@ -1,16 +1,9 @@
----
-title: "Demographics"
-format: html
-execute:
-  echo: true
----
-
-### Working with demographic data
+## Working with demographic data
 In our dataset we have the the variable gender. Let's examine what sort of variable gender is.
 
 ```{r}
 #| label: setup
-#| include: false
+#| include: true
 rm(list=ls())
 library(tidyverse)
 # load in the dataset
@@ -41,10 +34,10 @@ responses <- responses %>%
 ```{r}
 #| label: proportions
 #| include: true
-responses %>%
+knitr::kable(responses %>%
   group_by(gender) %>%
   summarise(n = n()) %>%
-  mutate(freq = n / sum(n))
+  mutate(freq = n / sum(n)), digits = 2)
 ```
 
 ## Remove the missing data for simplicity

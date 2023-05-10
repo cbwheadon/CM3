@@ -20,7 +20,7 @@ Under the two-parameter IRT model ICCs are not parallel. For a person with abili
 
 ```{r}
 #| label: setup
-#| include: false
+#| include: true
 rm(list=ls())  #remove all objects in the R environment
 require(tidyverse)
 ```

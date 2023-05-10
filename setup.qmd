@@ -2,6 +2,8 @@
 
 * Create A New Folder called CM3
 * Start VS Code
-* Add the folder to workspace (CMD + P + WORKSPACES ADD FOLDER TO WORKSPACE)
-* Create new quarto document (CMD + P + QUARTO NEW DOCUMENT)
+* Add the folder to workspace (CMD/CTRL + P + WORKSPACES ADD FOLDER TO WORKSPACE)
+* Create new quarto document (CMD/CTRL + P + QUARTO NEW DOCUMENT)
+* Download the data you need for the exercises: <https://cm3-datasets.s3.eu-west-1.amazonaws.com/data/data.zip>
+* Unzip the data to a new folder called data inside the CM3 folder
 

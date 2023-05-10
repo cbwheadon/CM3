@@ -1,8 +1,15 @@
 # Exploring alpha
 
+Internal consistency is a measure of the strength of the relationship between questions in the same scale. There are many different measures of internal consistency, with the most common cited being Cronbach's alpha. However, there are many other measures of internal consistency, including omega, glb, and others.
+
+## From alpha to omega
+Read the following article, and note the three main assumptions of alpha.
+<https://tidsskriftet.no/en/2022/08/medicine-and-numbers/internal-consistency-alpha-omega>
+
+## Computing variations on alpha
 ```{r}
 #| label: setup
-#| include: false
+#| include: true
 rm(list=ls())
 library(tidyverse)
 library(psych)
@@ -19,14 +26,10 @@ mdl_alpha <- psych::alpha(item_responses)
 print(summary(mdl_alpha))
 ```
 
-**What happens to alpha if you only use half the scores?**
-
-## From alpha to omega
-<https://tidsskriftet.no/en/2022/08/medicine-and-numbers/internal-consistency-alpha-omega>
-
 ```{r}
 mdl_omega <- psych::omega(item_responses)
 print(summary(mdl_omega))
 ```
 
-## Putting everything together what have we learned about the quality of the test?
+## Extension exercise
+The value of alpha is closely related to the length of the test and the number of items. In general, the longer the test, the higher the alpha. Using the test dataset explore the relationship between alpha and the length of the test.
