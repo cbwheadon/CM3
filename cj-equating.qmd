@@ -128,3 +128,6 @@ print(p)
 
 *    <https://observablehq.com/@nomoremarking/linking-standards-with-comparative-judgement>
 *    <https://observablehq.com/@nomoremarking/the-development-of-writing-ability>
+
+## Extension exercise
+Try different equating designs for different sets of numbers. eg. Try equating 1 to 8 with 6 to 13. How well does it work?
