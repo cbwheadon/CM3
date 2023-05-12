@@ -1,6 +1,6 @@
 # Fitting the Partial Credit Model
 
-You can fit the Partical Credit Model in either dexter or TAM. Let's start with dexter.
+You can fit the Partial Credit Model in either dexter or TAM. Let's start with dexter.
 
 ```{r}
 #| include: true
@@ -95,13 +95,11 @@ for(i in 1:n_items){
 
 # plot(m, "C3_1ai", summate=FALSE, show.observed=FALSE)
 # plot(m, "C3_1ai", summate=TRUE, show.observed=TRUE)
+
+close_project(db)
 ```
 
 ## Take a look at the SPAG items. How well are they working?
-```{r}
-#| include: true
-#| echo: true
-#| output: true
-#| warning: false
-close_project(db)
-```
+
+## Extension exercise
+Try fitting the Partial Credit Mode in TAM. What differences / similarities do you notice? Which do you prefer?
