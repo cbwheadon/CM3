@@ -46,7 +46,7 @@ summary(mod1$WLE)
 
 person_abilities <- tibble(theta=mod1$WLE)
 p <- ggplot(person_abilities, aes(x=theta))
-p <- p + geom_histogram(binwidth = 0.5)
+p <- p + geom_histogram(binwidth = 0.3)
 p
 
 ```
@@ -71,3 +71,11 @@ wrightMap(mod1$WLE, mod1$xsi, item.side = itemClassic)
 4. Visually compare ‘steepness’ of IRT observed ICC with CTT point-biserial correlation.
 5. Compare students’ IRT ability measures (WLE) with students’ test scores (CTT).
 6. Compute correlation and plot the two variables to show the relationship.
+
+```{r}
+item_stats <- tibble(item = mod1$item$item, delta = mod1$item$xsi.item, p = mod1$item$M)
+cor(item_stats$delta, item_stats$p)
+p <- ggplot(item_stats, aes(x=delta, y=p))
+p <- p + geom_point()
+print (p)
+```

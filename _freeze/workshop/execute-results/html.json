@@ -1,0 +1,14 @@
+{
+  "hash": "9ae67e8fd6fb43f218f7c0ad6c2ab659",
+  "result": {
+    "markdown": "# Workshop\n\n## Carry out a CTT and Rasch analysis\n\nCarry out CTT and IRT analyses for a grammar test. The test is of multiple-choice format. The data file contains “A,” “B,” “C,” “D” characters, and the responses are not scored. The keys are provided below.\n\n\n::: {.cell}\n\n```{.r .cell-code}\nkey <- c(\"D\",\"D\",\"D\",\"B\",\"B\",\"B\",\"A\",\"D\",\"C\",\"B\",\"A\",\"C\",\"D\",\"A\",\"B\")\n```\n:::\n\n\nFrom the output of the CTT and IRT analyses, answer the following questions:\n\n1. How many students are in the item response file?\n2. How many items are in the item response file?\n3. Which item is the easiest? Which item is the most difficult?\n4. Which item is the least discriminating? Which item is the most discriminating?\n5. What is the mean item difficulties? What is the mean person abilities?\n6. Is the test generally easy for the students, or difficult?\n7. What is the CTT test reliability? What is the IRT test reliability?\n\n## Item distractor analysis\n\nHow well are the distractors working? Do you have any guidance for the test developer?",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -58,3 +58,7 @@ The residual-based fit statistics reflect the slope of the ICC:
 *    When fit MS is higher than 1, the item is less discriminating than the average item discrimination.
 
 ## Identify an item of each type and plot the ICC using dexter or TAM or both
+
+```{r}
+knitr::kable(item_fit)
+```

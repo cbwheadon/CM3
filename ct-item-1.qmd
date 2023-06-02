@@ -55,4 +55,17 @@ knitr::kable(item_stats, digits=2)
 
 ## What do we learn from the item facility table?
 ## Plot the items by item difficulty in ascending order of difficulty
-## Plot the items by item difficulty in ascending order of difficulty for males, with the data grouped by gender
+
+```{r}
+item_stats <- item_stats %>% arrange(Mean) %>% mutate (item_rank = row_number())
+# plot the item_stats by item difficulty in ascending order of difficulty
+ggplot(item_stats, aes(x=item_rank, y=Mean)) +
+    geom_point()
+
+# label the items
+ggplot(item_stats, aes(x=item_rank, y=Mean)) +
+    geom_point() +
+    geom_text(aes(x=item_rank,y=Mean,label=Item), hjust=1.1, vjust=1.1)
+
+
+```

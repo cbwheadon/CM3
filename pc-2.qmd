@@ -99,6 +99,10 @@ for(i in 1:n_items){
 close_project(db)
 ```
 
+```{r}
+
+```
+
 ## Take a look at the SPAG items. How well are they working?
 
 ## Extension exercise

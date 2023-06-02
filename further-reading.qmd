@@ -1,0 +1,23 @@
+# Further Reading and Sources of Help
+
+**Rasch and IRT Practicals in R**
+
+<http://www.edmeasurementsurveys.com/TAM/Tutorials/5PartialCredit.htm>
+
+<http://www.edmeasurementsurveys.com/IRT/index.html>
+
+<https://bookdown.org/chua/new_rasch_demo2/>
+
+**The tidyverse**
+
+<https://r4ds.hadley.nz/>
+
+<https://www.tidyverse.org/>
+
+<https://community.rstudio.com/>
+
+**Quarto and Markdown**
+
+<https://quarto.org/docs/computations/r.html>
+
+<https://quarto.org/docs/authoring/markdown-basics.html>

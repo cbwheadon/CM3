@@ -1,0 +1,23 @@
+# Workshop
+
+## Carry out a CTT and Rasch analysis
+
+Carry out CTT and IRT analyses for a grammar test and present your results as quarto output. The test is of multiple-choice format. The data file contains “A,” “B,” “C,” “D” characters, and the responses are not scored. The keys are provided below. As the items are not scored I would recommend using dexter which includes a scoring function.
+
+```{r}
+key <- c("D","D","D","B","B","B","A","D","C","B","A","C","D","A","B")
+```
+
+From the output of the CTT and IRT analyses, answer the following questions:
+
+1. How many students are in the item response file?
+2. How many items are in the item response file?
+3. Which item is the easiest? Which item is the most difficult?
+4. Which item is the least discriminating? Which item is the most discriminating?
+5. What is the mean item difficulties? What is the mean person abilities?
+6. Is the test generally easy for the students, or difficult?
+7. What is the CTT test reliability? What is the IRT test reliability?
+
+## Item distractor analysis
+
+How well are the distractors working? Do you have any guidance for the test developer?

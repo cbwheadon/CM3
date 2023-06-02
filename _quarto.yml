@@ -22,6 +22,7 @@ book:
         - ct-distractors.qmd
         - ct-reliability.qmd
         - ct-alpha.qmd
+        - ct-dif.qmd
     - part: "The Rasch Model"
       chapters:
         - rasch-1.qmd
@@ -31,6 +32,8 @@ book:
         - rasch-ability-difficulty.qmd
         - rasch-infit.qmd
         - rasch-dif.qmd
+        - workshop.qmd
+        - workshop-answers.qmd
     - part: "The Partial Credit Model"
       chapters:
         - pc-1.qmd
@@ -42,6 +45,9 @@ book:
         - cj-bt-rasch.qmd
         - cj-practical.qmd
         - cj-equating.qmd
+    - part: "Further Reading"
+      chapters:
+        - further-reading.qmd
       
 bibliography: references.bib
 

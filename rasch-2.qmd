@@ -21,8 +21,8 @@ require(tidyverse)
 
 ```{r}
 # Calculate Rasch model probability
-delta <- 0.6  #item difficulty is 0.6
-theta <- 1.0  #person ability is 1.0
+delta <- 0  #item difficulty is 0.6
+theta <- 0  #person ability is 1.0
 prob <- exp(theta-delta)/(1+exp(theta-delta))
 prob
 ```
@@ -36,7 +36,7 @@ We will plot the probability as a function of θ.
 #| fig-cap: Item Characteristic Curve
 #Calculate prob as a function the theta
 id = 1 # item id
-delta <- 1 #item difficulty is 1
+delta <- -10 #item difficulty is 1
 theta <- seq(-3,3,0.01) #a vector of theta from -3 to 3 in steps of 0.01
 prob_function <- function(theta, delta){
     return (exp(theta-delta)/(1+exp(theta-delta)))
@@ -53,6 +53,34 @@ print(p)
 
 ## Exercise
 As an exercise, plot three ICC for three items with (1) δ = −1, (2) δ = 0, and (3) δ = 1.
+
+```{r}
+#| label: fig-item-ccs
+#| fig-cap: Item Characteristic Curves
+#Calculate prob as a function the theta
+id = 1 # item id
+delta <- -1 #item difficulty is 1
+theta <- seq(-3,3,0.01) #a vector of theta from -3 to 3 in steps of 0.01
+prob_function <- function(theta, delta){
+    return (exp(theta-delta)/(1+exp(theta-delta)))
+}
+
+probs <- tibble(id = id, delta=delta,theta=theta)
+probs <- probs %>% mutate(prob = prob_function(theta, delta))
+
+item1 <- tibble(id = 1, delta=-1,theta=theta)
+item2 <- tibble(id=2, delta=0, theta=theta)
+item3 <- tibble(id=3, delta=1, theta=theta)
+items <- bind_rows(item1, item2, item3)
+
+items <- items %>% mutate(item=factor(id))
+items_probs <- items %>% mutate(prob = prob_function(theta, delta))
+
+p <- ggplot(items_probs, aes(x=theta, y=prob,colour=item))
+p <- p + geom_point()
+print(p)
+
+```
 
 See if you can work out how to plot the three graphs using different colors. Can you easily identify the ICC of the easier item?
 

@@ -49,3 +49,30 @@ responses <- responses %>% drop_na(gender)
 
 ## Now go back to the Test Information and produce a table and a histogram by gender
 **What do you learn from the grouped information?**
+```{r}
+
+#| label: fig-histogram
+#| fig-cap: Histogram of scores
+#| width: 6
+#| height: 4
+#| include: true
+responses <- responses %>% mutate(total = rowSums(pick(ends_with("_score")), na.rm = TRUE))
+ggplot (responses, aes(x = total)) +
+  geom_histogram(bins = 21) +
+  scale_x_continuous(breaks = seq(0, 20, 1)) +
+  # add a vertical line at the mean
+    geom_vline(xintercept = mean(responses$total), linetype = "dashed", color = "red") +
+    facet_wrap(~gender, ncol = 1) +
+    # add the light theme
+    theme_light() 
+
+ggplot (responses, aes(x = total, fill=gender)) +
+  geom_density(alpha=0.2) +
+  scale_x_continuous() +
+  # add a vertical line at the mean
+    # add the light theme
+  theme_light() 
+
+```
+
+
