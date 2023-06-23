@@ -1,0 +1,60 @@
+# Using the *performance* package for item discrimination
+
+Rather than using our own home made functions, we can use the `performance` package to calculate item discrimination. This is a package that is designed for psychometrics, and has a number of useful functions for calculating item statistics.
+
+```{r}
+#| include: true
+#| echo: true
+#| output: false
+#| warning: false
+library(performance)
+library(tidyverse)
+```
+
+## Dichotomous items
+```{r}
+#| include: true
+#| echo: true
+#| output: false
+#| warning: false
+# load in the dataset
+responses <- read_csv('data/responses.csv')
+# select the columns we want
+responses <- responses %>% select(contains('_score')) 
+```
+```{r}
+#| include: true
+#| echo: true
+#| output: true
+#| warning: false
+# item stats
+item_stats <- performance::item_reliability(responses)
+knitr::kable(item_stats)
+
+```
+
+## Polytomous items
+```{r}
+#| include: true
+#| echo: true
+#| output: false
+#| warning: false
+# load in the dataset
+responses <- read_csv('data/pc-data.csv')
+# drop the first six columns
+resp <- responses %>% 
+  select(-c(1:6))
+# choose the columns that start with C1_
+resp_c1 <- resp %>% 
+  select(starts_with('C1_'))
+```
+```{r}
+#| include: true
+#| echo: true
+#| output: true
+#| warning: false
+# load in the dataset
+# get the item stats
+poly_item_stats <- performance::item_reliability(resp_c1)
+knitr::kable(poly_item_stats)
+```

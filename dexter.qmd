@@ -2,7 +2,7 @@
 
 Dexter is an R (R Development Core Team 2005) package intended as a robust and fairly comprehensive system for managing and analyzing test data organized in booklets. It includes facilities for importing and managing test data, assessing and improving the quality of data through basic test-and-item analysis, fitting an IRT model, and computing various estimates of ability.
 
-Work through the example here: <https://cran.r-project.org/web/packages/dexter/vignettes/dexter.html>
+Work through the examples here: <https://cran.r-project.org/web/packages/dexter/vignettes/dexter.html> and in this paper: <https://dexter-psychometrics.github.io/dexter/articles/blog/2023-05-20-dexter-paper>
 
 ## Extension exercise
 
