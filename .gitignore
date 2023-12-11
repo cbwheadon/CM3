@@ -4,3 +4,5 @@
 /_*.local
 /pdfs/
 /Plots/
+/_freeze/
+/*_files/

@@ -1,4 +1,4 @@
-# Booklet Design
+# Booklet Design - NOT USED IN THE COURSE
 ```{r}
 #| include: true
 #| echo: true
@@ -40,8 +40,8 @@ get_booklets(db)
 
 ```{r}
 
-mSit = fit_domains(db, item_property= "maintest")
-plot(mSit)
+# mSit = fit_domains(db, item_property= "main_test")
+# plot(mSit)
 
 m = fit_inter(db)
 n_items <- nrow(keys)
@@ -55,9 +55,6 @@ knitr::kable(tt$distractor)
 
 distractor_plot(db, "Q1")
 plot(m, "Q1", show.observed=TRUE)
-
-print(dd)
-plot(dd)
 
 profile_plot(db, item_property='main_test', covariate='yg')
 
