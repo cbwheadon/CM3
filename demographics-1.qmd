@@ -4,6 +4,8 @@ In our dataset we have the the variable gender. Let's examine what sort of varia
 ```{r}
 #| label: setup
 #| include: true
+#| warning: false
+
 rm(list=ls())
 library(tidyverse)
 # load in the dataset

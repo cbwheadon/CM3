@@ -7,11 +7,13 @@ Item total correlations, are generally used as supporting evidence for the relia
 ```{r}
 #| label: setup
 #| include: true
+#| warning: false
+
 rm(list=ls())
 library(tidyverse)
 # load in the dataset
 responses <- read_csv('data/responses.csv')
-#| label: sumscores
+
 # sum across the columns with _score_ in the name and add to a new column called total.
 # make sure to ignore missing values
 # https://dplyr.tidyverse.org/articles/rowwise.html

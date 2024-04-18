@@ -4,6 +4,9 @@
 ```{r}
 #| label: setup
 #| include: true
+#| warning: false
+#| echo: true
+
 rm(list=ls())
 library(tidyverse)
 # load in the dataset

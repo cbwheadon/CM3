@@ -1,67 +1,16 @@
 # Modern Tools for Rasch Analysis
-**Tools**
-The following tools are recommended for the course. They are all free and open source with the exception of Github Copilot which offers a free trial.
-
 **R**
 
-<https://cran.r-project.org/>
-Follow the standard installation of R. If you have used R before make sure you update to the latest version.
+For this course we will use R to run the analysis. 
 
-Once you have installed R, you will need to install the following packages before going any further. Installing a package is done by typing the following command in the R console:
+**posit Cloud**
 
-```
-    install.packages("languageserver")
-    install.packages("rmarkdown")
-    install.packages("tidyverse")
-```
+Sign up for a free account at Posit Cloud <https://posit.cloud/>
 
-**Visual Studio Code**
+Follow the Getting Started Guide: <https://posit.cloud/learn/guide#intro>
 
-<https://code.visualstudio.com/>
-Download and install the latest build. You will then need to install two extensions. This guide explains what an extension is, and how to install it: <https://code.visualstudio.com/docs/editor/extension-marketplace>
+# Creating a Project in R Studio
 
-**VSCode extension: R**
+Inside The Posit cloud, start a new RStudio project and follow the step by step guide to creating a visualisation here: <https://r4ds.hadley.nz/data-visualize>
 
-<https://marketplace.visualstudio.com/items?itemName=REditorSupport.r>
-The extension suggests various optional enhancements that you can install, but these are not neccessary if you are using Quarto.
-
-**VSCode extension: Quarto**
-
-<https://marketplace.visualstudio.com/items?itemName=quarto.quarto>
-
-**VSCode settings: Install httpgd in VSCode**
-
-In VSCode: Code - Preferences - Settings - Extensions - R - Plot: Use Httpgd. 
-
-![Alt text](images/plot-1.png)
-![Alt text](images/plot-2.png)
-![Alt text](images/plot-3.png)
-![Alt text](images/plot-4.png)
-
-In R:
-```
-    install.packages("httpgd")
-```
-
-
-
-**Install Quarto**
-
-https://quarto.org/docs/get-started/
-
-You will need to close and reopen Visual Studio Code after installing Quarto.
-
-
-**OPTIONAL!**
-
-**Github Copilot**
-
-<https://copilot.github.com/>
-Copilot is an AI pair programmer. As you type copilot will make suggestions for your code which will accelerate your learning experience. Copilot offers a 60 day free trial. To sign up for Copilot you will first need a free Github account.
-
-**Github Copilot for Visual Studio Code**
-
-<https://docs.github.com/en/copilot/getting-started-with-github-copilot/getting-started-with-github-copilot-in-visual-studio-code>
-Once you have signed up for copilot you will need to install the extension in Visual Studio Code.
-
-
+I recommend working your way through this book, doing a little every day.

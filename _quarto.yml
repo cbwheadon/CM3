@@ -8,8 +8,6 @@ book:
   chapters:
     - index.qmd
     - tools.qmd
-    - verify.qmd
-    - cj-intro.qmd
     - part: "Classical Test Theory"
       chapters:
         - setup.qmd
@@ -49,6 +47,7 @@ book:
     - part: "Further Reading"
       chapters:
         - further-reading.qmd
+        - references.qmd
       
 bibliography: references.bib
 
@@ -61,3 +60,5 @@ format:
 execute:
   freeze: true
 
+nocite: |
+  @*

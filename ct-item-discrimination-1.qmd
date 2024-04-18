@@ -4,6 +4,7 @@ The more an item discriminates among individuals with different amounts of the u
 ```{r}
 #| label: setup
 #| include: true
+#| warning: false
 rm(list=ls())
 library(tidyverse)
 # load in the dataset

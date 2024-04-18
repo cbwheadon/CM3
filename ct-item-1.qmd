@@ -6,6 +6,7 @@ In the special case of dichotomous items, scored “0” for one response and �
 ```{r}
 #| label: setup
 #| include: true
+#| warning: false
 rm(list=ls())
 library(tidyverse)
 # load in the dataset
