@@ -10,6 +10,7 @@ Read the following article, and note the three main assumptions of alpha.
 ```{r}
 #| label: setup
 #| include: true
+#| warning: false
 rm(list=ls())
 library(tidyverse)
 library(psych)
@@ -22,11 +23,13 @@ item_responses <- responses %>%
 ```
 
 ```{r}
+#| warning: false
 mdl_alpha <- psych::alpha(item_responses)
 print(summary(mdl_alpha))
 ```
 
 ```{r}
+#| warning: false
 mdl_omega <- psych::omega(item_responses)
 print(summary(mdl_omega))
 ```

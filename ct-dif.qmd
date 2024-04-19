@@ -1,42 +1,53 @@
 # DIF using proportion correct
+
+## Load in the dataset
 ```{r}
+#| warning: false
 rm(list=ls())
 library(tidyverse)
-# load in the dataset
 responses <- read_csv('data/responses.csv')
 responses <- responses %>% drop_na(gender)
 responses <- responses %>% select(gender, Q1_score:Q20_score)
 ```
 
+## Pivot the data so we have three columns, gender, score and question
 ```{r}
-# Pivot the data so we have three columns, gender, score and question
+#| warning: false
 long_responses <- responses %>% pivot_longer(cols = Q1_score:Q20_score, names_to = "question", values_to = "score")
 ```
 
+## Summarise the data by gender and question
+
 ```{r}
-# summarise the data by gender and question
+#| warning: false
 response_summary <- long_responses %>% group_by(gender, question) %>% summarise(mean_score = mean(score,na.rm=TRUE))
 ```
 
 ```{r}
+#| warning: false
 question_difficulty <- response_summary %>%
     filter(gender=='F') %>% 
     arrange(mean_score) %>% pull(question)
 
 ```
 
+## Create a factor for the response summary using the question difficulty order
 ```{r}
-# create a factor for the response summary using the question difficulty order
+
 ordered_responses <- response_summary %>% mutate(item = factor(question, levels=question_difficulty, ordered=TRUE))
-# create a factor for gender
-ordered_responses <- ordered_responses %>% mutate(
-    gender = factor(gender)
-)
 
 ```
 
+## Create a factor for gender
 ```{r}
-# plot the ordered responses as a line graph, grouped by gender with item on the x-axis, mean_score on the y-axis
+ordered_responses <- ordered_responses %>% mutate(
+    gender = factor(gender)
+)
+```
+
+## Plot the ordered responses as a line graph, grouped by gender with item on the x-axis, mean_score on the y-axis
+
+```{r}
 p <- ggplot(ordered_responses, aes(x=item, y=mean_score, group=gender, colour=gender, line_style=gender))
 p <- p + geom_line() # rotate the x-axis labels
 p <- p + theme_light()

@@ -50,6 +50,7 @@ knitr::kable(tt$items, digits = 2)
 Distractor plots provide visual information at response level. This is a non-parametric regression of the probability of each response (including non-response) on the total score, particularly useful to detect issues with multiple choice items due to wrong keys or, simply, sub-optimal item writing. 
 
 ```{r}
+#| warning: false
 # Look at distractor plots for all items
 n_items <- nrow(keys)
 for(i in 1:n_items){
