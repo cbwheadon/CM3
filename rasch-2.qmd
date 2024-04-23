@@ -12,9 +12,12 @@ $$
 
 where *X* is the person’s score on the item, taking values of 0 or 1.
 
+## Understanding the Rasch equation
+
 ```{r}
 #| label: setup
 #| include: true
+#| warning: false
 rm(list=ls())  #remove all objects in the R environment
 require(tidyverse)
 ```
@@ -52,7 +55,11 @@ print(p)
 ```
 
 ## Exercise
-As an exercise, plot three ICC for three items with (1) δ = −1, (2) δ = 0, and (3) δ = 1.
+As an exercise, let's plot three ICC for three items with
+
+1. δ = −1
+2. δ = 0
+3. δ = 1
 
 ```{r}
 #| label: fig-item-ccs
@@ -82,7 +89,7 @@ print(p)
 
 ```
 
-See if you can work out how to plot the three graphs using different colors. Can you easily identify the ICC of the easier item?
+Can you easily identify the ICC of the easier item?
 
 ## Theta Scale Unit
 The θ scale is in “logit” unit. Answer the following questions, assuming the item responses follow a Rasch model:

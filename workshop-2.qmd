@@ -1,0 +1,80 @@
+# Workshop 2
+
+## Test Functioning of a Maths Test
+
+Carry out CTT and IRT analyses for a Maths test. The test is of multiple-choice format. The data file contains “A,” “B,” “C,” “D”, "E" characters, and the responses are not scored.
+
+### Set up the environment and read in the data
+
+```{r}
+#| label: setup
+#| include: false
+#| echo: true
+#| output: false
+#| warning: false
+rm(list=ls())
+library(tidyverse)
+library(dexter)
+# load in the dataset
+responses <- read_csv('data/maths/responses.csv')
+keys <- read_csv('data/maths/key.csv')
+# Create the rules
+rules <- keys_to_rules(keys, include_NA_rule = TRUE)
+db <- start_new_project(rules, db_name = ":memory:", person_properties=list(gender=""))
+add_booklet(db, responses, "maths-workshop") 
+```
+```{r}
+#| label: tbl-test
+#| tbl-cap: Test statistics
+# check the number of items, the persons and the max score
+get_booklets(db)
+knitr::kable(get_booklets(db), digits = 2)
+# get the item scores for later use in other packages
+item_scores <- get_resp_matrix(db)
+item_scores <- as_tibble(item_scores)
+item_scores <- item_scores %>% select(
+    Q1,
+    Q2,
+    Q3,
+    Q4,
+    Q5,
+    Q6,
+    Q7,
+    Q8,
+    Q9,
+    Q10,
+    Q11,
+    Q12,
+    Q13,
+    Q14,
+    Q15
+)
+```
+
+### Basic item analysis
+
+Produce a table with the number of items, the number of persons and the maximum score.
+
+### Produce the item tables
+
+Produce a table with the reliability (alpha) the average item proportion correct (mean_pvalue) and the average test item correlations.
+What is the average item x test correlation? Is this good enough?
+What do you note about the reliability of this test compared to the grammar test? Why do you think the reliability may be low?
+
+### Item descriptive stats
+
+Produce a table with the item descriptive stats. Can you see any issues with any of the items?
+
+### Distractor analysis
+
+Produce the distractor plots. Distractor plots can be very useful for identifying misconceptions. Take a look at item 4 and see if you can identify the main misconception for this item for a) the lowest scoring and b) the middle scoring pupils. Repeat for items 11 and 14.
+
+### Rasch analysis
+In the previous analysis you should have picked up two issues. One is a relatively low reliability, the other is item Q10 with a negative correlation. We can further investigate through a Rasch analysis.
+
+On reliability, we can consider if the test is well targeted through a Wright map.
+
+For the item Q10, we can consider the ICC plot and the item fit statistics. The infit and outfit are very different. What does this tell you? The item is very difficult, but does the Wright Map suggest it is too diffficult? Do you think this item is functioning well?
+
+### Summary
+What feedback do you have for the test developer?

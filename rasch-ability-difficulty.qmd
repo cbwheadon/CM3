@@ -1,6 +1,6 @@
 # Item Difficulty and Person Ability
 
-A more traditional approach to the Rasch model is operationalised in the package TAM <https://alexanderrobitzsch.github.io/TAM/>
+A more traditional approach to the Rasch model is operationalised in the package TAM[@TAM_4.1-4] <https://alexanderrobitzsch.github.io/TAM/>
 
 ## Fitting the Rasch model with TAM
 
@@ -71,11 +71,3 @@ wrightMap(mod1$WLE, mod1$xsi, item.side = itemClassic)
 4. Visually compare ‘steepness’ of IRT observed ICC with CTT point-biserial correlation.
 5. Compare students’ IRT ability measures (WLE) with students’ test scores (CTT).
 6. Compute correlation and plot the two variables to show the relationship.
-
-```{r}
-item_stats <- tibble(item = mod1$item$item, delta = mod1$item$xsi.item, p = mod1$item$M)
-cor(item_stats$delta, item_stats$p)
-p <- ggplot(item_stats, aes(x=delta, y=p))
-p <- p + geom_point()
-print (p)
-```

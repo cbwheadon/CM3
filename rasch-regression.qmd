@@ -6,6 +6,10 @@ A common question is how does the Rasch model differ from regression models. The
 ## Model predictions compared to the empirical data
 If model predictions are reasonably similar to the empirical data then we can be relatively sure the model fits. While there are tests of 'fit' these statistical tests are of little use in evaluating the ways in which a test may fail to fit a model, and tend to be largely dependent on sample size. The dexter approach is built around visual inspections of Item Characteristic Plots. Note that dexter uses a slightly different model to the Rasch model for dichotomous data where there is no missing data.
 
+## Item Characteristic Plots
+Look at Item Characteristic Plots for all items. There are three item-test regressions on the plot: the observed one, shown as pink dots; the interaction model, shown with a thick gray line; and the ENORM model, shown with a thin black line. (ENORM=RASCH for dichotomous models)
+
+
 ```{r}
 #| include: true
 #| echo: true
@@ -21,9 +25,6 @@ keys <- read_csv('data/key.csv')
 rules <- keys_to_rules(keys, include_NA_rule = TRUE)
 db <- start_new_project(rules, db_name = ":memory:", person_properties=list(gender="unknown"))
 ```
-
-## Item Characteristic Plots
-Look at Item Characteristic Plots for all items. There are three item-test regressions on the plot: the observed one, shown as pink dots; the interaction model, shown with a thick gray line; and the ENORM model, shown with a thin black line. (ENORM=RASCH for dichotomous models)
 
 ```{r}
 
@@ -44,13 +45,13 @@ tt = tia_tables(db)
 knitr::kable(tt$items, digits=2)
 ```
 
+```{r}
+close_project(db)
+```
+
 ## Analysis
 ### Guessing
 The left hand curtain gives us an idea of guessing. By default, they are drawn at the 5th and the 95th percentile of the observed test scores, highlighting the central 90% of the data. The left curtain highlights the likely item score for the pupils at the 95th percentile. From examination of the ICCs, which items are prone to guessing?
 
 ### Model fit
 Which items seem to fit the Rasch model less well? Which restriction of the Rasch model do these items highlight? How can the fit of the model be improved?
-
-```{r}
-close_project(db)
-```

@@ -1,0 +1,124 @@
+# Workshop 2 Answers
+The following is a report on the item functioning of the maths test.
+
+```{r}
+#| label: setup
+#| include: false
+#| echo: true
+#| output: false
+#| warning: false
+rm(list=ls())
+library(tidyverse)
+library(dexter)
+# load in the dataset
+responses <- read_csv('data/maths/responses.csv')
+keys <- read_csv('data/maths/key.csv')
+# Create the rules
+rules <- keys_to_rules(keys, include_NA_rule = TRUE)
+db <- start_new_project(rules, db_name = ":memory:", person_properties=list(gender=""))
+add_booklet(db, responses, "maths-workshop") 
+```
+
+## Basic item analysis
+
+```{r}
+#| label: tbl-test
+#| tbl-cap: Test statistics
+# check the number of items, the persons and the max score
+get_booklets(db)
+knitr::kable(get_booklets(db), digits = 2)
+# get the item scores for later use in other packages
+item_scores <- get_resp_matrix(db)
+item_scores <- as_tibble(item_scores)
+item_scores <- item_scores %>% select(
+    Q1,
+    Q2,
+    Q3,
+    Q4,
+    Q5,
+    Q6,
+    Q7,
+    Q8,
+    Q9,
+    Q10,
+    Q11,
+    Q12,
+    Q13,
+    Q14,
+    Q15
+)
+```
+
+```{r}
+# produce the item tables
+tt = tia_tables(db)
+# get the reliability (alpha) the average item proportion correct (mean_pvalue) and the average test item correlations
+knitr::kable(tt$booklets, digits = 2)
+```
+
+```{r}
+#| label: tbl-items
+#| tbl-cap: Item statistics
+# get the item descriptive stats
+knitr::kable(tt$items, digits = 2)
+```
+
+The item test correlations in @tbl-items suggest an issue with item 10. Let's look at the distractor plot for that item @fig-item10.
+
+```{r}
+#| label: fig-item10
+#| fig-cap: Item 10
+# produce the distractor plots
+# Look at distractor plots for all items
+# Something is odd about Q10, so let's look at the distractor plot for that item
+distractor_plot(db, 'Q10')
+```
+
+```{r}
+#| echo: true
+#| output: false
+#| warning: false
+# run a traditional Rasch analysis using the item scores produced above
+library(TAM)
+mod1 <- tam.jml(item_scores)
+
+
+```
+
+```{r}
+# All the results of the Rasch analysis are stored in the object called "mod1"
+# Get the Rasch reliability
+print(mod1$WLEreliability)
+# Item difficulty measures
+knitr::kable(mod1$item1)
+# Person ability measures
+summary(mod1$WLE)
+# Wright map
+library(WrightMap)
+wrightMap(mod1$WLE, mod1$xsi, item.side = itemClassic)
+```
+
+```{r}
+plot(mod1,items = c(10))
+```
+
+```{r}
+# Rasch infit & outfit statistics
+fit1 <- tam.jml.fit(mod1,trim_val = NULL)
+item_fit <- tibble(fit1$fit.item)
+item_fit <- item_fit %>% bind_cols(mod1$item1)
+knitr::kable(item_fit, digits = 2)
+```
+
+```{r}
+# plot the item infit against the item difficulty
+p <- ggplot(item_fit, aes(x=infitItem, y=xsi, size=se.xsi,label=item))
+p <- p + geom_point()
+p <- p + geom_text(data=item_fit %>% filter(infitItem>1.1),aes(x=infitItem, y=xsi,label=item,size=4),nudge_y=0.15, nudge_x = -0.005)
+print(p)
+```
+
+```{r}
+dif_gender = DIF(db, "gender")
+dif_gender
+```

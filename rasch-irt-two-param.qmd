@@ -17,17 +17,17 @@ Under the Rasch model, for any person, Item 1 is easier than Item 2 which is eas
 
 Under the two-parameter IRT model ICCs are not parallel. For a person with ability measure of -1 logit, Item 1 is the easiest item. But for a person with an ability of 2 logits, Item 2 is the easiest item.
 
+## Exercise
+
+Amend the equation for the Rasch model so that it now has a discrimination parameter. Plot ICCs with different discrimination parameters to see the impact of manipulating alpha.
 
 ```{r}
 #| label: setup
 #| include: true
+#| warning: false
 rm(list=ls())  #remove all objects in the R environment
 require(tidyverse)
 ```
-
-## Exercise
-
-Amend the equation for the Rasch model so that it now has a discrimination parameter. Plot ICCs with different discrimination parameters to see the impact of manipulating alpha.
 
 ```{r}
 #| label: fig-item-cc
