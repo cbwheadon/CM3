@@ -1,7 +1,7 @@
 # Setting up your analysis environment
 
 * Log into the Posit Cloud
-* Download the data you need for the exercises: <https://cm3-datasets.s3.eu-west-1.amazonaws.com/data/data.zip>
+* Download the data you need for the exercises: <https://cm3-datasets.s3.eu-west-1.amazonaws.com/data/data-2024.zip>
 * Follow this video to get set up with the directory structure and packages you need
 
 {{< video https://vimeo.com/936331873?share=copy >}}
