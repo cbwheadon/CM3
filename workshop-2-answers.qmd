@@ -12,6 +12,7 @@ library(tidyverse)
 library(dexter)
 # load in the dataset
 responses <- read_csv('data/maths/responses.csv')
+responses <- responses %>% filter(!is.na(gender))
 keys <- read_csv('data/maths/key.csv')
 # Create the rules
 rules <- keys_to_rules(keys, include_NA_rule = TRUE)
@@ -116,9 +117,4 @@ p <- ggplot(item_fit, aes(x=infitItem, y=xsi, size=se.xsi,label=item))
 p <- p + geom_point()
 p <- p + geom_text(data=item_fit %>% filter(infitItem>1.1),aes(x=infitItem, y=xsi,label=item,size=4),nudge_y=0.15, nudge_x = -0.005)
 print(p)
-```
-
-```{r}
-dif_gender = DIF(db, "gender")
-dif_gender
 ```

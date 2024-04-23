@@ -17,6 +17,7 @@ library(tidyverse)
 library(dexter)
 # load in the dataset
 responses <- read_csv('data/maths/responses.csv')
+responses <- responses %>% filter(!is.na(gender))
 keys <- read_csv('data/maths/key.csv')
 # Create the rules
 rules <- keys_to_rules(keys, include_NA_rule = TRUE)
@@ -75,6 +76,9 @@ In the previous analysis you should have picked up two issues. One is a relative
 On reliability, we can consider if the test is well targeted through a Wright map.
 
 For the item Q10, we can consider the ICC plot and the item fit statistics. The infit and outfit are very different. What does this tell you? The item is very difficult, but does the Wright Map suggest it is too diffficult? Do you think this item is functioning well?
+
+### DIF
+Can you think of a meaningful subset of items to use for a profile analysis of gender? What do you find? 
 
 ### Summary
 What feedback do you have for the test developer?

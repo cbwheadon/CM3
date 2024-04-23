@@ -104,6 +104,3 @@ close_project(db)
 ```
 
 ## Take a look at the SPAG items. How well are they working?
-
-## Extension exercise
-Try fitting the Partial Credit Mode in TAM. What differences / similarities do you notice? Which do you prefer?
