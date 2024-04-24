@@ -1,10 +1,9 @@
 # Workshop 2 Answers
-The following is a report on the item functioning of the maths test.
 
 ```{r}
 #| label: setup
 #| include: false
-#| echo: true
+#| echo: false
 #| output: false
 #| warning: false
 rm(list=ls())
@@ -17,12 +16,12 @@ keys <- read_csv('data/maths/key.csv')
 # Create the rules
 rules <- keys_to_rules(keys, include_NA_rule = TRUE)
 db <- start_new_project(rules, db_name = ":memory:", person_properties=list(gender=""))
+
+# Add item properties
+properties <- read_csv('data/maths/properties.csv')
+add_item_properties(db, item_properties = properties, default_values = NULL)
+
 add_booklet(db, responses, "maths-workshop") 
-```
-
-## Basic item analysis
-
-```{r}
 #| label: tbl-test
 #| tbl-cap: Test statistics
 # check the number of items, the persons and the max score
@@ -50,13 +49,16 @@ item_scores <- item_scores %>% select(
 )
 ```
 
+## Summary item analysis
 ```{r}
+#| label: tbl-item-summary
+#| tbl-cap: item summary
 # produce the item tables
 tt = tia_tables(db)
-# get the reliability (alpha) the average item proportion correct (mean_pvalue) and the average test item correlations
 knitr::kable(tt$booklets, digits = 2)
 ```
 
+## Item descriptive stats
 ```{r}
 #| label: tbl-items
 #| tbl-cap: Item statistics
@@ -64,6 +66,7 @@ knitr::kable(tt$booklets, digits = 2)
 knitr::kable(tt$items, digits = 2)
 ```
 
+## Distractor analysis
 The item test correlations in @tbl-items suggest an issue with item 10. Let's look at the distractor plot for that item @fig-item10.
 
 ```{r}
@@ -75,36 +78,52 @@ The item test correlations in @tbl-items suggest an issue with item 10. Let's lo
 distractor_plot(db, 'Q10')
 ```
 
+## Rasch analysis
 ```{r}
 #| echo: true
 #| output: false
 #| warning: false
 # run a traditional Rasch analysis using the item scores produced above
 library(TAM)
-mod1 <- tam.jml(item_scores)
-
-
-```
-
-```{r}
 # All the results of the Rasch analysis are stored in the object called "mod1"
-# Get the Rasch reliability
-print(mod1$WLEreliability)
-# Item difficulty measures
-knitr::kable(mod1$item1)
-# Person ability measures
-summary(mod1$WLE)
-# Wright map
-library(WrightMap)
-wrightMap(mod1$WLE, mod1$xsi, item.side = itemClassic)
+mod1 <- TAM::tam.jml(item_scores)
+summary(mod1)
 ```
 
 ```{r}
+#| label: tbl-item-difficulties
+#| tbl-cap: Item Difficulties
+knitr::kable(mod1$item1)
+```
+
+```{r}
+#| label: tbl-item-difficulties-summary
+#| tbl-cap: Item Difficulties Summary
+summary(mod1$item1$xsi)
+```
+
+```{r}
+#| label: tbl-person-abilities-summary
+#| tbl-cap: Person Abilities Summary
+summary(mod1$theta)
+```
+
+```{r}
+#| label: fig-wright-map
+#| fig-cap: Wright Map
+library(WrightMap)
+wrightMap(mod1$theta, mod1$xsi, item.side = itemClassic)
+```
+
+```{r}
+#| label: fig-Q10
+#| fig-cap: ICC for Q10
 plot(mod1,items = c(10))
 ```
 
 ```{r}
-# Rasch infit & outfit statistics
+#| label: tab-item-fit
+#| fig-cap: Item Fit Statistics
 fit1 <- tam.jml.fit(mod1,trim_val = NULL)
 item_fit <- tibble(fit1$fit.item)
 item_fit <- item_fit %>% bind_cols(mod1$item1)
@@ -112,9 +131,30 @@ knitr::kable(item_fit, digits = 2)
 ```
 
 ```{r}
+#| label: fig-bubble-plot
+#| fig-cap: Rasch Bubble Plot
+
 # plot the item infit against the item difficulty
 p <- ggplot(item_fit, aes(x=infitItem, y=xsi, size=se.xsi,label=item))
 p <- p + geom_point()
 p <- p + geom_text(data=item_fit %>% filter(infitItem>1.1),aes(x=infitItem, y=xsi,label=item,size=4),nudge_y=0.15, nudge_x = -0.005)
 print(p)
+```
+
+```{r}
+#| label: fig-bubble-plot-outfit
+#| fig-cap: Rasch Bubble Plot Using Outfit
+
+# plot the item outfit against the item difficulty
+p <- ggplot(item_fit, aes(x=outfitItem, y=xsi, size=se.xsi,label=item))
+p <- p + geom_point()
+p <- p + geom_text(data=item_fit %>% filter(outfitItem>1.1),aes(x=outfitItem, y=xsi,label=item,size=4),nudge_y=0.15, nudge_x = -0.005)
+print(p)
+```
+
+## DIF
+```{r}
+#| label: fig-profile-analysis
+#| fig-cap: Gender profile analysis of calculation vs context
+profile_plot(db, item_property='construct', covariate='gender')
 ```

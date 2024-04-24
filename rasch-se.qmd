@@ -1,0 +1,35 @@
+### Rasch Measurement Error
+
+One of our principles of measurement is that we should be able to quantify error. The standard errors of both person ability and item difficulty can be obtained.
+
+```{r}
+#| include: true
+#| echo: true
+#| output: false
+#| warning: false
+rm(list=ls())  #remove all variables in the R environment
+library(TAM)  #load the package TAM so we can use the functions in TAM
+library(tidyverse)
+
+# load in the dataset
+responses <- read_csv('data/responses.csv')
+# keep the scores
+responses <- responses %>% select(ends_with('score'))
+mod1 <- tam.jml(responses,bias=FALSE)
+fit1 <- tam.jml.fit(mod1,trim_val = NULL)
+item_fit <- tibble(fit1$fit.item)
+item_fit <- item_fit %>% bind_cols(mod1$item1)
+item_fit <- item_fit %>% arrange(xsi)
+
+```
+
+How would you describe the relationship between the standard error of the item difficulty and the item difficulty?
+```{r}
+#| label: fig-error
+#| fig-cap: Standard Error of Item Measurement
+
+p <- ggplot(item_fit, aes(x=xsi, y=se.xsi))
+p <- p + geom_point()
+p
+
+```

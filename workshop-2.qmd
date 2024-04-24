@@ -1,14 +1,12 @@
-# Workshop 2
+# Workshop: Test Functioning of a Maths Test
 
-## Test Functioning of a Maths Test
+Carry out CTT and IRT analyses for a Multiple Choice Maths test. You can download the test [here](https://cm3-datasets.s3.eu-west-1.amazonaws.com/data/maths-start.pdf)
 
-Carry out CTT and IRT analyses for a Maths test. The test is of multiple-choice format. The data file contains “A,” “B,” “C,” “D”, "E" characters, and the responses are not scored.
-
-### Set up the environment and read in the data
+## Set up the environment and read in the data
 
 ```{r}
 #| label: setup
-#| include: false
+#| include: true
 #| echo: true
 #| output: false
 #| warning: false
@@ -22,15 +20,13 @@ keys <- read_csv('data/maths/key.csv')
 # Create the rules
 rules <- keys_to_rules(keys, include_NA_rule = TRUE)
 db <- start_new_project(rules, db_name = ":memory:", person_properties=list(gender=""))
+
+# Add item properties
+properties <- read_csv('data/maths/properties.csv')
+add_item_properties(db, item_properties = properties, default_values = NULL)
+
 add_booklet(db, responses, "maths-workshop") 
-```
-```{r}
-#| label: tbl-test
-#| tbl-cap: Test statistics
-# check the number of items, the persons and the max score
-get_booklets(db)
-knitr::kable(get_booklets(db), digits = 2)
-# get the item scores for later use in other packages
+
 item_scores <- get_resp_matrix(db)
 item_scores <- as_tibble(item_scores)
 item_scores <- item_scores %>% select(
@@ -52,33 +48,29 @@ item_scores <- item_scores %>% select(
 )
 ```
 
-### Basic item analysis
+## Summary item analysis
 
-Produce a table with the number of items, the number of persons and the maximum score.
-
-### Produce the item tables
-
-Produce a table with the reliability (alpha) the average item proportion correct (mean_pvalue) and the average test item correlations.
+Produce the item summary table with dexter.
 What is the average item x test correlation? Is this good enough?
-What do you note about the reliability of this test compared to the grammar test? Why do you think the reliability may be low?
+What do you note about the reliability of this test compared to the grammar test? Why do you think the reliability may be low? How can you investigate further?
 
-### Item descriptive stats
+## Item descriptive stats
 
 Produce a table with the item descriptive stats. Can you see any issues with any of the items?
 
-### Distractor analysis
+## Distractor analysis
 
 Produce the distractor plots. Distractor plots can be very useful for identifying misconceptions. Take a look at item 4 and see if you can identify the main misconception for this item for a) the lowest scoring and b) the middle scoring pupils. Repeat for items 11 and 14.
 
-### Rasch analysis
+## Rasch analysis
 In the previous analysis you should have picked up two issues. One is a relatively low reliability, the other is item Q10 with a negative correlation. We can further investigate through a Rasch analysis.
 
-On reliability, we can consider if the test is well targeted through a Wright map.
+On reliability, we can consider if the test is well targeted. Firstly, is the mean person ability higher or lower than the mean item difficulty. Secondly, use a Wright map to analyse how well targeted do the items appear to be.
 
-For the item Q10, we can consider the ICC plot and the item fit statistics. The infit and outfit are very different. What does this tell you? The item is very difficult, but does the Wright Map suggest it is too diffficult? Do you think this item is functioning well?
+For the item Q10, we can consider the ICC plot and the item fit statistics. The infit and outfit are very different. What does this tell you? Which statistic should you trust? The item is very difficult, but does the Wright Map suggest it is too diffficult? Do you think this item is functioning well?
 
-### DIF
-Can you think of a meaningful subset of items to use for a profile analysis of gender? What do you find? 
+## DIF
+Perform a dif profile analysis using the item construct property for Males and Females. The construct separates items into those requiring language and context, and those with pure calculation. Does the profile curve for the females lie consistently to the left and above the curve for males? What does this tell us?
 
-### Summary
+## Summary
 What feedback do you have for the test developer?

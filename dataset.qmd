@@ -1,6 +1,6 @@
 # The Dataset
 
-The dataset we will be using for analysis is a set of responses to a 20 question multiple choice test on sentence structure.
+The dataset we will be using for much of the following analysis is a set of responses to a 20 question multiple choice test on sentence structure.
 
 The test is designed to help teachers understand some of the most common mistakes we see in their pupils' writing.
 
@@ -21,4 +21,4 @@ ___
 
 ___
 
-You can download the full test here: <https://cm3-datasets.s3.eu-west-1.amazonaws.com/data/Mid-year-test.docx>
+You can download the full test [here](https://cm3-datasets.s3.eu-west-1.amazonaws.com/data/7.Middle.docx)

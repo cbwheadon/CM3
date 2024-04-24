@@ -30,8 +30,8 @@ book:
         - rasch-regression.qmd
         - rasch-ability-difficulty.qmd
         - rasch-infit.qmd
+        - rasch-se.qmd
         - rasch-dif.qmd
-        - workshop-1.qmd
         - workshop-2.qmd
     - part: "The Partial Credit Model"
       chapters:

@@ -22,52 +22,70 @@ responses <- responses %>% select(ends_with('score'))
 mod1 <- tam.jml(responses)
 ```
 
+## Model Summary
+All the results of the Rasch analysis are stored in the object called "mod1"
 ```{r}
 #| include: true
 #| echo: true
 #| output: true
 #| warning: false
-
-#All the results of the Rasch analysis are stored in the object called "mod1"
 summary(mod1)  #see a summary of the results
-
-#See specific results from the Rasch analysis
-knitr::kable(mod1$item, digits=2)
-head(mod1$WLE)
-mod1$WLEreliability
 ```
 
-## Item and person summary statistics
-```{r}
-# Item difficulty measures
-summary(mod1$item1)
-# Person ability measures
-summary(mod1$WLE)
 
-person_abilities <- tibble(theta=mod1$WLE)
-p <- ggplot(person_abilities, aes(x=theta))
-p <- p + geom_histogram(binwidth = 0.3)
+## Item Difficulty
+
+Items are assigned a difficulty parameter xsi.ite. The higher the value, the more difficult the item.
+
+```{r}
+#| label: tbl-item-difficulty
+#| tbl-cap: Item Difficulty
+knitr::kable(mod1$item)
+```
+
+How would you describe the relationship between the item facility (M) and the item difficulty (xsi.item) ?
+
+```{r}
+#| label: fig-M-xsi
+#| fig-cap: Item Difficulty compared to Item Means
+p <- ggplot(mod1$item, aes(x=M, y=xsi.item))
+p <- p + geom_point()
+p
+```
+
+## Person Ability
+Persons are given an estimated ability (theta). Higher theta means more ability.
+
+```{r}
+#| label: tbl-person-ability
+#| tbl-cap: Person Ability
+summary(mod1$theta)
+```
+
+How would you describe the relationship between person ability and total score?
+```{r}
+#| label: fig-ability
+#| fig-cap: Total score compared to person ability
+person_abilities <- tibble(theta=mod1$theta, sumScore = mod1$PersonScores)
+p <- ggplot(person_abilities, aes(x=theta, y= sumScore))
+p <- p + geom_point()
 p
 
 ```
 
 ## Item Characteristic Curves
+Item characteristic curves are used to examine the fit of the items to the Rasch model. The empirical data in black should follow the modelled data in blue for a good fit. As with *dexter*, items may be either under or over discriminating empirically compared to the model.
 ```{r}
 plot(mod1)
 ```
 
 ## Item person map
+Remember, under the Rasch model, person ability and item difficulty are on the same scale. If we plot a histogram of person ability against the location of item difficulty we can directly consider how well items are targeting person ability. The plot is referred to as a Wright map. How well targeted do you think this test is?
+
 ```{r}
+#| label: fig-wright-map
+#| fig-cap: Wright Map
 library(WrightMap)
-wrightMap(mod1$WLE, mod1$xsi, item.side = itemClassic)
+wrightMap(mod1$theta, mod1$xsi, item.side = itemClassic)
 
 ```
-
-
-## Exercises
-1. Compare IRT estimated item difficulties with CTT item scores.
-2. Use the R function cor to calculate correlation. Use plot to show the relationship graphically.
-3. Compare IRT reliability and CTT reliability
-4. Visually compare ‘steepness’ of IRT observed ICC with CTT point-biserial correlation.
-5. Compare students’ IRT ability measures (WLE) with students’ test scores (CTT).
-6. Compute correlation and plot the two variables to show the relationship.

@@ -65,5 +65,5 @@ The residual-based fit statistics reflect the slope of the ICC:
 *    When fit MS is higher than 1, the item is less discriminating than the average item discrimination.
 
 ## Exercises
-Identify an item of each type of ICC described in the previous section, and plot the ICC using dexter or TAM or both.
+Go back to the ICCs for this test and try and predict infit figures for each ICC.
 
