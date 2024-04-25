@@ -5,9 +5,11 @@ For this course we will use R to run the analysis.
 
 **posit Cloud**
 
-Sign up for a free account at Posit Cloud <https://posit.cloud/>
+If you do not have full admin permissions on your laptop I would recommend you use RStudio in the cloud. Sign up for a free account at Posit Cloud <https://posit.cloud/>
 
 Follow the Getting Started Guide: <https://posit.cloud/learn/guide#intro>
+
+If you do have full admin permissions on your laptop then you can use the desktop version of [RStudio](https://posit.co/download/rstudio-desktop/). Advanced coders may prefer R in VSCode.
 
 # Creating a Project in R Studio
 
