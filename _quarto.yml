@@ -35,6 +35,7 @@ book:
         - rasch-se.qmd
         - rasch-dif.qmd
         - workshop-2.qmd
+        - workshop-2-answers.qmd
     - part: "The Partial Credit Model"
       chapters:
         - pc-1.qmd

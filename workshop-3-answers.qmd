@@ -1,0 +1,158 @@
+# Workshop 2 Answers
+
+```{r}
+#| label: setup
+#| include: false
+#| echo: false
+#| output: false
+#| warning: false
+rm(list=ls())
+library(tidyverse)
+library(dexter)
+# load in the dataset
+responses <- read_csv('data/maths/responses-2.csv')
+responses <- responses %>% filter(!is.na(gender))
+keys <- read_csv('data/maths/key-2.csv')
+# Create the rules
+rules <- keys_to_rules(keys, include_NA_rule = TRUE)
+db <- start_new_project(rules, db_name = ":memory:", person_properties=list(gender=""))
+
+add_booklet(db, responses, "maths-workshop-2") 
+#| label: tbl-test
+#| tbl-cap: Test statistics
+# check the number of items, the persons and the max score
+get_booklets(db)
+knitr::kable(get_booklets(db), digits = 2)
+# get the item scores for later use in other packages
+item_scores <- get_resp_matrix(db)
+item_scores <- as_tibble(item_scores)
+item_scores <- item_scores %>% select(
+    Q1,
+    Q2,
+    Q3,
+    Q4,
+    Q5,
+    Q6,
+    Q7,
+    Q8,
+    Q9,
+    Q10,
+    Q11,
+    Q12,
+    Q13,
+    Q14,
+    Q15
+)
+```
+
+## Summary item analysis
+```{r}
+#| label: tbl-item-summary
+#| tbl-cap: item summary
+# produce the item tables
+tt = tia_tables(db)
+knitr::kable(tt$booklets, digits = 2)
+```
+
+## Item descriptive stats
+```{r}
+#| label: tbl-items
+#| tbl-cap: Item statistics
+# get the item descriptive stats
+knitr::kable(tt$items, digits = 2)
+```
+
+## Distractor analysis
+
+```{r}
+#| label: fig-item10
+#| fig-cap: Item 10
+# produce the distractor plots
+# Look at distractor plots for all items
+# Something is odd about Q10, so let's look at the distractor plot for that item
+n_items <- nrow(keys)
+for(i in 1:n_items){
+  distractor_plot(db, keys$item_id[i])
+}
+```
+
+## Rasch analysis
+```{r}
+#| echo: true
+#| output: false
+#| warning: false
+# run a traditional Rasch analysis using the item scores produced above
+library(TAM)
+# All the results of the Rasch analysis are stored in the object called "mod1"
+mod1 <- TAM::tam.jml(item_scores)
+summary(mod1)
+```
+
+```{r}
+#| label: tbl-item-difficulties
+#| tbl-cap: Item Difficulties
+knitr::kable(mod1$item1)
+```
+
+```{r}
+#| label: tbl-item-difficulties-summary
+#| tbl-cap: Item Difficulties Summary
+summary(mod1$item1$xsi)
+```
+
+```{r}
+#| label: tbl-person-abilities-summary
+#| tbl-cap: Person Abilities Summary
+summary(mod1$theta)
+```
+
+```{r}
+#| label: fig-wright-map
+#| fig-cap: Wright Map
+library(WrightMap)
+wrightMap(mod1$theta, mod1$xsi, item.side = itemClassic)
+```
+
+```{r}
+#| label: fig-Q10
+#| fig-cap: ICC for Q10
+plot(mod1,items = c(10))
+```
+
+```{r}
+#| label: tab-item-fit
+#| fig-cap: Item Fit Statistics
+fit1 <- tam.jml.fit(mod1,trim_val = NULL)
+item_fit <- tibble(fit1$fit.item)
+item_fit <- item_fit %>% bind_cols(mod1$item1)
+knitr::kable(item_fit, digits = 2)
+```
+
+```{r}
+#| label: fig-bubble-plot
+#| fig-cap: Rasch Bubble Plot
+
+# plot the item infit against the item difficulty
+p <- ggplot(item_fit, aes(x=infitItem, y=xsi, size=se.xsi,label=item))
+p <- p + geom_point()
+p <- p + geom_text(data=item_fit %>% filter(infitItem>1.1),aes(x=infitItem, y=xsi,label=item,size=4),nudge_y=0.15, nudge_x = -0.005)
+print(p)
+```
+
+```{r}
+#| label: fig-bubble-plot-outfit
+#| fig-cap: Rasch Bubble Plot Using Outfit
+
+# plot the item outfit against the item difficulty
+p <- ggplot(item_fit, aes(x=outfitItem, y=xsi, size=se.xsi,label=item))
+p <- p + geom_point()
+p <- p + geom_text(data=item_fit %>% filter(outfitItem>1.1),aes(x=outfitItem, y=xsi,label=item,size=4),nudge_y=0.15, nudge_x = -0.005)
+print(p)
+```
+
+## DIF
+```{r}
+#| label: fig-profile-analysis
+#| fig-cap: Gender profile analysis of calculation vs context
+profile_plot(db, item_property='construct', covariate='gender')
+```
