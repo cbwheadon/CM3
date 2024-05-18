@@ -1,9 +1,8 @@
 # Workshop 2 Answers
 
 ```{r}
-#| label: setup
-#| include: false
-#| echo: false
+#| include: true
+#| echo: true
 #| output: false
 #| warning: false
 rm(list=ls())
@@ -56,6 +55,8 @@ item_scores <- item_scores %>% select(
 # produce the item tables
 tt = tia_tables(db)
 knitr::kable(tt$booklets, digits = 2)
+## save the output so you can open it in Excel
+write_csv(tt$booklets, file='tables/booklets.csv')
 ```
 
 ## Item descriptive stats
@@ -64,9 +65,21 @@ knitr::kable(tt$booklets, digits = 2)
 #| tbl-cap: Item statistics
 # get the item descriptive stats
 knitr::kable(tt$items, digits = 2)
+## save the output so you can open it in Excel
+write_csv(tt$items, file='tables/items.csv')
 ```
 
 ## Distractor analysis
+
+```{r}
+#| warning: false
+# Look at all the distractor plots
+n_items <- nrow(keys)
+for(i in 1:n_items){
+  distractor_plot(db, keys$item_id[i])
+}
+```
+
 The item test correlations in @tbl-items suggest an issue with item 10. Let's look at the distractor plot for that item @fig-item10.
 
 ```{r}
@@ -116,6 +129,12 @@ wrightMap(mod1$theta, mod1$xsi, item.side = itemClassic)
 ```
 
 ```{r}
+#| label: fig-all-ICCs
+#| fig-cap: ICCs for all items
+plot(mod1,items = c(1:10))
+```
+
+```{r}
 #| label: fig-Q10
 #| fig-cap: ICC for Q10
 plot(mod1,items = c(10))
@@ -155,6 +174,29 @@ print(p)
 ## DIF
 ```{r}
 #| label: fig-profile-analysis
-#| fig-cap: Gender profile analysis of calculation vs context
-profile_plot(db, item_property='construct', covariate='gender')
+#| fig-cap: DIF using proportion correct
+item_scores <- item_scores %>% mutate(gender = responses$gender)
+long_responses <- item_scores %>% pivot_longer(cols = Q1:Q15, names_to = "question", values_to = "score")
+long_responses <- long_responses %>% mutate(gender = factor(gender))
+long_responses <- long_responses %>% mutate(question = factor(question))
+
+response_summary <- long_responses %>% 
+  group_by(gender, question) %>%
+  summarise(mean_score = mean(score,na.rm=TRUE))
+
+question_difficulty <- response_summary %>%
+  filter(gender=='F') %>% 
+  arrange(mean_score) %>% pull(question)
+
+ordered_responses <- response_summary %>% mutate(item = factor(question, levels=question_difficulty, ordered=TRUE))
+ordered_responses <- ordered_responses %>% mutate(
+  gender = factor(gender)
+)
+
+p <- ggplot(ordered_responses, aes(x=item, y=mean_score, group=gender, colour=gender, line_style=gender))
+p <- p + geom_line() # rotate the x-axis labels
+p <- p + theme_light()
+p <- p + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+p
+
 ```

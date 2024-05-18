@@ -14,7 +14,6 @@ rm(list=ls())
 library(tidyverse)
 library(ggplot2)
 library(sirt)
-require(nmmBtm)
 decisions <- read_csv('data/decisions-1.csv')
 persons <- read_csv('data/persons-1.csv')
 glimpse(decisions)
@@ -67,21 +66,29 @@ mod1 <- btm(decisions, judge=judges, fix.eta = 0, ignore.ties = TRUE, eps = 0.3)
 See <https://alexanderrobitzsch.github.io/sirt/reference/btm.html>
 
 ### Reliability
-### Person parameters
 
 ```{r}
 #| label: reliability
 #| include: true
 # The mle reliability, also known as separation reliability
 print(mod1$mle.rel)
+```
+
+### Person parameters
+
+```{r}
 # The person parameters
 knitr::kable(mod1$effects, digits = 2)
+```
+
+### Judge fit
+```{r}
 # The judge fit
 # Fit statistics (outfit and infit) for judges if judge is provided. In addition, average agreement of the rating with the mode of the ratings is calculated for each judge (at least three ratings per dyad has to be available for computing the agreement)
 knitr::kable(mod1$fit_judges, digits = 2)
 ```
 
-## Visualise the person parameters (model effects) along with the standard error
+### Visualise the person parameters (model effects) along with the standard error
 ```{r}
 #| label: person-parameters
 # plot the model effects with the standard errors
@@ -100,8 +107,8 @@ p <- ggplot(effects, aes(x = individual, y = theta)) +
 print(p)
 ```
 
-## Inspect the model probabilities
-## What is p1? p0? pD?
+### Inspect the model probabilities
+### What is p1? p0? pD?
 ```{r}
 #| include: true
 #| warning: false
@@ -111,6 +118,6 @@ head(mod1$probs)
 ```
 
 ## Extension exercises
-*    Try some less accurate judging. Note the impace on the model parameters.
+*    Try some less accurate judging. Note the impact on the model parameters.
 *    Can you recreate the model probabilities?
 

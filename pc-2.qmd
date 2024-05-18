@@ -66,6 +66,7 @@ knitr::kable(tt$items, digits=2)
 ```
 
 ## Expected Score Curves
+The Rasch model is shown with a thinner, darker line. The interaction model (unique to dexter) is shown with a thicker, lighter line, and the pink dots show the observed regression.
 
 ```{r}
 #| include: true

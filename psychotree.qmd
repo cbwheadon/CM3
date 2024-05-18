@@ -1,0 +1,45 @@
+# Psychotree
+
+```{r}
+#| include: true
+#| echo: true
+#| output: true
+#| warning: false
+
+rm(list=ls())
+library(tidyverse)
+library(dexter)
+
+```
+```{r}
+# load in the dataset
+responses <- read_csv('data/responses.csv')
+responses <- responses %>% filter(!is.na(gender))
+keys <- read_csv('data/key.csv')
+# Create the rules
+rules <- keys_to_rules(keys, include_NA_rule = TRUE)
+db <- start_new_project(rules, db_name = ":memory:", person_properties=list(gender=""))
+
+add_booklet(db, responses, "ss-workshop-2") 
+# check the number of items, the persons and the max score
+get_booklets(db)
+knitr::kable(get_booklets(db), digits = 2)
+# get the item scores for later use in other packages
+item_scores <- get_resp_matrix(db)
+item_scores <- as_tibble(item_scores)
+
+# install.packages("psychotree")
+library("psychotree")
+
+facets <- tibble(gender=responses$gender)
+facets <- facets %>% mutate(gender = factor(gender))
+facets <- facets %>% mutate(
+  responses = as.matrix(item_scores)
+)
+
+my_first_raschtree <- raschtree(responses ~ gender, data = facets)
+plot(my_first_raschtree)
+
+itempar(my_first_raschtree, node = 2)
+itempar(my_first_raschtree, node = 3)
+```

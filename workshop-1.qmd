@@ -1,55 +1,14 @@
-# Workshop 1
+# Workshop End of Year Test
 
-## Test Functioning of a Grammar Test
+## Test Functioning of the end of year Sentence Structure test
 
-Carry out CTT and IRT analyses for a grammar test. The test is of multiple-choice format. The data file contains “A,” “B,” “C,” “D”, "E" characters, and the responses are not scored.
+Following the mid-year test a final year test was administered. The population administered to was very similar to the original population.
 
-### Set up the environment and read in the data
-```{r}
-#| label: setup
-#| include: true
-#| echo: true
-#| output: false
-#| warning: false
-rm(list=ls())
-library(tidyverse)
-library(dexter)
-# load in the dataset
-responses <- read_csv('data/GrammarB2raw.csv')
-keys <- read_csv('data/grammar-key.csv')
-# Create the rules
-rules <- keys_to_rules(keys, include_NA_rule = TRUE)
-db <- start_new_project(rules, db_name = ":memory:")
-add_booklet(db, responses, "workshop") 
-```
+The responses are available [here](https://cm3-datasets.s3.eu-west-1.amazonaws.com/data/responses-may-y5-end.csv)
+The key is available [here](https://cm3-datasets.s3.eu-west-1.amazonaws.com/data/key-end.csv) 
+The test is available [here](https://cm3-datasets.s3.eu-west-1.amazonaws.com/data/End-of-year-test.docx)
 
-### Basic item analysis
+Remember you will need to change the names of the data files you are reading in in the two lines with the code: *read_csv*
 
-Produce a table with the number of items, the number of persons and the maximum score.
-
-### Produce the item tables
-
-Produce a table with the reliability (alpha) the average item proportion correct (mean_pvalue) and the average test item correlations.
-
-### Item descriptive stats
-
-Produce and table with the item descriptive stats. Can you see any issues with any of the items?
-
-### Distractor analysis
-
-Produce the distractor plots. Are there any issues with any of the items?
-
-### Rasch analysis
-Run a traditional Rasch analysis using the item scores produced above. Produce the following:
-
-1. Rasch reliability
-2. Item difficulty measures
-3. Person ability measures
-4. Item fit statistics
-5. ICC plots
-6. Wright map
-
-What more do you learn about the test from the Rasch analysis?
-
-### Summary
-What feedback do you have for the test developer?
+## How well is this test functioning?
+Compare the functioning of this final test with the mid-year test. What similiarities and differences do you note? Thinking about the purpose of the test, that student should master this domain by completing the course on sentence structure, do you think the course has achieved its aim?

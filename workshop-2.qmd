@@ -1,8 +1,9 @@
-# Workshop: Test Functioning of a Maths Test
+# Workshop Test Functioning of a Maths Test
+## Task
 
 Carry out CTT and IRT analyses for a Multiple Choice Maths test. You can download the test [here](https://cm3-datasets.s3.eu-west-1.amazonaws.com/data/maths-start.pdf)
 
-## Set up the environment and read in the data
+### Set up the environment and read in the data
 
 ```{r}
 #| label: setup
@@ -48,29 +49,58 @@ item_scores <- item_scores %>% select(
 )
 ```
 
-## Summary item analysis
+### Summary item analysis
 
 Produce the item summary table with dexter.
 What is the average item x test correlation? Is this good enough?
 What do you note about the reliability of this test compared to the grammar test? Why do you think the reliability may be low? How can you investigate further?
 
-## Item descriptive stats
+### Item descriptive stats
 
 Produce a table with the item descriptive stats. Can you see any issues with any of the items?
 
-## Distractor analysis
+### Distractor analysis
 
 Produce the distractor plots. Distractor plots can be very useful for identifying misconceptions. Take a look at item 4 and see if you can identify the main misconception for this item for a) the lowest scoring and b) the middle scoring pupils. Repeat for items 11 and 14.
 
-## Rasch analysis
+### Rasch analysis
 In the previous analysis you should have picked up two issues. One is a relatively low reliability, the other is item Q10 with a negative correlation. We can further investigate through a Rasch analysis.
 
 On reliability, we can consider if the test is well targeted. Firstly, is the mean person ability higher or lower than the mean item difficulty. Secondly, use a Wright map to analyse how well targeted do the items appear to be.
 
 For the item Q10, we can consider the ICC plot and the item fit statistics. The infit and outfit are very different. What does this tell you? Which statistic should you trust? The item is very difficult, but does the Wright Map suggest it is too diffficult? Do you think this item is functioning well?
 
-## DIF
+### DIF
 Perform a dif profile analysis using the item construct property for Males and Females. The construct separates items into those requiring language and context, and those with pure calculation. Does the profile curve for the females lie consistently to the left and above the curve for males? What does this tell us?
 
-## Summary
+### Summary
 What feedback do you have for the test developer?
+
+## Produce a Summary 2 page technical report
+For a technical report we would expect:
+
+* Introduction ending with a clear statement of your aims 
+* Method
+    * Persons
+    * Data
+    * Analytical strategy
+* Results
+* Discussion & conclusion
+* Appendices with full tables 
+
+Remember that the results should not present an item by item analysis. The results should pull out key findings, with full documentation on all items available in the Appendices.
+
+## Remember:
+
+In your report:
+
+* Start with an abstract. What you did - why - what you found - implications.
+* No requirement for a lit review in your introduction
+* Give your *results* structure a sensible structure
+* Use appropriate referencing. Remember to cite R & R packages you use.
+* Illustrate your analyses with the actual items themselves
+* Label figures & tables
+* Make sure that all results are interpreted sufficiently for the reader in the results section
+* Do not introduce new information in the discussion
+* Do not use statistics in your discussion
+* Don't just repeat your findings in the discussion draw out implications and practical issues

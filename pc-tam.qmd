@@ -22,7 +22,12 @@ resp_c1 <- resp %>%
 mod1 <- tam.jml(resp_c1)
 
 thres <- tam.threshold(mod1) # find Thurstonian thresholds
-
+```
+```{r}
+#| include: true
+#| echo: true
+#| output: true
+#| warning: false
 wrightMap(mod1$WLE, thres, item.side = itemClassic)
 wrightMap(mod1$WLE, thres)  # try different display options
 
